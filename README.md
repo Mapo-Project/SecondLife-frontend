@@ -1,1 +1,1 @@
-# SecondLife-frontend
+# Second Life
