@@ -63,7 +63,7 @@ const NavbarWrapper = styled.nav`
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
-export const Navbar = () => {
+const Navbar = () => {
   return (
     <NavbarWrapper>
       <ul className="navbar-section1">
@@ -102,3 +102,5 @@ export const Navbar = () => {
     </NavbarWrapper>
   );
 };
+
+export default Navbar;
