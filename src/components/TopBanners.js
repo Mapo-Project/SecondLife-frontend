@@ -5,7 +5,7 @@ import Carousel from "./Carousel";
 const Header = styled.header`
   /* background-color: lightblue; */
   width: 100%;
-  height: 100vh;
+  height: 888px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,7 +14,7 @@ const Header = styled.header`
   .carousel {
     /* background-color: lightpink; */
     width: 100%;
-    height: 60px;
+    padding-bottom: 57px;
     display: flex;
     flex-direction: column;
     align-items: center;
