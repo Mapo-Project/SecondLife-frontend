@@ -119,8 +119,8 @@ const SideNavigation = ({ active, onToggle }) => {
               />
             </Head>
             <Description>
-              세컨드라이프는 지속가능한 의류 선순환 A to Z<br /> 서비스를
-              제공하는 친환경 그린커머스 플랫폼입니다.
+              세컨드라이프는 지속가능한 의류 선순환 A to Z 서비스를 제공하는
+              친환경 그린커머스 플랫폼입니다.
             </Description>
             <LinkList>
               <li>
