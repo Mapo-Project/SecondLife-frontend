@@ -106,7 +106,7 @@ const SlideWrapper = styled.div`
     color: ${({ theme }) => theme.colors.white};
     border: 2px solid #000;
   }
-  .link:hover {
+  .slide-link:hover {
     background-color: ${({ theme }) => theme.colors.green300};
     color: ${({ theme }) => theme.colors.black};
   }
