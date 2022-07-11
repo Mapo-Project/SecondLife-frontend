@@ -66,7 +66,7 @@ const NavbarWrapper = styled.nav`
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
 const Navbar = () => {
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const onToggle = () => {
     setActive(!active);
   };

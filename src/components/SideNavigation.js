@@ -35,6 +35,7 @@ const LeftWrapper = styled.div`
     /* background-color: gray; */
     margin-bottom: 32px;
     padding-right: 31px;
+    cursor: pointer;
   }
   li h1 {
     ${({ theme }) => theme.korean.headline6};
@@ -139,7 +140,10 @@ const SideNavigation = ({ active, onToggle }) => {
             <ul>
               {data.map((datum) => (
                 <li key={datum.id}>
-                  <div className="menus">
+                  <div
+                    className="menus"
+                    onClick={() => handleClickDropdownBtn(datum.id)}
+                  >
                     <h1>{datum.menu}</h1>
                     {datum.items &&
                       (datum.active ? (
@@ -147,14 +151,12 @@ const SideNavigation = ({ active, onToggle }) => {
                           src={`${process.env.PUBLIC_URL}/assets/images/icons/shootup_btn.svg`}
                           className="shootup-btn"
                           alt="shootup button"
-                          onClick={() => handleClickDropdownBtn(datum.id)}
                         />
                       ) : (
                         <img
                           src={`${process.env.PUBLIC_URL}/assets/images/icons/dropdown_btn.svg`}
                           className="dropdowm-btn"
                           alt="dropdown button"
-                          onClick={() => handleClickDropdownBtn(datum.id)}
                         />
                       ))}
                   </div>
