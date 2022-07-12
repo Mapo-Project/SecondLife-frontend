@@ -1,5 +1,7 @@
+import FollowingList from "../components/FollowingList";
+
 const Home = () => {
-  return null;
+  return <FollowingList />;
 };
 
 export default Home;
