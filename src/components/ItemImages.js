@@ -74,7 +74,7 @@ const ItemImages = ({ items }) => {
           price = item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         return (
-          <ItemWrapper className="item-wrapper">
+          <ItemWrapper className="item-wrapper" key={item.id}>
             <div className="hover-img">
               <Texts>
                 {item.size && <p>{item.size}</p>}

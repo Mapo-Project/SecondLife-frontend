@@ -1,5 +1,15 @@
+import FollowingPDSection from "../components/FollowingPDSection";
+import HashtagSection from "../components/HashtagSection";
+import PopularSection from "../components/PopularSection";
+
 const Home = () => {
-  return null;
+  return (
+    <>
+      <FollowingPDSection />
+      <PopularSection />
+      <HashtagSection />
+    </>
+  );
 };
 
 export default Home;
