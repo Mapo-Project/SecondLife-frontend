@@ -113,6 +113,9 @@ const SlideWrapper = styled.div`
   .active {
     opacity: 1;
   }
+  .angle-right {
+    margin-left: 8px;
+  }
 `;
 
 const BtnWrapper = styled.div`
@@ -171,8 +174,8 @@ const Carousel = () => {
             <pre className="slide-title"> {datum.title} </pre>
             <pre className="slide-content"> {datum.content} </pre>
             <a href="#" className="slide-link">
-              {datum.button}
-              <FontAwesomeIcon icon={faAngleRight} />
+              <span>{datum.button}</span>
+              <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
             </a>
           </div>
         </SlideWrapper>

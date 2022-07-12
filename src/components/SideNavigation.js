@@ -21,9 +21,10 @@ const LeftWrapper = styled.div`
   height: 100vh;
   padding: 0px 30px;
   transition: width 0.5s;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   ::-webkit-scrollbar {
-    width: 0.1px;
-    background-color: ${({ theme }) => theme.colors.black};
+    display: none; /* Chrome, Safari, Opera*/
   }
   .logo {
     width: 130px;
@@ -49,6 +50,9 @@ const LeftWrapper = styled.div`
     ${({ theme }) => theme.korean.subtitle1};
     color: ${({ theme }) => theme.colors.white};
     margin-bottom: 15px;
+  }
+  .items li:hover {
+    color: ${({ theme }) => theme.colors.green300};
   }
 `;
 
