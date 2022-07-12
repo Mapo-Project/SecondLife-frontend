@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import GlobalStyle from "./components/GlobalStyle";
 import FollowingPDSection from "./components/FollowingPDSection";
 import PopularSection from "./components/PopularSection";
+import HashtagSection from "./components/HashtagSection";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/following" element={<FollowingPDSection />} />
           <Route path="/popular" element={<PopularSection />} />
+          <Route path="/hashtag" element={<HashtagSection />} />
         </Routes>
       </BrowserRouter>
     </>
