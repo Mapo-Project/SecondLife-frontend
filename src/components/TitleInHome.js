@@ -10,7 +10,6 @@ const TopWrapper = styled.div`
   margin-bottom: 30px;
   button:hover {
     background-color: ${({ theme }) => theme.colors.green300};
-    transition: 0.3s ease-in-out;
   }
   h6 {
     ${({ theme }) => theme.korean.headline6};
@@ -33,6 +32,9 @@ const MoreButton = styled.button`
     margin-left: 9px;
   }
   cursor: pointer;
+  span {
+    margin-right: 8px;
+  }
 `;
 
 const TitleInHome = ({ title }) => {
@@ -40,7 +42,7 @@ const TitleInHome = ({ title }) => {
     <TopWrapper>
       <h6>{title}</h6>
       <MoreButton>
-        더보기&nbsp;
+        <span>더보기</span>
         <FontAwesomeIcon icon={faAngleRight} />
       </MoreButton>
     </TopWrapper>
