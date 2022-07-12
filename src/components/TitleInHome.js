@@ -13,7 +13,7 @@ const TopWrapper = styled.div`
     transition: 0.3s ease-in-out;
   }
   h6 {
-    ${({ theme }) => theme.korean.subtitle6};
+    ${({ theme }) => theme.korean.headline6};
     color: ${({ theme }) => theme.colors.gray900};
   }
 `;
@@ -23,7 +23,7 @@ const MoreButton = styled.button`
   color: ${({ theme }) => theme.colors.gray900};
   width: 89px;
   height: 36px;
-  border: 2px solid #000;
+  border: 2px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
   padding: 6px;
   display: flex;
