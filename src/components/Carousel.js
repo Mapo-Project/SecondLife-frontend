@@ -86,7 +86,7 @@ const SlideWrapper = styled.div`
     ${({ theme }) => theme.english.headline3};
     color: ${({ theme }) => theme.colors.green300};
     line-height: 70px;
-    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    text-shadow: -4px 0 #000, 0 4px #000, 4px 0 #000, 0 -4px #000;
     /* background-color: aliceblue; */
   }
   .slide-content {
