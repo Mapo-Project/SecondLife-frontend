@@ -62,20 +62,6 @@ const RightWrapper = styled.div`
   /* background-color: lightblue; */
 `;
 
-const Head = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  h2 {
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 27px;
-    color: ${({ theme }) => theme.colors.green300};
-  }
-`;
-
 const Description = styled.h3`
   ${({ theme }) => theme.korean.caption};
   color: ${({ theme }) => theme.colors.green300};
@@ -115,13 +101,11 @@ const SideNavigation = ({ active, onToggle }) => {
       {active && (
         <TopWrapper>
           <LeftWrapper>
-            <Head>
-              <img
-                src={`${process.env.PUBLIC_URL}/assets/images/icons/logo.svg`}
-                className="logo"
-                alt="logo"
-              />
-            </Head>
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/icons/logo.svg`}
+              className="logo"
+              alt="logo"
+            />
             <Description>
               세컨드라이프는 지속가능한 의류 선순환 A to Z 서비스를 제공하는
               친환경 그린커머스 플랫폼입니다.
