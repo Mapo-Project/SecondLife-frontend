@@ -65,7 +65,7 @@ const SlideWrapper = styled.div`
     width: 100%;
     height: 100%;
     position: absolute;
-    opacity: 0;
+    display: none;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -74,9 +74,8 @@ const SlideWrapper = styled.div`
   .slide-contents {
     position: absolute;
     bottom: 148px;
-    opacity: 0;
     z-index: 10;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -96,22 +95,19 @@ const SlideWrapper = styled.div`
     /* background-color: aqua; */
   }
   .slide-link {
-    padding: 5px 0px 7px 0px;
-    display: inline-block;
+    padding: 5px 10px 7px 10px;
     ${({ theme }) => theme.korean.subtitle2};
-    width: 134px;
-    height: 38px;
     border-radius: 20px;
     background-color: ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.white};
     border: 2px solid #000;
-  }
-  .slide-link:hover {
-    background-color: ${({ theme }) => theme.colors.green300};
-    color: ${({ theme }) => theme.colors.black};
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.green300};
+      color: ${({ theme }) => theme.colors.black};
+    }
   }
   .active {
-    opacity: 1;
+    display: flex;
   }
   .angle-right {
     margin-left: 8px;
@@ -174,7 +170,7 @@ const Carousel = () => {
             <pre className="slide-title"> {datum.title} </pre>
             <pre className="slide-content"> {datum.content} </pre>
             <a href="#" className="slide-link">
-              <span>{datum.button}</span>
+              {datum.button}
               <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
             </a>
           </div>

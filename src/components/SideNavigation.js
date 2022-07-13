@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { sideNavigationData } from "../utils/sideNavigationData";
 import { useState } from "react";
 
@@ -13,6 +13,15 @@ const TopWrapper = styled.div`
   display: flex;
 `;
 
+const Slide = keyframes`
+  0%{
+    transform: translateX(-363px);
+  }
+  100%{
+    transform: translateX(0px);
+  }
+`;
+
 const LeftWrapper = styled.div`
   overflow: hidden;
   overflow-y: scroll;
@@ -20,7 +29,8 @@ const LeftWrapper = styled.div`
   width: 363px;
   height: 100vh;
   padding: 0px 30px;
-  transition: width 0.5s;
+  animation: ${Slide} 0.4s ease-in-out;
+  transform-origin: left;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   ::-webkit-scrollbar {
