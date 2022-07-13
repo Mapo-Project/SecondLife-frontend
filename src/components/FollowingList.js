@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { useDraggable } from "react-use-draggable-scroll";
 import styled from "styled-components";
 import { followingListData } from "../utils/followingListData";
 import TitleInHome from "./TitleInHome";
@@ -15,7 +17,9 @@ const TopWrapper = styled.div`
   }
   /* 스크롤바 막대 설정*/
   .items::-webkit-scrollbar-thumb {
-    border-radius: 33px;
+    width: 17%;
+    border: 33px solid transparent;
+    /* border-radius: 33px; */
     background-color: #000;
   }
   .items:hover::-webkit-scrollbar-thumb {
@@ -62,10 +66,13 @@ let user = `김뫄뫄`;
 let title = `${user}님이 팔로우한 셀러`;
 
 const FollowingList = () => {
+  const containerRef = useRef(null);
+  const { events } = useDraggable(containerRef);
+
   return (
     <TopWrapper>
       <TitleInHome title={title} />
-      <ItemsWrapper className="items">
+      <ItemsWrapper className="items" {...events} ref={containerRef}>
         {followingListData.map((datum) => (
           <ItemWrapper key={datum.id}>
             {datum.active && <Circle />}
