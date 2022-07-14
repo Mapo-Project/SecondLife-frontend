@@ -31,6 +31,7 @@ const ScrollText = styled.span`
   transition: 0.5s;
   white-space: nowrap;
   display: flex;
+  align-items: center;
   .type_1 {
     ${(prop) => prop.theme.english.headline5}
     letter-spacing: 0.06em;
@@ -39,7 +40,7 @@ const ScrollText = styled.span`
     color: ${(prop) => prop.theme.colors.bg};
   }
   .type_2 {
-    font-family: "Y Universe";
+    font-family: "YUniverse";
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -49,7 +50,7 @@ const ScrollText = styled.span`
     color: ${(prop) => prop.theme.colors.white};
   }
   .type_3 {
-    font-family: "Y Universe";
+    font-family: "YUniverse";
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -58,7 +59,38 @@ const ScrollText = styled.span`
     -webkit-text-stroke: 1px ${(prop) => prop.theme.colors.green300};
     color: ${(prop) => prop.theme.colors.white};
   }
+  span {
+    font-family: "YUniverse";
+  }
 `;
+
+export const BannerData = [
+  {
+    textStyle: 0,
+    size: 102,
+    style: "2px solid black",
+  },
+  {
+    bg: "black",
+    size: 46,
+    textStyle: 2,
+    style: "none",
+  },
+  {
+    bg: "#00FF85",
+    textStyle: 1,
+    direction: true,
+    size: 73,
+    style: "none",
+  },
+];
+
+export const textData = [
+  "THE FUTURE IS CIRCULAR !",
+  "세컨드라이프의 지속가능한 의류소비과정 보러가기 !",
+  "짃 THE FUTURE IS CIRCULAR 짃 THE FUTURE IS CIRCULAR 짃 THE FUTURE IS CIRCULAR",
+  "짃 제주의 푸르른 비자림을 지켜주세요 짃 제주의 푸르른 비자림을 지켜주세요 짃 제주의 푸르른 비자림을 지켜주세요",
+];
 
 const RollingBanner = ({ type, children }) => {
   return (
@@ -66,7 +98,8 @@ const RollingBanner = ({ type, children }) => {
       style={{
         backgroundColor: type.bg,
         height: type.size,
-        border: type.style,
+        borderTop: type.style,
+        borderBottom: type.style,
       }}
     >
       <ScrollText active={type.direction}>
