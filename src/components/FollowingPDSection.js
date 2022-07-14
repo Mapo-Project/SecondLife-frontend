@@ -8,7 +8,7 @@ let title = `${user}님이 팔로우한 셀러의 상품 모아보기`;
 
 const TopWrapper = styled.div`
   width: 1410px;
-  margin: 0px auto 135px;
+  margin: 135px auto 135px;
 `;
 
 const FollowingPDSection = () => {
