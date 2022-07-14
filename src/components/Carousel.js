@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/carouselImg/`;
 
@@ -56,11 +57,8 @@ const carouselData = [
 const SlideWrapper = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
   display: flex;
   justify-content: center;
-  align-items: center;
-  top: 0;
   .slide-img {
     width: 100%;
     height: 100%;
@@ -69,7 +67,10 @@ const SlideWrapper = styled.div`
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    z-index: -10;
+    z-index: 10;
+    cursor: pointer;
+    top: 0;
+    left: 0;
   }
   .slide-contents {
     position: absolute;
@@ -95,16 +96,16 @@ const SlideWrapper = styled.div`
     /* background-color: aqua; */
   }
   .slide-link {
-    padding: 5px 10px 7px 10px;
+    padding: 7px 16px 7px 20px;
     ${({ theme }) => theme.korean.subtitle2};
     border-radius: 20px;
     background-color: ${({ theme }) => theme.colors.black};
     color: ${({ theme }) => theme.colors.white};
     border: 2px solid #000;
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.green300};
-      color: ${({ theme }) => theme.colors.black};
-    }
+  }
+  .slide-link:hover {
+    background-color: ${({ theme }) => theme.colors.green300};
+    color: ${({ theme }) => theme.colors.black};
   }
   .active {
     display: flex;
@@ -116,6 +117,7 @@ const SlideWrapper = styled.div`
 
 const BtnWrapper = styled.div`
   /* background-color: black; */
+  margin-bottom: 57px;
   width: 132px;
   display: flex;
   justify-content: space-between;
@@ -157,24 +159,30 @@ const Carousel = () => {
   return (
     <div className="carousel">
       {carouselData.map((datum, index) => (
-        <SlideWrapper key={datum.id}>
-          <div
-            style={{ backgroundImage: `url(${datum.imgUrl})` }}
-            className={slideIndex === index ? "slide-img active" : "slide-img"}
-          />
-          <div
-            className={
-              slideIndex === index ? "slide-contents active" : "slide-contents"
-            }
-          >
-            <pre className="slide-title"> {datum.title} </pre>
-            <pre className="slide-content"> {datum.content} </pre>
-            <a href="#" className="slide-link">
-              {datum.button}
-              <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
-            </a>
-          </div>
-        </SlideWrapper>
+        <Link to="/" key={datum.id}>
+          <SlideWrapper>
+            <div
+              style={{ backgroundImage: `url(${datum.imgUrl})` }}
+              className={
+                slideIndex === index ? "slide-img active" : "slide-img"
+              }
+            />
+            <div
+              className={
+                slideIndex === index
+                  ? "slide-contents active"
+                  : "slide-contents"
+              }
+            >
+              <pre className="slide-title"> {datum.title} </pre>
+              <pre className="slide-content"> {datum.content} </pre>
+              <Link to="/" className="slide-link">
+                {datum.button}
+                <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
+              </Link>
+            </div>
+          </SlideWrapper>
+        </Link>
       ))}
       <BtnWrapper>
         {carouselData.map((datum, index) => {

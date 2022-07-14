@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import SideNavigation from "./SideNavigation";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const NavbarWrapper = styled.nav`
   /* background-color: blueviolet; */
@@ -98,14 +99,22 @@ const Navbar = () => {
             />
           </li>
           <li>
-            <img src={`${imgUrl}cart.png`} className="cart" alt="cart button" />
+            <Link to="/">
+              <img
+                src={`${imgUrl}cart.png`}
+                className="cart"
+                alt="cart button"
+              />
+            </Link>
           </li>
           <li>
-            <img
-              src={`${imgUrl}mypage.png`}
-              className="mypage"
-              alt="mypage button"
-            />
+            <Link to="/">
+              <img
+                src={`${imgUrl}mypage.png`}
+                className="mypage"
+                alt="mypage button"
+              />
+            </Link>
           </li>
         </ul>
       </NavbarWrapper>

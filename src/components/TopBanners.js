@@ -9,14 +9,15 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
 
   .carousel {
     /* background-color: lightpink; */
+    position: relative;
     width: 100%;
-    padding-bottom: 57px;
+    height: 798px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     align-items: center;
   }
 `;

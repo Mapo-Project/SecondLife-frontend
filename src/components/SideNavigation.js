@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { sideNavigationData } from "../utils/sideNavigationData";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const TopWrapper = styled.div`
   position: fixed;
@@ -26,7 +27,7 @@ const LeftWrapper = styled.div`
   overflow: hidden;
   overflow-y: scroll;
   background-color: ${({ theme }) => theme.colors.black};
-  width: 363px;
+  width: 362px;
   height: 100vh;
   padding: 0px 30px;
   animation: ${Slide} 0.4s ease-in-out;
@@ -85,6 +86,9 @@ const LinkList = styled.ul`
   li {
     margin-bottom: 20px;
   }
+  li:hover {
+    text-decoration: underline;
+  }
 `;
 
 const HorizonLine = styled.div`
@@ -122,16 +126,16 @@ const SideNavigation = ({ active, onToggle }) => {
             </Description>
             <LinkList>
               <li>
-                <a href="#">인사이드 세컨드라이프</a>
+                <Link to="/">인사이드 세컨드라이프</Link>
               </li>
               <li>
-                <a href="#">우리의 지속가능 여정</a>
+                <Link to="/">우리의 지속가능 여정</Link>
               </li>
               <li>
-                <a href="#">쓰임 있는 옷장 만들기</a>
+                <Link to="/">쓰임 있는 옷장 만들기</Link>
               </li>
               <li>
-                <a href="#">지속가능 제로라이프</a>
+                <Link to="/">지속가능 제로라이프</Link>
               </li>
             </LinkList>
             <HorizonLine />
@@ -162,7 +166,7 @@ const SideNavigation = ({ active, onToggle }) => {
                     <ul className="items">
                       {datum.items.map((item) => (
                         <li key={datum.id}>
-                          <a href="#">{item}</a>
+                          <Link to="/">{item}</Link>
                         </li>
                       ))}
                     </ul>
