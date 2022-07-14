@@ -7,9 +7,6 @@ const TopWrapper = styled.div`
   .item-wrapper:hover > * {
     opacity: 1;
   }
-  /* .item-wrapper:nth-last-child(1) {
-    margin-right: 0px;
-  } */
 `;
 
 const ItemWrapper = styled.div`
@@ -43,7 +40,7 @@ const ItemWrapper = styled.div`
 const Texts = styled.div`
   margin-right: 16px;
   margin-bottom: 16px;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.white};
   text-align: right;
   p:nth-child(1) {
     font-family: "Montserrat";

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { itemsData } from "../utils/itemsData";
+import { itemsData3 } from "../utils/itemsData3";
 import ItemImages from "./ItemImages";
 import TitleInHome from "./TitleInHome";
 
@@ -16,7 +16,7 @@ const HashtagSection = () => {
   return (
     <TopWrapper>
       <TitleInHome title={title} />
-      <ItemImages items={itemsData} />
+      <ItemImages items={itemsData3} />
     </TopWrapper>
   );
 };

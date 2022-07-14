@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ItemImages from "./ItemImages";
 import TitleInHome from "./TitleInHome";
-import { itemsData } from "../utils/itemsData";
+import { itemsData2 } from "../utils/itemsData2";
 
 let title = "사람들이 많이 스크랩한 인기 상품이에요";
 
@@ -14,7 +14,7 @@ const PopularSection = () => {
   return (
     <TopWrapper>
       <TitleInHome title={title} />
-      <ItemImages items={itemsData} />
+      <ItemImages items={itemsData2} />
     </TopWrapper>
   );
 };
