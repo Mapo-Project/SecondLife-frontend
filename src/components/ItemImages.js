@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const TopWrapper = styled.div`
   width: 100%;
@@ -71,25 +72,27 @@ const ItemImages = ({ items }) => {
           price = item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         return (
-          <ItemWrapper className="item-wrapper" key={item.id}>
-            <div className="hover-img">
-              <Texts>
-                {item.size && <p>{item.size}</p>}
-                {item.price && (
-                  <p>
-                    {price}
-                    <span>원</span>
-                  </p>
-                )}
-              </Texts>
-            </div>
-            <div
-              className="item-img"
-              style={{
-                backgroundImage: `url(${item.imgUrl})`,
-              }}
-            />
-          </ItemWrapper>
+          <Link to="/" key={item.id}>
+            <ItemWrapper className="item-wrapper">
+              <div className="hover-img">
+                <Texts>
+                  {item.size && <p>{item.size}</p>}
+                  {item.price && (
+                    <p>
+                      {price}
+                      <span>원</span>
+                    </p>
+                  )}
+                </Texts>
+              </div>
+              <div
+                className="item-img"
+                style={{
+                  backgroundImage: `url(${item.imgUrl})`,
+                }}
+              />
+            </ItemWrapper>
+          </Link>
         );
       })}
     </TopWrapper>
