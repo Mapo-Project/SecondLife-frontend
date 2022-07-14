@@ -1,0 +1,24 @@
+import styled from "styled-components";
+import { itemsData3 } from "../utils/itemsData3";
+import ItemImages from "./ItemImages";
+import TitleInHome from "./TitleInHome";
+
+let user = "김뫄뫄";
+let hashtag = "네온";
+let title = `${user}님이 관심있는 #${hashtag} 상품 모아보기`;
+
+const TopWrapper = styled.div`
+  width: 1410px;
+  margin: 0px auto 135px;
+`;
+
+const HashtagSection = () => {
+  return (
+    <TopWrapper>
+      <TitleInHome title={title} />
+      <ItemImages items={itemsData3} />
+    </TopWrapper>
+  );
+};
+
+export default HashtagSection;
