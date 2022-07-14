@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 const TopWrapper = styled.div`
   width: 1410px;
+  height: 246px;
   margin: 0 auto 140px;
   /* background-color: aliceblue; */
   /* 스크롤바 설정*/
