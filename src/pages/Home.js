@@ -12,7 +12,6 @@ const Home = () => {
       <HashtagSection />
     </>
   );
-
 };
 
 export default Home;
