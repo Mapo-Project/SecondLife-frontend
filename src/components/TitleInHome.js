@@ -42,12 +42,12 @@ const TitleInHome = ({ title }) => {
   return (
     <TopWrapper>
       <h6>{title}</h6>
-      <MoreButton>
-        <Link to="/">
+      <Link to="/">
+        <MoreButton>
           <span>더보기</span>
           <FontAwesomeIcon icon={faAngleRight} />
-        </Link>
-      </MoreButton>
+        </MoreButton>
+      </Link>
     </TopWrapper>
   );
 };
