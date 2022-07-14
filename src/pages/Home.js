@@ -1,5 +1,7 @@
+import TopBanners from "../components/TopBanners";
+
 const Home = () => {
-  return null;
+  return <TopBanners />;
 };
 
 export default Home;
