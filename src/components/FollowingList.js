@@ -3,6 +3,7 @@ import { useDraggable } from "react-use-draggable-scroll";
 import styled from "styled-components";
 import { followingListData } from "../utils/followingListData";
 import TitleInHome from "./TitleInHome";
+import { Link } from "react-router-dom";
 
 const TopWrapper = styled.div`
   width: 1410px;
@@ -76,8 +77,10 @@ const FollowingList = () => {
         {followingListData.map((datum) => (
           <ItemWrapper key={datum.id}>
             {datum.active && <Circle />}
-            <img src={datum.imgUrl} alt={datum.following} />
-            <h5>{datum.following}</h5>
+            <Link to="/">
+              <img src={datum.imgUrl} alt={datum.following} />
+              <h5>{datum.following}</h5>
+            </Link>
           </ItemWrapper>
         ))}
       </ItemsWrapper>

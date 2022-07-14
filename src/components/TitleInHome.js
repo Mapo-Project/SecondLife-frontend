@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 const TopWrapper = styled.div`
   width: 100%;
@@ -41,10 +42,12 @@ const TitleInHome = ({ title }) => {
   return (
     <TopWrapper>
       <h6>{title}</h6>
-      <MoreButton>
-        <span>더보기</span>
-        <FontAwesomeIcon icon={faAngleRight} />
-      </MoreButton>
+      <Link to="/">
+        <MoreButton>
+          <span>더보기</span>
+          <FontAwesomeIcon icon={faAngleRight} />
+        </MoreButton>
+      </Link>
     </TopWrapper>
   );
 };
