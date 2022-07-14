@@ -1,5 +1,7 @@
+import TodayPick from "../components/TodayPick";
+
 const Home = () => {
-  return null;
+  return <TodayPick />;
 };
 
 export default Home;
