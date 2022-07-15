@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 
+import { Link } from "react-router-dom";
 const TopWrapper = styled.div`
   width: 100%;
   display: flex;
