@@ -11,12 +11,13 @@ const Container = styled.div`
       position: fixed;
       right: 30px;
       bottom: 15px;
+      z-index: 18;
     }
     h6 {
       position: fixed;
       right: 95px;
       bottom: 80px;
-      z-index: 1000;
+      z-index: 19;
       text-align: center;
       ${({ theme }) => theme.korean.headline6};
       color: ${({ theme }) => theme.colors.black};
