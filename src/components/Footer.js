@@ -1,9 +1,5 @@
 /* eslint-disable */
 import styled from "styled-components";
-import BottomBanners from "./BottomBanner";
-import Circle from "./Circle";
-import BrandSection from "./BrandSection";
-import NewItemSection from "./NewItemSection";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -114,9 +110,6 @@ const SectionBottom = styled.div`
 const Footer = () => {
   return (
     <Container>
-      <NewItemSection />
-      <BrandSection />
-      <BottomBanners />
       <FooterSection>
         <SectionTop>
           <FooterLeft>
@@ -210,7 +203,6 @@ const Footer = () => {
           <a href="#">Created with love by 마청단</a>
         </SectionBottom>
       </FooterSection>
-      <Circle />
     </Container>
   );
 };
