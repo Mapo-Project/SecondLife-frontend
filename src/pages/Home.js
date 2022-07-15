@@ -8,6 +8,12 @@ import RollingBanner, {
   BannerData,
   textData,
 } from "../components/RollingBanner";
+import TopSellerSection from "../components/TopSellerSection";
+import BottomBanners from "../components/BottomBanner";
+import Circle from "../components/Circle";
+import BrandSection from "../components/BrandSection";
+import NewItemSection from "../components/NewItemSection";
+import Footer from "../components/Footer";
 
 const Home = () => {
   return (
@@ -22,7 +28,13 @@ const Home = () => {
       <TodayPick />
       <RollingBanner type={BannerData[1]}>{textData[2]}</RollingBanner>
       <RollingBanner type={BannerData[2]}>{textData[3]}</RollingBanner>
+      <TopSellerSection />
       <FollowingList />
+      <NewItemSection />
+      <BrandSection />
+      <BottomBanners />
+      <Footer />
+      <Circle />
     </>
   );
 };

@@ -20,6 +20,7 @@ export const TopSellerSectiondata = [
   {
     no: 2,
     UserId: "aaa3",
+
     HashTag: "#모자 #티셔츠3",
     url: `${imgUrl}TopSeller.jpg`,
     followers: 102,

@@ -13,6 +13,7 @@ const Section = styled.div`
   max-width: 1410px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 135px;
   .container {
     display: inline-block;
     width: 100%;
