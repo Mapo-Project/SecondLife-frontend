@@ -1,5 +1,7 @@
+import Agreement from "../components/Agreement";
+
 const SignUp = () => {
-  return null;
+  return <Agreement />;
 };
 
 export default SignUp;
