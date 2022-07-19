@@ -3,6 +3,6 @@ import tokenReducer from "./Auth";
 
 export default configureStore({
   reducer: {
-    authToken: tokenReducer,
+    accessToken: tokenReducer,
   },
 });

@@ -19,8 +19,8 @@ function Logout() {
 
   async function logout() {
     // 백으로부터 받은 응답
-    const data = await logoutUser({ refresh_token: refreshToken }, accessToken);
-
+    const data = await logoutUser({ refreshToken: refreshToken }, accessToken);
+    console.log("success");
     if (data.status) {
       // store에 저장된 Access Token 정보를 삭제
       dispatch(DELETE_TOKEN());
@@ -39,6 +39,7 @@ function Logout() {
 
   return (
     <>
+      <div>로그아웃</div>
       <Link to="/" />
     </>
   );

@@ -68,7 +68,10 @@ export const logoutUser = async (credentials, accessToken) => {
     body: JSON.stringify(credentials),
   };
 
-  const data = await getPromise("/logout-url", option).catch(() => {
+  const data = await getPromise(
+    "https://hee-backend.shop:7179/user/logout",
+    option
+  ).catch(() => {
     return statusError;
   });
 
@@ -94,10 +97,13 @@ export const requestToken = async (refreshToken) => {
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
     },
-    body: JSON.stringify({ refresh_token: refreshToken }),
+    body: JSON.stringify({ refreshToken: refreshToken }),
   };
 
-  const data = await getPromise("/login-url", option).catch(() => {
+  const data = await getPromise(
+    "https://hee-backend.shop:7179/user/general/signin",
+    option
+  ).catch(() => {
     return statusError;
   });
 
