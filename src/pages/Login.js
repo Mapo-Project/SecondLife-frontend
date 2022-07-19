@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-
 import { loginUser } from "../api/User";
 import { setRefreshToken } from "../storage/Cookie";
 import { SET_TOKEN } from "../store/Auth";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import theme from "../theme";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -47,6 +45,12 @@ const Input = styled.input`
   padding: 12px 0px;
 `;
 
+const ErrorMessage = styled.p`
+  height: 10px;
+  margin-bottom: 21px;
+  ${({ theme }) => theme.korean.subtitle2};
+`;
+
 const LoginBox = styled.div`
   margin-top: 49px;
   h5 {
@@ -56,11 +60,12 @@ const LoginBox = styled.div`
   div {
     margin-top: 15px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     p {
       ${({ theme }) => theme.korean.body2};
       color: ${({ theme }) => theme.colors.gray500};
+      margin-right: 20px;
     }
   }
 `;
@@ -121,15 +126,18 @@ const Login = () => {
               아이디
             </label>
             <Input
-              {...register("user_id", { required: "Please Enter Your ID" })}
+              {...register("user_id", {
+                required: "Please Enter Your ID",
+                maxLength: 10,
+              })}
               type="text"
               placeholder="example123"
             />
-            <span
-              name="user_id"
-              errors={errors}
-              render={({ message }) => <p>{message}</p>}
-            />
+            <ErrorMessage>
+              {errors.user_id?.type === "required" && "아이디를 입력해주세요."}
+              {errors.user_id?.type === "maxLength" &&
+                "올바르지 않은 아이디 입니다."}
+            </ErrorMessage>
 
             <label htmlFor="password">비밀번호</label>
             <Input
@@ -139,11 +147,9 @@ const Login = () => {
               type="text"
               placeholder="영어 대문자, 소문자, 숫자, 특수문자를 포함한 10자리 이상"
             />
-            <span
-              name="user_id"
-              errors={errors}
-              render={({ message }) => <p>{message}</p>}
-            />
+            <ErrorMessage>
+              {errors.password && "패스워드를 입력해주세요."}
+            </ErrorMessage>
 
             <LoginBox>
               <h5>
