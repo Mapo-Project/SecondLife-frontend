@@ -59,13 +59,14 @@ export const loginUser = async (credentials) => {
   }
 };
 
-export const logoutUser = async (credentials, accessToken) => {
+export const logoutUser = async (accessToken) => {
+  console.log(accessToken);
   const option = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json;charset=UTF-8",
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: JSON.stringify(credentials),
   };
 
   const data = await getPromise(

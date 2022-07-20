@@ -14,8 +14,15 @@ import Circle from "../components/Circle";
 import BrandSection from "../components/BrandSection";
 import NewItemSection from "../components/NewItemSection";
 import Footer from "../components/Footer";
+import { getCookieToken } from "../storage/Cookie";
+import { useEffect } from "react";
+import Logout2 from "../components/Logout2";
 
 const Home = () => {
+  const refreshToken = getCookieToken();
+  useEffect(() => {
+    console.log(refreshToken);
+  }, []);
   return (
     <>
       <TopBanners />
@@ -35,6 +42,7 @@ const Home = () => {
       <BottomBanners />
       <Footer />
       <Circle />
+      {refreshToken ? <Logout2 /> : null}
     </>
   );
 };

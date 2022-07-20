@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const TOKEN_TIME_OUT = 600 * 1000;
 
 export const tokenSlice = createSlice({
-  name: "accessToken",
+  name: "token",
   initialState: {
     authenticated: false,
     accessToken: null,
@@ -14,6 +14,7 @@ export const tokenSlice = createSlice({
       state.authenticated = true;
       state.accessToken = action.payload;
       state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
+      console.log("Auth 저장소: ", state.accessToken);
     },
     DELETE_TOKEN: (state) => {
       state.authenticated = false;

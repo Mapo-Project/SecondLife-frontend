@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { getCookieToken, removeCookieToken } from "../storage/Cookie";
+import { removeCookieToken } from "../storage/Cookie";
 import { DELETE_TOKEN } from "../store/Auth";
 import { logoutUser } from "../api/User";
 
@@ -15,12 +15,14 @@ function Logout() {
   const navigate = useNavigate();
 
   // Cookie에 저장된 Refresh Token 정보를 받아 온다
-  const refreshToken = getCookieToken();
+  console.log(
+    "useSelector",
+    useSelector((state) => state.token)
+  );
 
   async function logout() {
     // 백으로부터 받은 응답
-    const data = await logoutUser({ refreshToken: refreshToken }, accessToken);
-    console.log("success");
+    const data = await logoutUser(accessToken);
     if (data.status) {
       // store에 저장된 Access Token 정보를 삭제
       dispatch(DELETE_TOKEN());
@@ -39,7 +41,6 @@ function Logout() {
 
   return (
     <>
-      <div>로그아웃</div>
       <Link to="/" />
     </>
   );

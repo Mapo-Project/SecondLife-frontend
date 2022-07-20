@@ -6,6 +6,9 @@ import { setRefreshToken } from "../storage/Cookie";
 import { SET_TOKEN } from "../store/Auth";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -14,6 +17,9 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  .error:focus {
+    border-bottom: 2px solid red;
+  }
 `;
 
 const Container = styled.div`
@@ -41,8 +47,12 @@ const Input = styled.input`
   width: 450px;
   border: none;
   background-color: transparent;
-  border-bottom: 2px solid #bebebe;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.gray300};
   padding: 12px 0px;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid black;
+  }
 `;
 
 const ErrorMessage = styled.p`
@@ -84,8 +94,12 @@ const LoginBtn = styled.button`
 `;
 
 const Login = () => {
+  const [hidden, setHidden] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const onHidePassword = () => {
+    setHidden(!hidden);
+  };
 
   // useForm 사용을 위한 선언
   const {
@@ -108,6 +122,7 @@ const Login = () => {
       // 쿠키에 Refresh Token, store에 Access Token 저장
       setRefreshToken(response.json.refreshToken);
       dispatch(SET_TOKEN(response.json.accessToken));
+
       return navigate("/");
     } else {
       console.log(response.json);
@@ -132,6 +147,7 @@ const Login = () => {
               })}
               type="text"
               placeholder="example123"
+              className={errors.user_id?.type === "required" && "error"}
             />
             <ErrorMessage>
               {errors.user_id?.type === "required" && "아이디를 입력해주세요."}
@@ -144,9 +160,16 @@ const Login = () => {
               {...register("password", {
                 required: "Please Enter Your Password",
               })}
-              type="text"
+              type={!hidden ? "text" : "password"}
               placeholder="영어 대문자, 소문자, 숫자, 특수문자를 포함한 10자리 이상"
+              className={errors.password?.type === "required" && "error"}
             />
+            <FontAwesomeIcon
+              onClick={onHidePassword}
+              style={{ position: "relative", top: -30, right: -430 }}
+              icon={faEyeSlash}
+            />
+
             <ErrorMessage>
               {errors.password && "패스워드를 입력해주세요."}
             </ErrorMessage>
