@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 const TopWrapper = styled.div`
   width: 509px;
+  /* height: 951px; */
   margin: 29px auto 38px auto;
 `;
 
@@ -105,69 +106,89 @@ const HorizonLine = styled.div`
 
 const lastHorizonLineStyle = { marginBottom: "100px" };
 
-const Agreement = () => {
-  const [agreements, setAgreements] = useState([
-    {
-      id: 0,
-      className: "agree-all left-wrapper",
-      text: "약관 모두 동의하기",
-      active: false,
-    },
-    {
-      id: 1,
-      className: "left-wrapper",
-      text: "이용 약관 동의(필수)",
-      active: false,
-    },
-    {
-      id: 2,
-      className: "left-wrapper",
-      text: "개인정보 수집 및 이용동의(필수)",
-      active: false,
-    },
-    {
-      id: 3,
-      className: "left-wrapper",
-      text: "위치기반 서비스 이용 약관 동의(선택)",
-      active: false,
-    },
-    {
-      id: 4,
-      className: "left-wrapper",
-      text: "E-mail 및 SMS 광고성 정보 수신동의(선택)",
-      active: false,
-    },
-  ]);
+// 아이콘 이미지 경로
+const iconImgURL = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
-  const clickCheckHandler = (id) => {
-    if (id === 0) {
-      setAgreements(
-        agreements.map((agreement) => {
-          return { ...agreement, active: !agreements[0].active };
-        })
-      );
+const Agreement = () => {
+  const [allCheck, setAllCheck] = useState(false);
+  const [useCheck, setUseCheck] = useState(false);
+  const [privacyCheck, setPrivacyCheck] = useState(false);
+  const [locationCheck, setLocationCheck] = useState(false);
+  const [marketingCheck, setMarketingCheck] = useState(false);
+
+  // 약관 모두 동의
+  const allBtnEvent = () => {
+    if (allCheck === false) {
+      setAllCheck(true);
+      setUseCheck(true);
+      setPrivacyCheck(true);
+      setLocationCheck(true);
+      setMarketingCheck(true);
     } else {
-      setAgreements(
-        agreements.map((agreement) => {
-          return agreement.id === id
-            ? {
-                ...agreement,
-                active: !agreement.active,
-              }
-            : agreement;
-        })
-      );
+      setAllCheck(false);
+      setUseCheck(false);
+      setPrivacyCheck(false);
+      setLocationCheck(false);
+      setMarketingCheck(false);
     }
   };
 
+  // 이용 약관 동의
+  const useBtnEvent = () => {
+    if (useCheck === false) {
+      setUseCheck(true);
+    } else {
+      setUseCheck(false);
+    }
+  };
+
+  // 개인정보 수집 및 이용동의
+  const privacyBtnEvent = () => {
+    if (privacyCheck === false) {
+      setPrivacyCheck(true);
+    } else {
+      setPrivacyCheck(false);
+    }
+  };
+
+  // 위치기반 서비스 이용 약관 동의
+  const locationBtnEvent = () => {
+    if (locationCheck === false) {
+      setLocationCheck(true);
+    } else {
+      setLocationCheck(false);
+    }
+  };
+
+  // 광고성 정보 수신 동의
+  const marketingBtnEvent = () => {
+    if (marketingCheck === false) {
+      setMarketingCheck(true);
+    } else {
+      setMarketingCheck(false);
+    }
+  };
+
+  // 필수 이용 동의/비동의시 변화
+  let active = useCheck && privacyCheck;
+
+  useEffect(() => {
+    if (
+      useCheck === true &&
+      privacyCheck === true &&
+      locationCheck === true &&
+      marketingCheck === true
+    ) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  }, [useCheck, privacyCheck, locationCheck, marketingCheck]);
   return (
     <TopWrapper>
       <CloseBtnWrapper>
         <Link to="/">
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/icons/x.png`}
-            alt="close button"
-          />
+          <img src={`${iconImgURL}x.png`} alt="close button" />
         </Link>
       </CloseBtnWrapper>
       <ProgressBarWrapper>
@@ -179,10 +200,7 @@ const Agreement = () => {
         <p>가입완료</p>
       </Step>
       <Logo>
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/images/icons/logo.svg`}
-          alt="logo"
-        />
+        <img src={`${iconImgURL}logo.svg`} alt="logo" />
       </Logo>
       <Description>
         지속가능한
@@ -190,51 +208,128 @@ const Agreement = () => {
         의류소비의
         <br />첫 발걸음!
       </Description>
-      {/* <AgreementWrapper>
+      <AgreementWrapper>
         <div className="agree-all left-wrapper">
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/icons/check.png`}
-            alt="check button"
-          />
+          {allCheck ? (
+            <img
+              src={`${iconImgURL}checked.png`}
+              alt="checked button"
+              onClick={allBtnEvent}
+            />
+          ) : (
+            <img
+              src={`${iconImgURL}check.png`}
+              alt="check button"
+              onClick={allBtnEvent}
+            />
+          )}
           <p>약관 모두 동의하기</p>
         </div>
       </AgreementWrapper>
-      <HorizonLine /> */}
-      {agreements.map((agreement) => {
-        return (
-          <>
-            <AgreementWrapper>
-              <div className={agreement.className}>
-                {agreement.active ? (
-                  <img
-                    src={`${process.env.PUBLIC_URL}/assets/images/icons/checked.png`}
-                    alt="checked button"
-                    onClick={() => clickCheckHandler(agreement.id)}
-                  />
-                ) : (
-                  <img
-                    src={`${process.env.PUBLIC_URL}/assets/images/icons/check.png`}
-                    alt="check button"
-                    onClick={() => clickCheckHandler(agreement.id)}
-                  />
-                )}
-
-                <p>{agreement.text}</p>
-              </div>
-              <div className="right-wrapper">
-                <Link to="/">
-                  <FontAwesomeIcon icon={faAngleRight} />
-                </Link>
-              </div>
-            </AgreementWrapper>
-            <HorizonLine />
-          </>
-        );
-      })}
-      {/* <HorizonLine style={lastHorizonLineStyle} /> */}
-      <Link to="/">
-        <AgreeBtn />
-      </Link>
+      <HorizonLine />
+      <AgreementWrapper>
+        <div className="left-wrapper">
+          {useCheck ? (
+            <img
+              src={`${iconImgURL}checked.png`}
+              alt="checked button"
+              onClick={useBtnEvent}
+            />
+          ) : (
+            <img
+              src={`${iconImgURL}check.png`}
+              alt="check button"
+              onClick={useBtnEvent}
+            />
+          )}
+          <p>이용 약관 동의(필수)</p>
+        </div>
+        <div className="right-wrapper">
+          <Link to="/">
+            <FontAwesomeIcon icon={faAngleRight} />
+          </Link>
+        </div>
+      </AgreementWrapper>
+      <HorizonLine />
+      <AgreementWrapper>
+        <div className="left-wrapper">
+          {privacyCheck ? (
+            <img
+              src={`${iconImgURL}checked.png`}
+              alt="checked button"
+              onClick={privacyBtnEvent}
+            />
+          ) : (
+            <img
+              src={`${iconImgURL}check.png`}
+              alt="check button"
+              onClick={privacyBtnEvent}
+            />
+          )}
+          <p>개인정보 수집 및 이용동의(필수)</p>
+        </div>
+        <div className="right-wrapper">
+          <Link to="/">
+            <FontAwesomeIcon icon={faAngleRight} />
+          </Link>
+        </div>
+      </AgreementWrapper>
+      <HorizonLine />
+      <AgreementWrapper>
+        <div className="left-wrapper">
+          {locationCheck ? (
+            <img
+              src={`${iconImgURL}checked.png`}
+              alt="checked button"
+              onClick={locationBtnEvent}
+            />
+          ) : (
+            <img
+              src={`${iconImgURL}check.png`}
+              alt="check button"
+              onClick={locationBtnEvent}
+            />
+          )}
+          <p>위치기반 서비스 이용 약관 동의(선택)</p>
+        </div>
+        <div className="right-wrapper">
+          <Link to="/">
+            <FontAwesomeIcon icon={faAngleRight} />
+          </Link>
+        </div>
+      </AgreementWrapper>
+      <HorizonLine />
+      <AgreementWrapper>
+        <div className="left-wrapper">
+          {marketingCheck ? (
+            <img
+              src={`${iconImgURL}checked.png`}
+              alt="checked button"
+              onClick={marketingBtnEvent}
+            />
+          ) : (
+            <img
+              src={`${iconImgURL}check.png`}
+              alt="check button"
+              onClick={marketingBtnEvent}
+            />
+          )}
+          <p>E-mail 및 SMS 광고성 정보 수신동의(선택)</p>
+        </div>
+        <div className="right-wrapper">
+          <Link to="/">
+            <FontAwesomeIcon icon={faAngleRight} />
+          </Link>
+        </div>
+      </AgreementWrapper>
+      <HorizonLine style={lastHorizonLineStyle} />
+      {active ? (
+        <Link to="/signup/userinform">
+          <AgreeBtn active={active}>동의하기</AgreeBtn>
+        </Link>
+      ) : (
+        <AgreeBtn>동의하기</AgreeBtn>
+      )}
     </TopWrapper>
   );
 };
