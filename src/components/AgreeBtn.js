@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 const AgreeBtnWrapper = styled.div`
+  position: sticky;
+  bottom: 0px;
+  margin-bottom: 38px;
   ${({ theme }) => theme.korean.headline6}
   letter-spacing: 10px;
   width: 450px;
@@ -11,10 +14,16 @@ const AgreeBtnWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
+  .active {
+    cursor: pointer;
+  }
 `;
 
-const AgreeBtn = () => {
-  return <AgreeBtnWrapper>동의하기</AgreeBtnWrapper>;
+const AgreeBtn = ({ children, active }) => {
+  return (
+    <AgreeBtnWrapper className={active && active}>{children}</AgreeBtnWrapper>
+  );
 };
 
 export default AgreeBtn;
