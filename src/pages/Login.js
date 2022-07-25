@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { loginKako, loginUser } from "../api/User";
+import { loginUser } from "../api/User";
 import { setRefreshToken } from "../storage/Cookie";
 import { SET_TOKEN } from "../store/Auth";
 import styled from "styled-components";
@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
+const BACKEND = "http://172.30.1.46:7179";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -280,7 +281,7 @@ const Login = () => {
           <SimpleLogin>
             <h5>간편 로그인</h5>
 
-            <form action="http://172.30.1.46:7179/auth/kakao" method="GET">
+            <form action={`${BACKEND}/auth/kakao`} method="GET">
               <SimpleBtn type="submit">
                 <img src={imgUrl + "Union.svg"} alt="카카오" />
                 카카오 계정으로 로그인
@@ -288,7 +289,7 @@ const Login = () => {
               </SimpleBtn>
             </form>
 
-            <form action="http://172.30.1.46:7179/auth/google" method="GET">
+            <form action={`${BACKEND}/auth/google"`} method="GET">
               <GoogleBtn type="submit">
                 <img src={imgUrl + "google_logo.svg"} alt="구글" /> Google
                 계정으로 로그인

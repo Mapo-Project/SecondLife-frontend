@@ -124,15 +124,3 @@ export const requestToken = async (refreshToken) => {
     return statusError;
   }
 };
-
-export const loginKako = async () => {
-  const data = await axios
-    .get(`http://172.30.1.46:7179/auth/kaka`)
-    .then((response) => {
-      return response;
-    })
-    .catch();
-  console.log(data.json);
-
-  return data;
-};
