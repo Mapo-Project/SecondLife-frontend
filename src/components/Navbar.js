@@ -108,7 +108,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/login">
               <img
                 src={`${imgUrl}mypage.png`}
                 className="mypage"

@@ -14,8 +14,37 @@ import Circle from "../components/Circle";
 import BrandSection from "../components/BrandSection";
 import NewItemSection from "../components/NewItemSection";
 import Footer from "../components/Footer";
+import { getCookieToken } from "../storage/Cookie";
+import { useEffect } from "react";
+import Logout2 from "../components/Logout2";
+import { setRefreshToken } from "../storage/Cookie";
+import { SET_TOKEN } from "../store/Auth";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 
 const Home = () => {
+  const refreshToken = getCookieToken();
+  const url = new URL(window.location.href);
+
+  // URLSearchParams 객체
+  const urlParams = url.searchParams;
+  const user = JSON.parse(urlParams.get("user"));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onKakao = () => {
+    if (user) {
+      setRefreshToken(user.refreshToken);
+      dispatch(SET_TOKEN(user.accessToken));
+      return navigate("/");
+    } else {
+      console.log("no Kako");
+    }
+  };
+  useEffect(() => {
+    onKakao();
+    console.log(user);
+  }, []);
   return (
     <>
       <TopBanners />
@@ -35,6 +64,7 @@ const Home = () => {
       <BottomBanners />
       <Footer />
       <Circle />
+      {refreshToken ? <Logout2 /> : null}
     </>
   );
 };
