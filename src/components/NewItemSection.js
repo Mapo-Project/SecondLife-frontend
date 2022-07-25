@@ -31,14 +31,14 @@ const NewItemSection = () => {
 
   useEffect(() => {
     axios
-      .get("https://hee-backend.shop:7179/product/select/latest")
+      .get("https://hee-backend.shop:7179/product/latest/select")
       .then((result) => {
         console.log(result.data);
         setTest(result.data.data);
         // console.log(test);
       })
       .catch(() => {
-        // alert("조회실패");
+        alert("조회실패");
       });
   }, []);
 
