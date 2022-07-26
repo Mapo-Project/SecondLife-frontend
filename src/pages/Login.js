@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
+const BACKEND = "https://hee-backend.shop:7179";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -183,8 +184,8 @@ const Login = () => {
   // 백으로 유저 정보 전달
   const onValid = async ({ user_id, password }) => {
     // input 태그 값 비워주는 코드
+    // setValue(crypto.AES.encrypt("password").toString(), "");
     setValue("password", "");
-
     // 백으로부터 받은 응답
     const response = await loginUser({ user_id, password });
 
@@ -211,7 +212,9 @@ const Login = () => {
     }
   }, [watch()]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log();
+  }, []);
 
   return (
     <>
@@ -280,7 +283,7 @@ const Login = () => {
           <SimpleLogin>
             <h5>간편 로그인</h5>
 
-            <form action={`${process.env.BACKEND}/auth/kakao`} method="GET">
+            <form action={`${BACKEND}/auth/kakao`} method="GET">
               <SimpleBtn type="submit">
                 <img src={imgUrl + "Union.svg"} alt="카카오" />
                 카카오 계정으로 로그인
@@ -288,7 +291,7 @@ const Login = () => {
               </SimpleBtn>
             </form>
 
-            <form action={`${process.env.BACKEND}/auth/google"`} method="GET">
+            <form action={`${BACKEND}/auth/google"`} method="GET">
               <GoogleBtn type="submit">
                 <img src={imgUrl + "google_logo.svg"} alt="구글" /> Google
                 계정으로 로그인

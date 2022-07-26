@@ -33,17 +33,19 @@ const Home = () => {
   const navigate = useNavigate();
 
   const onKakao = () => {
-    if (user) {
+    if (user.verify === "Y") {
       setRefreshToken(user.refreshToken);
       dispatch(SET_TOKEN(user.accessToken));
       return navigate("/");
+    } else if (user.verify === "N") {
+      return navigate("/signup");
     } else {
-      console.log("no Kako");
+      console.log("No Kako");
     }
   };
   useEffect(() => {
     onKakao();
-    console.log(user);
+    console.log("간편 로그인 성공", user);
   }, []);
   return (
     <>
