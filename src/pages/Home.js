@@ -14,40 +14,12 @@ import Circle from "../components/Circle";
 import BrandSection from "../components/BrandSection";
 import NewItemSection from "../components/NewItemSection";
 import Footer from "../components/Footer";
-import { getCookieToken } from "../storage/Cookie";
-import { useEffect } from "react";
-import Logout2 from "../components/Logout2";
-import { setRefreshToken } from "../storage/Cookie";
-import { SET_TOKEN } from "../store/Auth";
-import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import Check from "../auth/Check";
 
 const Home = () => {
-  const refreshToken = getCookieToken();
-  const url = new URL(window.location.href);
-
-  // URLSearchParams 객체
-  const urlParams = url.searchParams;
-  const user = JSON.parse(urlParams.get("user"));
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const onKakao = () => {
-    if (user) {
-      setRefreshToken(user.refreshToken);
-      dispatch(SET_TOKEN(user.accessToken));
-      console.log("간편 로그인 성공 :", user);
-      console.log(user.verify);
-      return navigate("/");
-    } else {
-      return navigate("/");
-    }
-  };
-  useEffect(() => {
-    onKakao();
-  }, []);
   return (
     <>
+      <Check />
       <TopBanners />
       <RollingBanner type={BannerData[0]}>
         {textData[0]} <span>짃</span> !{textData[1]} <span>짃</span> !
@@ -65,7 +37,6 @@ const Home = () => {
       <BottomBanners />
       <Footer />
       <Circle />
-      {refreshToken ? <Logout2 /> : null}
     </>
   );
 };
