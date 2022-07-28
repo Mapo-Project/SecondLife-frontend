@@ -28,11 +28,11 @@ const Test = () => {
       let newInform = { ...inform, password: hashPassword };
       console.log(newInform);
 
-      // const response = await axios.post(
-      //   `https://hee-backend.shop:7179/user/general/signup`,
-      //   newInform
-      // );
-      // console.log(response);
+      const response = await axios.post(
+        `https://hee-backend.shop:7179/user/general/signup`,
+        newInform
+      );
+      console.log(response);
     } catch (error) {
       console.log("encryptPW error:", error);
       alert("회원가입 실패");

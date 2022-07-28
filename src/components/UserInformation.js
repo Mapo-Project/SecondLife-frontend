@@ -55,6 +55,7 @@ const InputWrapper = styled.div`
   }
   input {
     width: 450px;
+    padding-bottom: 12px;
     font-family: "Noto Sans KR";
     font-weight: 700;
     font-size: 18px;

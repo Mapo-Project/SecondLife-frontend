@@ -10,6 +10,10 @@ const TopWrapper = styled.div`
   width: 509px;
   /* height: 951px; */
   margin: 29px auto 38px auto;
+  .btn_active {
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.green300};
+  }
 `;
 
 const CloseBtnWrapper = styled.div`

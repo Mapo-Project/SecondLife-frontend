@@ -15,14 +15,13 @@ const AgreeBtnWrapper = styled.div`
   justify-content: center;
   align-items: center;
   pointer-events: none;
-  .active {
-    cursor: pointer;
-  }
 `;
 
 const AgreeBtn = ({ children, active }) => {
   return (
-    <AgreeBtnWrapper className={active && active}>{children}</AgreeBtnWrapper>
+    <AgreeBtnWrapper className={active && "btn_active"}>
+      {children}
+    </AgreeBtnWrapper>
   );
 };
 
