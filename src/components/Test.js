@@ -9,7 +9,7 @@ const Test = () => {
     name: "zxcvzxcv",
     birth: "1111-01-01",
     email: "zxcvzxcv@secondLife.com",
-    phone_num: "01011112222",
+    phone_num: "01098765432",
     address: "서울특별시 마포구 성산로 4길 53",
     detail_address: "마포구청사 제3별관",
     phone_verify: "Y",
@@ -23,7 +23,6 @@ const Test = () => {
       //해싱된 객체를 Base64로 toString으로 만든다.
       const hashPassword = hash.toString(CryptoJS.enc.Base64);
       //패스워드로 다시 반환한다
-      console.log(typeof hashPassword);
 
       let newInform = { ...inform, password: hashPassword };
       console.log(newInform);

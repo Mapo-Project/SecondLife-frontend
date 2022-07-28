@@ -234,7 +234,7 @@ const UserInformation = () => {
   // const nameRef = useRef();
   const [name, setName] = useState("");
   const handleNameChange = (e) => {
-    setName(e.target.value.replace(/[^ㄱ-ㅣ가-힣a-zA-Z]/g, ""));
+    setName(e.target.value.replace(/[^ㄱ-ㅣ가-힣a-zA-Z] /g, ""));
   };
 
   // 폼 전송시 실행되는 함수
