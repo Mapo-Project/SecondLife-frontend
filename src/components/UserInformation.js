@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useRef } from "react";
 import axios from "axios";
+import DaumPost from "./Daumpost";
 
 const TopWrapper = styled.div`
   width: 509px;
@@ -102,10 +103,35 @@ const InputWrapper = styled.div`
     right: 65px;
   }
   position: relative;
-
   margin-bottom: 30px;
+
+  .timer {
+    position: absolute;
+    right: 120px;
+  }
+  button:hover {
+    background-color: ${({ theme }) => theme.colors.green300};
+  }
 `;
 
+const Button = styled.button`
+  position: absolute;
+  right: 65px;
+  bottom: 10px;
+  ${({ theme }) => theme.korean.caption};
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.gray700};
+  width: 93px;
+  height: 28px;
+  border: 1px solid ${({ theme }) => theme.colors.black};
+  border-radius: 20px;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+const Submit = styled.sub;
 // 아이콘 이미지 경로
 const iconImgURL = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
@@ -196,6 +222,54 @@ const UserInformation = () => {
   // 폼 전송시 실행되는 함수
   const onSubmit = async (data) => {
     console.log(data);
+  };
+
+  // 유저정보(번호,주소)
+  const [user, setUser] = useState({
+    phone_num: "",
+    address: "",
+    detail_address: "",
+  });
+  const { phone_num, address, detail_address } = user;
+
+  //유저 정보 저장
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  //휴대전화 인증 확인
+  const [phone, setPhone] = useState({
+    num: "",
+    code: "",
+    code2: "",
+    check: false,
+  });
+  const { num, code, code2, check } = phone;
+  //휴대전화 정보 임시저장
+  const onPhoneInput = (e) => {
+    const { name, value } = e.target;
+    setPhone({ ...phone, [name]: value });
+  };
+
+  //우편번호 API
+  const [popup, setPopup] = useState(false);
+
+  const handleComplete = () => {
+    setPopup(!popup);
+  };
+
+  //input창 리셋
+  const onReset = (e) => {
+    const name = e.target.name;
+    setUser((preState) => {
+      return { ...preState, [name]: "" };
+    });
+  };
+
+  //인증번호 유효성
+  const onValidation = () => {
+    alert("유효성");
   };
 
   return (
@@ -390,7 +464,122 @@ const UserInformation = () => {
           <label htmlFor="email">이메일</label>
           <input type="email" id="email" placeholder="example@gmail.com" />
         </InputWrapper>
-        <input type="submit" value="submit" />
+        {/* 휴대전화 인풋창 */}
+        <InputWrapper>
+          <label htmlFor="phone_num">휴대전화</label>
+          <input
+            type="text"
+            id="phone_num"
+            name="num"
+            value={num}
+            placeholder="01012345678"
+            maxLength={11}
+            disabled={check ? "disabled" : ""}
+            onChange={onPhoneInput}
+          />
+          <Button
+            disabled={check ? "disabled" : ""}
+            onClick={() => {
+              axios
+                .get(
+                  `https://hee-backend.shop:7179/user/general/signup/auth/phone/test/${phone.num}`
+                )
+                .then((result) => {
+                  alert("인증번호가 전송되었습니다.");
+                  setPhone({ ...phone, code: result.data.code });
+                  console.log(result.data);
+                })
+                .catch((result) => {
+                  if (result.response.data.statusCode === 409) {
+                    alert("이미 존재하는 번호입니다.");
+                  } else {
+                    alert("전화번호를 다시 확인해주세요");
+                  }
+                });
+            }}
+          >
+            <span>인증번호발급</span>
+          </Button>
+        </InputWrapper>
+        {/* 인증번호 인풋창 */}
+        <InputWrapper>
+          <label htmlFor="phone_code">인증번호</label>
+          <input
+            type="text"
+            // id="phone_code"
+            name="code2"
+            value={code2}
+            maxLength={6}
+            placeholder="SMS로 전송된 6자리 숫자를 입력하세요."
+            disabled={check ? "disabled" : ""}
+            onChange={onPhoneInput}
+          />
+          <Button
+            style={{ width: "47px" }}
+            disabled={check ? "disabled" : ""}
+            className="eye unvisible"
+            onClick={() => {
+              console.log(phone);
+              if (code === "" && code === "") {
+                alert("휴대전화 인증이 필요합니다.");
+              } else if (code == code2) {
+                setPhone({ ...phone, check: true });
+                setUser({ ...user, phone_num: num });
+                alert("인증되었습니다");
+              } else {
+                alert("인증번호를 다시 확인해주세요.");
+              }
+            }}
+          >
+            {check ? "완료" : "확인"}
+          </Button>
+          <span className="timer">3:00</span>
+        </InputWrapper>
+        {/* 주소 인풋창 */}
+        <InputWrapper>
+          <label htmlFor="address">주소</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            value={address}
+            placeholder="시/군/구 동 이름을 검색하세요."
+            onClick={(e) => {
+              onReset(e);
+              handleComplete();
+            }}
+            onChange={onChangeInput}
+          />
+
+          <img
+            className="eye unvisible"
+            src={`${iconImgURL}search.png`}
+            alt="search"
+            name="address"
+            onClick={(e) => {
+              onReset(e);
+              handleComplete();
+            }}
+          />
+          {popup && <DaumPost address={address} setUser={setUser} />}
+        </InputWrapper>
+        <InputWrapper>
+          <input
+            type="text"
+            id="detail_address"
+            placeholder="상세주소를 입력하세요."
+            name="detail_address"
+            value={detail_address}
+            onChange={onChangeInput}
+          />
+        </InputWrapper>
+        <input
+          type="submit"
+          value="submit"
+          onClick={() => {
+            console.log(user);
+          }}
+        />
       </form>
     </TopWrapper>
   );
