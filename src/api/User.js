@@ -1,5 +1,3 @@
-import axios from "axios";
-
 // promise 요청 타임아웃 시간 선언
 const TIME_OUT = 300 * 1000;
 
@@ -93,17 +91,17 @@ export const logoutUser = async (accessToken) => {
   }
 };
 
-export const requestToken = async (refreshToken) => {
+export const requestToken = async (refresh_Token) => {
   const option = {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8",
     },
-    body: JSON.stringify({ refreshToken: refreshToken }),
+    body: JSON.stringify({ refreshToken: refresh_Token }),
   };
 
   const data = await getPromise(
-    "https://hee-backend.shop:7179/user/general/signin",
+    "https://hee-backend.shop:7179/auth/token/reissuance",
     option
   ).catch(() => {
     return statusError;

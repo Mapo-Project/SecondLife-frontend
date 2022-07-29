@@ -2,35 +2,27 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
 import { removeCookieToken } from "../storage/Cookie";
 import { DELETE_TOKEN } from "../store/Auth";
 import { logoutUser } from "../api/User";
 
-function Logout() {
+const Logout = () => {
   // store에 저장된 Access Token 정보를 받아 온다
   const { accessToken } = useSelector((state) => state.token);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // Cookie에 저장된 Refresh Token 정보를 받아 온다
-  console.log(
-    "useSelector",
-    useSelector((state) => state.token)
-  );
 
   async function logout() {
     // 백으로부터 받은 응답
     const data = await logoutUser(accessToken);
+    console.log("두번쨰:", accessToken);
     if (data.status) {
-      // store에 저장된 Access Token 정보를 삭제
       dispatch(DELETE_TOKEN());
-      // Cookie에 저장된 Refresh Token 정보를 삭제
       removeCookieToken();
-      return navigate("/");
+      return navigate("/login");
     } else {
       window.location.reload();
+      console.log("실패");
     }
   }
 
@@ -39,11 +31,7 @@ function Logout() {
     logout();
   }, []);
 
-  return (
-    <>
-      <Link to="/" />
-    </>
-  );
-}
+  return <Link to="/login" />;
+};
 
 export default Logout;

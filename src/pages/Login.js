@@ -9,6 +9,8 @@ import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import CryptoJS from "crypto-js";
+// import pbkdf2 from "pbkdf2-sha256";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 const BACKEND = "https://hee-backend.shop:7179";
@@ -117,6 +119,7 @@ const LoginBtn = styled.button`
   border: none;
   background-color: ${({ theme }) => theme.colors.gray300};
   ${({ theme }) => theme.korean.button};
+  color: ${({ theme }) => theme.colors.gray700};
   font-size: 20px;
   font-weight: 700;
   border-radius: 100px;
@@ -164,11 +167,16 @@ const GoogleBtn = styled(SimpleBtn)`
 const Login = () => {
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState(false);
+  const [keepLogin, setKeepLogin] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onHidePassword = () => {
     setHidden(!hidden);
+  };
+
+  const onKeepLogin = () => {
+    setKeepLogin(!keepLogin);
   };
 
   // useForm 사용을 위한 선언
@@ -184,11 +192,21 @@ const Login = () => {
   // 백으로 유저 정보 전달
   const onValid = async ({ user_id, password }) => {
     // input 태그 값 비워주는 코드
-    // setValue(crypto.AES.encrypt("password").toString(), "");
     setValue("password", "");
-    // 백으로부터 받은 응답
-    const response = await loginUser({ user_id, password });
 
+    //암호화
+    const makeHash = () => {
+      //비밀번호를 SHA256으로 해싱한다.
+      const hash = CryptoJS.SHA256(password);
+      //해싱된 객체를 Base64로 toString으로 만든다.
+      const hashPassword = hash.toString(CryptoJS.enc.Base64);
+      //패스워드로 다시 반환한다
+      return (password = hashPassword);
+    };
+    makeHash();
+
+    // // 백으로부터 받은 응답
+    const response = await loginUser({ user_id, password });
     if (response.status) {
       // 쿠키에 Refresh Token, store에 Access Token 저장
       setRefreshToken(response.json.refreshToken);
@@ -213,8 +231,10 @@ const Login = () => {
   }, [watch()]);
 
   useEffect(() => {
-    console.log();
-  }, []);
+    if (active) {
+      setKeepLogin(true);
+    }
+  }, [active]);
 
   return (
     <>
@@ -262,8 +282,9 @@ const Login = () => {
             <LoginBox>
               <h5>
                 <img
+                  onClick={onKeepLogin}
                   src={
-                    active
+                    keepLogin
                       ? imgUrl + "check_true.png"
                       : imgUrl + "check_default.png"
                   }
