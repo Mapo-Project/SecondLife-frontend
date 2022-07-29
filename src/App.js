@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import GlobalStyle from "./components/GlobalStyle";
 import UserInformation from "./components/UserInformation";
 import Agreement from "./components/Agreement";
+import Test from "./components/Test";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/test" element={<Test />} />
           <Route path="/signup/agreement" element={<Agreement />} />
           <Route path="/signup/userinform" element={<UserInformation />} />
         </Routes>

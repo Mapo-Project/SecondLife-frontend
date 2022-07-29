@@ -96,11 +96,11 @@ const InputWrapper = styled.div`
   }
   .visible {
     position: absolute;
-    right: 65px;
+    right: 0px;
   }
   .unvisible {
     position: absolute;
-    right: 65px;
+    right: 0px;
   }
   position: relative;
   margin-bottom: 30px;
@@ -132,6 +132,17 @@ const Button = styled.button`
   cursor: pointer;
 `;
 const Submit = styled.sub;
+const CheckingSign = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 0px;
+`;
+
+const BottomSection = styled.div`
+  width: 450px;
+  margin: 0 auto;
+`;
+
 // 아이콘 이미지 경로
 const iconImgURL = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
@@ -219,6 +230,12 @@ const UserInformation = () => {
     setBirthNum(e.target.value);
   };
 
+  // const nameRef = useRef();
+  const [name, setName] = useState("");
+  const handleNameChange = (e) => {
+    setName(e.target.value.replace(/[^ㄱ-ㅣ가-힣a-zA-Z]/g, ""));
+  };
+
   // 폼 전송시 실행되는 함수
   const onSubmit = async (data) => {
     console.log(data);
@@ -287,300 +304,324 @@ const UserInformation = () => {
         <p>회원정보</p>
         <p>가입완료</p>
       </Step>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* 아이디 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="id">아이디</label>
-          <input
-            className={
-              watchId &&
-              (errors.id?.types.mustFollowPattern
-                ? "error"
-                : checkIdRes
-                ? "pass"
-                : "error")
-            }
-            type="text"
-            id="id"
-            placeholder="영문, 숫자, 마침표를 사용할 수 있습니다."
-            {...register("id", {
-              required: true,
-              validate: {
-                mustFollowPattern: (v) => /^[a-zA-Z0-9.]{6,20}$/.test(v),
-                duplicate: (v) => {
-                  checkId(v);
-                },
-                showIdError: () => {
-                  setErrorActive({ ...errorActive, id: true });
-                },
-              },
-            })}
-            onFocus={(e) => handleInputFocus(e)}
-          />
-          {errorActive.id && (
-            <p className="idValidation">
-              {watchId &&
+      <BottomSection>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* 아이디 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="id">아이디</label>
+            <input
+              className={
+                watchId &&
                 (errors.id?.types.mustFollowPattern
-                  ? "영문, 숫자 6에서 20글자 사이여야 합니다"
+                  ? "error"
                   : checkIdRes
-                  ? "사용가능한 아이디입니다"
-                  : "이미 사용하고 있는 아이디입니다.")}
-            </p>
-          )}
-        </InputWrapper>
-        {/* 비밀번호 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="password">비밀번호</label>
-          <input
-            className={watchPW && (isValid ? "pass" : "error")}
-            type={showPW ? "text" : "password"}
-            id="password"
-            placeholder="영어 대문자, 소문자, 숫자, 특수문자를 포함한 10자 이상"
-            {...register("password", {
-              validate: {
-                mustContainLowerUpper: (v) =>
-                  /(?=.*?[a-z])(?=.*?[A-Z])/.test(v),
-                mustContainDigitORSign: (v) =>
-                  /(?=.*?[0-9])|(?=.*?[#?!@$%^&*-])/.test(v),
-                showPWError: () => {
-                  setErrorActive({ ...errorActive, password: true });
-                },
-                getPassword: (v) => {
-                  setPassword(v);
-                },
-              },
-              minLength: 10,
-            })}
-            onFocus={(e) => handleInputFocus(e)}
-          />
-          {showPW ? (
-            <img
-              className="eye unvisible"
-              src={`${iconImgURL}unvisible.png`}
-              alt="unvisible"
-              onClick={handleEyeClick}
-            />
-          ) : (
-            <img
-              className="eye visible"
-              src={`${iconImgURL}visible.png`}
-              alt="visible"
-              onClick={handleEyeClick}
-            />
-          )}
-
-          <div className="pwValidation">
-            {errorActive.password &&
-              watchPW &&
-              (isValid ? (
-                <p>사용 가능한 비밀번호입니다.</p>
-              ) : (
-                <>
-                  <p className="guideline">비밀번호 가이드라인</p>
-                  <p>
-                    {errors.password?.types.mustContainLowerUpper ? (
-                      <img src={`${iconImgURL}pw_wrong.png`} alt="pw_wrong" />
-                    ) : (
-                      <img
-                        src={`${iconImgURL}pw_checked.png`}
-                        alt="pw_checked"
-                      />
-                    )}
-                    소문자 및 대문자 모두 포함
-                  </p>
-                  <p>
-                    {errors.password?.types.mustContainDigitORSign ? (
-                      <img src={`${iconImgURL}pw_wrong.png`} alt="pw_wrong" />
-                    ) : (
-                      <img
-                        src={`${iconImgURL}pw_checked.png`}
-                        alt="pw_checked"
-                      />
-                    )}
-                    숫자 또는 기호 포함
-                  </p>
-                  <p>
-                    {errors.password?.types.minLength ? (
-                      <img src={`${iconImgURL}pw_wrong.png`} alt="pw_wrong" />
-                    ) : (
-                      <img
-                        src={`${iconImgURL}pw_checked.png`}
-                        alt="pw_checked"
-                      />
-                    )}
-                    문자길이 최소 10자 이상
-                  </p>
-                </>
-              ))}
-          </div>
-        </InputWrapper>
-        {/* 비밀번호 확인 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="pw_check">비밀번호 확인</label>
-          <input
-            className={pwChecked && (password === pwChecked ? "pass" : "error")}
-            type={showPW ? "text" : "password"}
-            id="pw_check"
-            placeholder="입력한 비밀번호와 동일하게 입력하세요."
-            onBlur={(e) => {
-              handleCheckPWBlur(e.target.value);
-            }}
-          />
-          {showPW ? (
-            <img
-              className="eye unvisible"
-              src={`${iconImgURL}unvisible.png`}
-              alt="unvisible"
-              onClick={handleEyeClick}
-            />
-          ) : (
-            <img
-              className="eye visible"
-              src={`${iconImgURL}visible.png`}
-              alt="visible"
-              onClick={handleEyeClick}
-            />
-          )}
-        </InputWrapper>
-        {/* 이름 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="name">이름</label>
-          <input type="text" id="name" placeholder="홍길동" />
-        </InputWrapper>
-        {/* 생년월일 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="birth">생년월일</label>
-          <input
-            type="text"
-            id="birth"
-            placeholder="YYYY/MM/DD"
-            value={birthNum}
-            ref={birthRef}
-            onChange={changeBirth}
-          />
-        </InputWrapper>
-        {/* 이메일 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="email">이메일</label>
-          <input type="email" id="email" placeholder="example@gmail.com" />
-        </InputWrapper>
-        {/* 휴대전화 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="phone_num">휴대전화</label>
-          <input
-            type="text"
-            id="phone_num"
-            name="num"
-            value={num}
-            placeholder="01012345678"
-            maxLength={11}
-            disabled={check ? "disabled" : ""}
-            onChange={onPhoneInput}
-          />
-          <Button
-            disabled={check ? "disabled" : ""}
-            onClick={() => {
-              axios
-                .get(
-                  `https://hee-backend.shop:7179/user/general/signup/auth/phone/test/${phone.num}`
-                )
-                .then((result) => {
-                  alert("인증번호가 전송되었습니다.");
-                  setPhone({ ...phone, code: result.data.code });
-                  console.log(result.data);
-                })
-                .catch((result) => {
-                  if (result.response.data.statusCode === 409) {
-                    alert("이미 존재하는 번호입니다.");
-                  } else {
-                    alert("전화번호를 다시 확인해주세요");
-                  }
-                });
-            }}
-          >
-            <span>인증번호발급</span>
-          </Button>
-        </InputWrapper>
-        {/* 인증번호 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="phone_code">인증번호</label>
-          <input
-            type="text"
-            // id="phone_code"
-            name="code2"
-            value={code2}
-            maxLength={6}
-            placeholder="SMS로 전송된 6자리 숫자를 입력하세요."
-            disabled={check ? "disabled" : ""}
-            onChange={onPhoneInput}
-          />
-          <Button
-            style={{ width: "47px" }}
-            disabled={check ? "disabled" : ""}
-            className="eye unvisible"
-            onClick={() => {
-              console.log(phone);
-              if (code === "" && code === "") {
-                alert("휴대전화 인증이 필요합니다.");
-              } else if (code == code2) {
-                setPhone({ ...phone, check: true });
-                setUser({ ...user, phone_num: num });
-                alert("인증되었습니다");
-              } else {
-                alert("인증번호를 다시 확인해주세요.");
+                  ? "pass"
+                  : "error")
               }
-            }}
-          >
-            {check ? "완료" : "확인"}
-          </Button>
-          <span className="timer">3:00</span>
-        </InputWrapper>
-        {/* 주소 인풋창 */}
-        <InputWrapper>
-          <label htmlFor="address">주소</label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={address}
-            placeholder="시/군/구 동 이름을 검색하세요."
-            onClick={(e) => {
-              onReset(e);
-              handleComplete();
-            }}
-            onChange={onChangeInput}
-          />
+              type="text"
+              id="id"
+              placeholder="영문, 숫자, 마침표를 사용할 수 있습니다."
+              {...register("id", {
+                required: true,
+                validate: {
+                  mustFollowPattern: (v) => /^[a-zA-Z0-9.]{6,20}$/.test(v),
+                  duplicate: (v) => {
+                    checkId(v);
+                  },
+                  showIdError: () => {
+                    setErrorActive({ ...errorActive, id: true });
+                  },
+                },
+              })}
+              onFocus={(e) => handleInputFocus(e)}
+              required
+            />
+            {errorActive.id && (
+              <CheckingSign>
+                {watchId &&
+                  (errors.id?.types.mustFollowPattern ? (
+                    <img src={`${iconImgURL}alert.png`} alt="alert mark" />
+                  ) : checkIdRes ? (
+                    <img src={`${iconImgURL}pass.png`} alt="pass mark" />
+                  ) : (
+                    <img src={`${iconImgURL}alert.png`} alt="alert mark" />
+                  ))}
+              </CheckingSign>
+            )}
+            {errorActive.id && (
+              <p className="idValidation">
+                {watchId &&
+                  (errors.id?.types.mustFollowPattern
+                    ? "영문, 숫자 6에서 20글자 사이여야 합니다"
+                    : checkIdRes
+                    ? "사용가능한 아이디입니다"
+                    : "이미 사용하고 있는 아이디입니다.")}
+              </p>
+            )}
+          </InputWrapper>
+          {/* 비밀번호 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="password">비밀번호</label>
+            <input
+              className={watchPW && (isValid ? "pass" : "error")}
+              type={showPW ? "text" : "password"}
+              id="password"
+              placeholder="영어 대문자, 소문자, 숫자, 특수문자를 포함한 10자 이상"
+              {...register("password", {
+                required: true,
+                validate: {
+                  mustContainLowerUpper: (v) =>
+                    /(?=.*?[a-z])(?=.*?[A-Z])/.test(v),
+                  mustContainDigitORSign: (v) =>
+                    /(?=.*?[0-9])|(?=.*?[#?!@$%^&*-])/.test(v),
+                  showPWError: () => {
+                    setErrorActive({ ...errorActive, password: true });
+                  },
+                  getPassword: (v) => {
+                    setPassword(v);
+                  },
+                },
+                minLength: 10,
+              })}
+              onFocus={(e) => handleInputFocus(e)}
+            />
+            {showPW ? (
+              <img
+                className="eye unvisible"
+                src={`${iconImgURL}unvisible.png`}
+                alt="unvisible"
+                onClick={handleEyeClick}
+              />
+            ) : (
+              <img
+                className="eye visible"
+                src={`${iconImgURL}visible.png`}
+                alt="visible"
+                onClick={handleEyeClick}
+              />
+            )}
 
-          <img
-            className="eye unvisible"
-            src={`${iconImgURL}search.png`}
-            alt="search"
-            name="address"
-            onClick={(e) => {
-              onReset(e);
-              handleComplete();
+            <div className="pwValidation">
+              {errorActive.password &&
+                watchPW &&
+                (isValid ? (
+                  <p>사용 가능한 비밀번호입니다.</p>
+                ) : (
+                  <>
+                    <p className="guideline">비밀번호 가이드라인</p>
+                    <p>
+                      {errors.password?.types.mustContainLowerUpper ? (
+                        <img src={`${iconImgURL}pw_wrong.png`} alt="pw_wrong" />
+                      ) : (
+                        <img
+                          src={`${iconImgURL}pw_checked.png`}
+                          alt="pw_checked"
+                        />
+                      )}
+                      소문자 및 대문자 모두 포함
+                    </p>
+                    <p>
+                      {errors.password?.types.mustContainDigitORSign ? (
+                        <img src={`${iconImgURL}pw_wrong.png`} alt="pw_wrong" />
+                      ) : (
+                        <img
+                          src={`${iconImgURL}pw_checked.png`}
+                          alt="pw_checked"
+                        />
+                      )}
+                      숫자 또는 기호 포함
+                    </p>
+                    <p>
+                      {errors.password?.types.minLength ? (
+                        <img src={`${iconImgURL}pw_wrong.png`} alt="pw_wrong" />
+                      ) : (
+                        <img
+                          src={`${iconImgURL}pw_checked.png`}
+                          alt="pw_checked"
+                        />
+                      )}
+                      문자길이 최소 10자 이상
+                    </p>
+                  </>
+                ))}
+            </div>
+          </InputWrapper>
+          {/* 비밀번호 확인 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="pw_check">비밀번호 확인</label>
+            <input
+              className={
+                pwChecked && (password === pwChecked ? "pass" : "error")
+              }
+              type={showPW ? "text" : "password"}
+              id="pw_check"
+              placeholder="입력한 비밀번호와 동일하게 입력하세요."
+              onBlur={(e) => {
+                handleCheckPWBlur(e.target.value);
+              }}
+            />
+            {showPW ? (
+              <img
+                className="eye unvisible"
+                src={`${iconImgURL}unvisible.png`}
+                alt="unvisible"
+                onClick={handleEyeClick}
+              />
+            ) : (
+              <img
+                className="eye visible"
+                src={`${iconImgURL}visible.png`}
+                alt="visible"
+                onClick={handleEyeClick}
+              />
+            )}
+          </InputWrapper>
+          {/* 이름 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="name">이름</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="홍길동"
+              value={name}
+              onChange={handleNameChange}
+            />
+          </InputWrapper>
+          {/* 생년월일 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="birth">생년월일</label>
+            <input
+              type="text"
+              id="birth"
+              placeholder="YYYY/MM/DD"
+              value={birthNum}
+              ref={birthRef}
+              onChange={changeBirth}
+            />
+          </InputWrapper>
+          {/* 이메일 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="email">이메일</label>
+            <input type="email" id="email" placeholder="example@gmail.com" />
+          </InputWrapper>
+          {/* 휴대전화 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="phone_num">휴대전화</label>
+            <input
+              type="text"
+              id="phone_num"
+              name="num"
+              value={num}
+              placeholder="01012345678"
+              maxLength={11}
+              disabled={check ? "disabled" : ""}
+              onChange={onPhoneInput}
+            />
+            <Button
+              disabled={check ? "disabled" : ""}
+              onClick={() => {
+                axios
+                  .get(
+                    `https://hee-backend.shop:7179/user/general/signup/auth/phone/test/${phone.num}`
+                  )
+                  .then((result) => {
+                    alert("인증번호가 전송되었습니다.");
+                    setPhone({ ...phone, code: result.data.code });
+                    console.log(result.data);
+                  })
+                  .catch((result) => {
+                    if (result.response.data.statusCode === 409) {
+                      alert("이미 존재하는 번호입니다.");
+                    } else {
+                      alert("전화번호를 다시 확인해주세요");
+                    }
+                  });
+              }}
+            >
+              <span>인증번호발급</span>
+            </Button>
+          </InputWrapper>
+          {/* 인증번호 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="phone_code">인증번호</label>
+            <input
+              type="text"
+              // id="phone_code"
+              name="code2"
+              value={code2}
+              maxLength={6}
+              placeholder="SMS로 전송된 6자리 숫자를 입력하세요."
+              disabled={check ? "disabled" : ""}
+              onChange={onPhoneInput}
+            />
+            <Button
+              style={{ width: "47px" }}
+              disabled={check ? "disabled" : ""}
+              className="eye unvisible"
+              onClick={() => {
+                console.log(phone);
+                if (code === "" && code === "") {
+                  alert("휴대전화 인증이 필요합니다.");
+                } else if (code == code2) {
+                  setPhone({ ...phone, check: true });
+                  setUser({ ...user, phone_num: num });
+                  alert("인증되었습니다");
+                } else {
+                  alert("인증번호를 다시 확인해주세요.");
+                }
+              }}
+            >
+              {check ? "완료" : "확인"}
+            </Button>
+            <span className="timer">3:00</span>
+          </InputWrapper>
+          {/* 주소 인풋창 */}
+          <InputWrapper>
+            <label htmlFor="address">주소</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={address}
+              placeholder="시/군/구 동 이름을 검색하세요."
+              onClick={(e) => {
+                onReset(e);
+                handleComplete();
+              }}
+              onChange={onChangeInput}
+            />
+
+            <img
+              className="eye unvisible"
+              src={`${iconImgURL}search.png`}
+              alt="search"
+              name="address"
+              onClick={(e) => {
+                onReset(e);
+                handleComplete();
+              }}
+            />
+            {popup && <DaumPost address={address} setUser={setUser} />}
+          </InputWrapper>
+          <InputWrapper>
+            <input
+              type="text"
+              id="detail_address"
+              placeholder="상세주소를 입력하세요."
+              name="detail_address"
+              value={detail_address}
+              onChange={onChangeInput}
+            />
+          </InputWrapper>
+          <input
+            type="submit"
+            value="submit"
+            onClick={() => {
+              console.log(user);
             }}
           />
-          {popup && <DaumPost address={address} setUser={setUser} />}
-        </InputWrapper>
-        <InputWrapper>
-          <input
-            type="text"
-            id="detail_address"
-            placeholder="상세주소를 입력하세요."
-            name="detail_address"
-            value={detail_address}
-            onChange={onChangeInput}
-          />
-        </InputWrapper>
-        <input
-          type="submit"
-          value="submit"
-          onClick={() => {
-            console.log(user);
-          }}
-        />
-      </form>
+        </form>
+      </BottomSection>
     </TopWrapper>
   );
 };
