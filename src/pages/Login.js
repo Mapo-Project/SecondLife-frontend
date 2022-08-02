@@ -312,10 +312,10 @@ const Login = () => {
               </SimpleBtn>
             </form>
 
-            <form action={`${BACKEND}/auth/google"`} method="GET">
+            <form action={`${BACKEND}/auth/google`} method="GET">
               <GoogleBtn type="submit">
-                <img src={imgUrl + "google_logo.svg"} alt="구글" /> Google
-                계정으로 로그인
+                <img src={imgUrl + "google_logo.svg"} alt="구글" />
+                Google 계정으로 로그인
                 <span></span>
               </GoogleBtn>
             </form>
