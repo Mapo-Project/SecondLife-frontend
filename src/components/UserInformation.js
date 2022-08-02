@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useRef } from "react";
 import axios from "axios";
 import DaumPost from "./Daumpost";
+import CryptoJS from "crypto-js";
 
 const TopWrapper = styled.div`
   width: 509px;
@@ -53,33 +54,13 @@ const InputWrapper = styled.div`
     ${({ theme }) => theme.korean.subtitle1}
     margin-bottom: 12px;
   }
-  input {
-    width: 450px;
-    padding-bottom: 12px;
-    font-family: "Noto Sans KR";
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: 0.1px;
-    border: 0 solid black;
-    background-color: ${({ theme }) => theme.colors.bg};
-    border-bottom: 2px solid ${({ theme }) => theme.colors.gray300};
-    margin-bottom: 5px;
-  }
-  input:focus {
-    outline: none;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.black};
-  }
   .pass {
     border-bottom: 2px solid ${({ theme }) => theme.colors.green300};
   }
   .error {
     border-bottom: 2px solid #ff0000;
   }
-  input::placeholder {
-    ${({ theme }) => theme.korean.subtitle2};
-    color: ${({ theme }) => theme.colors.gray300};
-  }
+
   p,
   .pwValidation {
     font-family: "Noto Sans KR";
@@ -108,22 +89,40 @@ const InputWrapper = styled.div`
 
   .timer {
     position: absolute;
-    right: 120px;
-  }
-  button:hover {
-    background-color: ${({ theme }) => theme.colors.green300};
+    right: 55px;
   }
 `;
 
-const Button = styled.button`
+const Input = styled.input`
+  width: 450px;
+  padding-bottom: 12px;
+  font-family: "Noto Sans KR";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  border: 0 solid black;
+  background-color: ${({ theme }) => theme.colors.bg};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.gray300};
+  margin-bottom: 5px;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.black};
+  }
+  &::placeholder {
+    ${({ theme }) => theme.korean.subtitle2};
+    color: ${({ theme }) => theme.colors.gray300};
+  }
+`;
+
+const Button = styled.input`
   position: absolute;
-  right: 65px;
-  bottom: 10px;
+  right: 0px;
+  bottom: 20px;
   ${({ theme }) => theme.korean.caption};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.gray700};
   width: 93px;
-  height: 28px;
   border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
   padding: 6px;
@@ -131,6 +130,9 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.green300};
+  }
 `;
 const Submit = styled.sub;
 const CheckingSign = styled.div`
@@ -144,6 +146,28 @@ const BottomSection = styled.div`
   margin: 0 auto;
 `;
 
+const SignUpBtn = styled.input`
+  /* position: sticky; */
+  bottom: 0px;
+  margin-top: 66px;
+  margin-bottom: 38px;
+  ${({ theme }) => theme.korean.headline6}
+  letter-spacing: 10px;
+  width: 450px;
+  height: 62px;
+  background-color: ${({ theme }) => theme.colors.gray300};
+  color: ${({ theme }) => theme.colors.gray700};
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.green300};
+  }
+`;
+
 // 아이콘 이미지 경로
 const iconImgURL = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
@@ -155,11 +179,11 @@ const UserInformation = () => {
     formState: { errors, isValid },
   } = useForm({ mode: "onBlur", criteriaMode: "all" });
   // input창 입력 상태 확인(react-hook-form 기능)
-  const [watchId, watchPW] = watch(["id", "password"]);
+  const [watchId, watchPW] = watch(["user_id", "password"]);
 
   // input창 클릭시 에러 메시지 숨김 기능
   const [errorActive, setErrorActive] = useState({
-    id: false,
+    user_id: false,
     password: false,
   });
   const handleInputFocus = (e) => {
@@ -198,7 +222,7 @@ const UserInformation = () => {
   };
 
   // 비밀번호 변수
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   // 비밀번호 확인 변수
   const [pwChecked, setPwChecked] = useState("");
   // 비밀번호 확인 함수
@@ -208,12 +232,11 @@ const UserInformation = () => {
 
   // 생년월일 자동 하이픈(-) 추가
   const birthRef = useRef();
-  const [birthNum, setBirthNum] = useState("");
+  // const [birthNum, setBirthNum] = useState("");
   const changeBirth = (e) => {
     const value = birthRef.current.value.replace(/\D+/g, "");
     const numberLength = 8;
-    let result;
-    result = "";
+    let result = "";
     for (let i = 0; i < value.length && i < numberLength; i++) {
       switch (i) {
         case 4:
@@ -228,27 +251,57 @@ const UserInformation = () => {
       result += value[i];
     }
     birthRef.current.value = result;
-    setBirthNum(e.target.value);
   };
 
-  // const nameRef = useRef();
-  const [name, setName] = useState("");
-  const handleNameChange = (e) => {
-    setName(e.target.value.replace(/[^ㄱ-ㅣ가-힣a-zA-Z] /g, ""));
+  const nameRef = useRef();
+  const handleNameChange = () => {
+    nameRef.current.value = nameRef.current.value.replace(
+      /[^ㄱ-ㅣ가-힣a-zA-Z ]/g,
+      ""
+    );
   };
 
+  let navigate = useNavigate();
   // 폼 전송시 실행되는 함수
-  const onSubmit = async (data) => {
-    console.log(data);
+  const onSubmit = async () => {
+    console.log("onsubmit할때", user);
+    // try {
+    //비밀번호를 SHA256으로 해싱한다.
+    const hash = CryptoJS.SHA256(user.password);
+    //해싱된 객체를 Base64로 toString으로 만든다.
+    const hashPassword = hash.toString(CryptoJS.enc.Base64);
+    //패스워드로 다시 반환한다
+
+    let newInform = { ...user, password: hashPassword };
+    console.log(newInform);
+
+    try {
+      const response = await axios.post(
+        `https://hee-backend.shop:7179/user/general/signup`,
+        newInform
+      );
+      console.log(response);
+      navigate("/signup/finishSignUp");
+    } catch (error) {
+      console.log("encryptPW error:", error);
+      alert("회원가입 실패");
+    }
   };
 
   // 유저정보(번호,주소)
   const [user, setUser] = useState({
+    user_id: "",
+    password: "",
+    name: "",
+    birth: "",
+    email: "",
     phone_num: "",
     address: "",
     detail_address: "",
+    phone_verify: "",
   });
-  const { phone_num, address, detail_address } = user;
+  const { user_id, password, name, birth, email, address, detail_address } =
+    user;
 
   //유저 정보 저장
   const onChangeInput = (e) => {
@@ -290,6 +343,27 @@ const UserInformation = () => {
     alert("유효성");
   };
 
+  const getCertification = () => {
+    axios
+      .get(
+        `https://hee-backend.shop:7179/user/general/signup/auth/phone/test/${phone.num}`
+      )
+      .then((result) => {
+        alert("인증번호가 전송되었습니다.");
+        setPhone({ ...phone, code: result.data.code });
+        console.log(result.data);
+      })
+      .catch((result) => {
+        if (result.response.data.statusCode === 409) {
+          alert("이미 존재하는 번호입니다.");
+        } else {
+          alert("전화번호를 다시 확인해주세요");
+        }
+      });
+  };
+
+  const pwMarginBottom = { marginBottom: "100px" };
+
   return (
     <TopWrapper>
       <CloseBtnWrapper>
@@ -309,20 +383,20 @@ const UserInformation = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* 아이디 인풋창 */}
           <InputWrapper>
-            <label htmlFor="id">아이디</label>
-            <input
+            <label htmlFor="user_id">아이디</label>
+            <Input
               className={
                 watchId &&
-                (errors.id?.types.mustFollowPattern
+                (errors.user_id?.types.mustFollowPattern
                   ? "error"
                   : checkIdRes
                   ? "pass"
                   : "error")
               }
               type="text"
-              id="id"
+              id="user_id"
               placeholder="영문, 숫자, 마침표를 사용할 수 있습니다."
-              {...register("id", {
+              {...register("user_id", {
                 required: true,
                 validate: {
                   mustFollowPattern: (v) => /^[a-zA-Z0-9.]{6,20}$/.test(v),
@@ -330,17 +404,19 @@ const UserInformation = () => {
                     checkId(v);
                   },
                   showIdError: () => {
-                    setErrorActive({ ...errorActive, id: true });
+                    setErrorActive({ ...errorActive, user_id: true });
                   },
                 },
               })}
-              onFocus={(e) => handleInputFocus(e)}
+              value={user_id}
+              onChange={onChangeInput}
+              onFocus={handleInputFocus}
               required
             />
-            {errorActive.id && (
+            {errorActive.user_id && (
               <CheckingSign>
                 {watchId &&
-                  (errors.id?.types.mustFollowPattern ? (
+                  (errors.user_id?.types.mustFollowPattern ? (
                     <img src={`${iconImgURL}alert.png`} alt="alert mark" />
                   ) : checkIdRes ? (
                     <img src={`${iconImgURL}pass.png`} alt="pass mark" />
@@ -349,10 +425,10 @@ const UserInformation = () => {
                   ))}
               </CheckingSign>
             )}
-            {errorActive.id && (
+            {errorActive.user_id && (
               <p className="idValidation">
                 {watchId &&
-                  (errors.id?.types.mustFollowPattern
+                  (errors.user_id?.types.mustFollowPattern
                     ? "영문, 숫자 6에서 20글자 사이여야 합니다"
                     : checkIdRes
                     ? "사용가능한 아이디입니다"
@@ -363,10 +439,11 @@ const UserInformation = () => {
           {/* 비밀번호 인풋창 */}
           <InputWrapper>
             <label htmlFor="password">비밀번호</label>
-            <input
+            <Input
               className={watchPW && (isValid ? "pass" : "error")}
               type={showPW ? "text" : "password"}
               id="password"
+              value={password}
               placeholder="영어 대문자, 소문자, 숫자, 특수문자를 포함한 10자 이상"
               {...register("password", {
                 required: true,
@@ -378,13 +455,14 @@ const UserInformation = () => {
                   showPWError: () => {
                     setErrorActive({ ...errorActive, password: true });
                   },
-                  getPassword: (v) => {
-                    setPassword(v);
-                  },
+                  // getPassword: (v) => {
+                  //   setUser({ ...user, password: v });
+                  // },
                 },
                 minLength: 10,
               })}
-              onFocus={(e) => handleInputFocus(e)}
+              onFocus={handleInputFocus}
+              onChange={onChangeInput}
             />
             {showPW ? (
               <img
@@ -448,9 +526,9 @@ const UserInformation = () => {
             </div>
           </InputWrapper>
           {/* 비밀번호 확인 인풋창 */}
-          <InputWrapper>
+          <InputWrapper style={pwMarginBottom}>
             <label htmlFor="pw_check">비밀번호 확인</label>
-            <input
+            <Input
               className={
                 pwChecked && (password === pwChecked ? "pass" : "error")
               }
@@ -480,35 +558,51 @@ const UserInformation = () => {
           {/* 이름 인풋창 */}
           <InputWrapper>
             <label htmlFor="name">이름</label>
-            <input
+            <Input
               type="text"
               id="name"
+              name="name"
               placeholder="홍길동"
               value={name}
-              onChange={handleNameChange}
+              ref={nameRef}
+              onChange={(e) => {
+                handleNameChange();
+                onChangeInput(e);
+              }}
             />
           </InputWrapper>
           {/* 생년월일 인풋창 */}
           <InputWrapper>
             <label htmlFor="birth">생년월일</label>
-            <input
+            <Input
               type="text"
               id="birth"
+              name="birth"
               placeholder="YYYY/MM/DD"
-              value={birthNum}
+              value={birth}
               ref={birthRef}
-              onChange={changeBirth}
+              onChange={(e) => {
+                changeBirth(e);
+                onChangeInput(e);
+              }}
             />
           </InputWrapper>
           {/* 이메일 인풋창 */}
           <InputWrapper>
             <label htmlFor="email">이메일</label>
-            <input type="email" id="email" placeholder="example@gmail.com" />
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="example@gmail.com"
+              value={email}
+              onChange={onChangeInput}
+            />
           </InputWrapper>
           {/* 휴대전화 인풋창 */}
           <InputWrapper>
             <label htmlFor="phone_num">휴대전화</label>
-            <input
+            <Input
               type="text"
               id="phone_num"
               name="num"
@@ -519,33 +613,18 @@ const UserInformation = () => {
               onChange={onPhoneInput}
             />
             <Button
+              type="button"
               disabled={check ? "disabled" : ""}
-              onClick={() => {
-                axios
-                  .get(
-                    `https://hee-backend.shop:7179/user/general/signup/auth/phone/test/${phone.num}`
-                  )
-                  .then((result) => {
-                    alert("인증번호가 전송되었습니다.");
-                    setPhone({ ...phone, code: result.data.code });
-                    console.log(result.data);
-                  })
-                  .catch((result) => {
-                    if (result.response.data.statusCode === 409) {
-                      alert("이미 존재하는 번호입니다.");
-                    } else {
-                      alert("전화번호를 다시 확인해주세요");
-                    }
-                  });
-              }}
-            >
-              <span>인증번호발급</span>
-            </Button>
+              onClick={getCertification}
+              value="인증번호발급"
+            />
+            {/* <span>인증번호발급</span>
+            </Button> */}
           </InputWrapper>
           {/* 인증번호 인풋창 */}
           <InputWrapper>
             <label htmlFor="phone_code">인증번호</label>
-            <input
+            <Input
               type="text"
               // id="phone_code"
               name="code2"
@@ -556,6 +635,7 @@ const UserInformation = () => {
               onChange={onPhoneInput}
             />
             <Button
+              type="button"
               style={{ width: "47px" }}
               disabled={check ? "disabled" : ""}
               className="eye unvisible"
@@ -565,21 +645,20 @@ const UserInformation = () => {
                   alert("휴대전화 인증이 필요합니다.");
                 } else if (code == code2) {
                   setPhone({ ...phone, check: true });
-                  setUser({ ...user, phone_num: num });
+                  setUser({ ...user, phone_num: num, phone_verify: "Y" });
                   alert("인증되었습니다");
                 } else {
                   alert("인증번호를 다시 확인해주세요.");
                 }
               }}
-            >
-              {check ? "완료" : "확인"}
-            </Button>
+              value={check ? "완료" : "확인"}
+            />
             <span className="timer">3:00</span>
           </InputWrapper>
           {/* 주소 인풋창 */}
           <InputWrapper>
             <label htmlFor="address">주소</label>
-            <input
+            <Input
               type="text"
               id="address"
               name="address"
@@ -605,7 +684,7 @@ const UserInformation = () => {
             {popup && <DaumPost address={address} setUser={setUser} />}
           </InputWrapper>
           <InputWrapper>
-            <input
+            <Input
               type="text"
               id="detail_address"
               placeholder="상세주소를 입력하세요."
@@ -614,13 +693,7 @@ const UserInformation = () => {
               onChange={onChangeInput}
             />
           </InputWrapper>
-          <input
-            type="submit"
-            value="submit"
-            onClick={() => {
-              console.log(user);
-            }}
-          />
+          <SignUpBtn type="submit" value="동의하기" />
         </form>
       </BottomSection>
     </TopWrapper>

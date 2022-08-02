@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AgreeBtn from "./AgreeBtn";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes, useMatch } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import UserInformation from "./UserInformation";
+import FinishSignUp from "./FinishSignUp";
 
 const TopWrapper = styled.div`
   width: 509px;
@@ -119,6 +121,7 @@ const lastHorizonLineStyle = { marginBottom: "100px" };
 const iconImgURL = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
 const Agreement = () => {
+  // const match = useMatch("signup/userinform");
   const [allCheck, setAllCheck] = useState(false);
   const [useCheck, setUseCheck] = useState(false);
   const [privacyCheck, setPrivacyCheck] = useState(false);
@@ -180,6 +183,8 @@ const Agreement = () => {
 
   // 필수 이용 동의/비동의시 변화
   let active = useCheck && privacyCheck;
+
+  // console.log(match.pathname);
 
   useEffect(() => {
     if (
