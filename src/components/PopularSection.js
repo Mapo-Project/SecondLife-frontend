@@ -19,7 +19,7 @@ const PopularSection = () => {
       const response = await axios.get(
         `https://hee-backend.shop:7179/product/popularity/select`
       );
-      console.log(response.data);
+      setPopularItems(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +30,7 @@ const PopularSection = () => {
   return (
     <TopWrapper>
       <TitleInHome title={title} />
-      <ItemImages items={itemsData2} />
+      <ItemImages items={popularItems} />
     </TopWrapper>
   );
 };
