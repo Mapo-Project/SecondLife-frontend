@@ -199,12 +199,13 @@ const Agreement = () => {
     }
   }, [useCheck, privacyCheck, locationCheck, marketingCheck]);
   return (
-    <TopWrapper>
-      <CloseBtnWrapper>
+    // <TopWrapper>
+    <>
+      {/* <CloseBtnWrapper>
         <Link to="/">
           <img src={`${iconImgURL}x.png`} alt="close button" />
         </Link>
-      </CloseBtnWrapper>
+      </CloseBtnWrapper> */}
       <ProgressBarWrapper>
         <ProgressBar />
       </ProgressBarWrapper>
@@ -346,7 +347,8 @@ const Agreement = () => {
           <AgreeBtn>동의하기</AgreeBtn>
         )}
       </BottomSection>
-    </TopWrapper>
+    </>
+    // </TopWrapper>
   );
 };
 

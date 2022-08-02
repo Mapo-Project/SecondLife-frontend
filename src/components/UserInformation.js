@@ -365,12 +365,12 @@ const UserInformation = () => {
   const pwMarginBottom = { marginBottom: "100px" };
 
   return (
-    <TopWrapper>
-      <CloseBtnWrapper>
+    <>
+      {/* <CloseBtnWrapper>
         <Link to="/">
           <img src={`${iconImgURL}x.png`} alt="close button" />
         </Link>
-      </CloseBtnWrapper>
+      </CloseBtnWrapper> */}
       <ProgressBarWrapper>
         <ProgressBar />
       </ProgressBarWrapper>
@@ -696,7 +696,7 @@ const UserInformation = () => {
           <SignUpBtn type="submit" value="동의하기" />
         </form>
       </BottomSection>
-    </TopWrapper>
+    </>
   );
 };
 

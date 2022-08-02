@@ -59,17 +59,16 @@ const SignUp = () => {
       </CloseBtnWrapper>
       {/* <ProgressBarWrapper>
         <ProgressBar />
-      </ProgressBarWrapper> */}
-      <ProgressBarWrapper />
+      </ProgressBarWrapper>
       <Step>
         <p>약관동의</p>
         <p>회원정보</p>
         <p>가입완료</p>
-      </Step>
+      </Step> */}
       <Routes>
         <Route path="agreement" element={<Agreement />} />
         <Route path="userinform" element={<UserInformation />} />
-        <Route path="finishsignup" element={<FinishSignUp />} />
+        <Route path="finishSignUp" element={<FinishSignUp />} />
       </Routes>
     </TopWrapper>
   );
