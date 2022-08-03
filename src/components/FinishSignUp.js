@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TopWrapper = styled.div`
   width: 509px;
@@ -112,6 +112,12 @@ const backImg = {
 };
 
 const FinishSignUp = () => {
+  const navigate = useNavigate();
+
+  const handleStartClick = () => {
+    navigate("/login");
+  };
+
   return (
     <TopWrapper>
       <ProgressBarWrapper>
@@ -138,9 +144,7 @@ const FinishSignUp = () => {
         </div>
         <ImageWrapper style={backImg} />
       </CenterWrapper>
-      <Link to="/">
-        <AgreeBtnWrapper>시작하기</AgreeBtnWrapper>
-      </Link>
+      <AgreeBtnWrapper onClick={handleStartClick}>시작하기</AgreeBtnWrapper>
     </TopWrapper>
   );
 };
