@@ -1,7 +1,6 @@
 import { Link, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Agreement from "../components/Agreement";
-import FinishSignUp from "../components/FinishSignUp";
 import UserInformation from "../components/UserInformation";
 
 const TopWrapper = styled.div`
@@ -68,7 +67,6 @@ const SignUp = () => {
       <Routes>
         <Route path="agreement" element={<Agreement />} />
         <Route path="userinform" element={<UserInformation />} />
-        <Route path="finishSignUp" element={<FinishSignUp />} />
       </Routes>
     </TopWrapper>
   );

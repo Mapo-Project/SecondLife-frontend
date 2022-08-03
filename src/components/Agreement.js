@@ -2,11 +2,9 @@ import styled from "styled-components";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AgreeBtn from "./AgreeBtn";
-import { Link, Route, Routes, useMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import UserInformation from "./UserInformation";
-import FinishSignUp from "./FinishSignUp";
 
 const TopWrapper = styled.div`
   width: 509px;

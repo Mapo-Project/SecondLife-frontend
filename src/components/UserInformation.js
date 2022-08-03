@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useRef } from "react";
 import axios from "axios";
@@ -300,8 +300,17 @@ const UserInformation = () => {
     detail_address: "",
     phone_verify: "",
   });
-  const { user_id, password, name, birth, email, address, detail_address } =
-    user;
+  const {
+    user_id,
+    password,
+    name,
+    birth,
+    email,
+    phone_num,
+    address,
+    detail_address,
+    phone_verify,
+  } = user;
 
   //유저 정보 저장
   const onChangeInput = (e) => {
