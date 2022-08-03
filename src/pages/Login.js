@@ -219,7 +219,7 @@ const Login = () => {
   };
 
   const signUp = () => {
-    navigate("/");
+    navigate("/signup/agreement");
   };
 
   useEffect(() => {
