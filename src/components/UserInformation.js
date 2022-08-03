@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState, useRef } from "react";
+import { useCallback } from "react";
 import axios from "axios";
 import DaumPost from "./Daumpost";
 
@@ -246,15 +247,14 @@ const UserInformation = () => {
     check: false,
   });
   const { num, code, code2, check } = phone;
+
   //휴대전화 정보 임시저장
   const onPhoneInput = (e) => {
     const { name, value } = e.target;
     setPhone({ ...phone, [name]: value });
   };
-
   //우편번호 API
   const [popup, setPopup] = useState(false);
-
   const handleComplete = () => {
     setPopup(!popup);
   };
@@ -267,10 +267,44 @@ const UserInformation = () => {
     });
   };
 
-  //인증번호 유효성
-  const onValidation = () => {
-    alert("유효성");
-  };
+  //인증시간 타이머
+  const [minutes, setMinutes] = useState(3);
+  const [seconds, setSeconds] = useState(0);
+  const time = useRef(180);
+  const intervalRef = useRef(null);
+
+  //인증시간 타이머 함수
+  const start = useCallback(() => {
+    if (intervalRef.current !== null) {
+      return;
+    }
+    intervalRef.current = setInterval(() => {
+      time.current -= 1;
+      setMinutes(parseInt(time.current / 60));
+      setSeconds(time.current % 60);
+      if (time.current === 0) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        setPhone((preState) => {
+          return { ...preState, num: "" };
+        });
+      }
+    }, 1000);
+    return () => clearInterval(intervalRef.current);
+  }, []);
+
+  const stop = useCallback(() => {
+    if (intervalRef.current == null) {
+      return;
+    }
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+  }, []);
+
+  const timerReset = useCallback(() => {
+    time.current = 180;
+    start();
+  }, []);
 
   return (
     <TopWrapper>
@@ -471,7 +505,7 @@ const UserInformation = () => {
             type="text"
             id="phone_num"
             name="num"
-            value={num}
+            value={num || ""}
             placeholder="01012345678"
             maxLength={11}
             disabled={check ? "disabled" : ""}
@@ -488,6 +522,7 @@ const UserInformation = () => {
                   alert("인증번호가 전송되었습니다.");
                   setPhone({ ...phone, code: result.data.code });
                   console.log(result.data);
+                  timerReset();
                 })
                 .catch((result) => {
                   if (result.response.data.statusCode === 409) {
@@ -520,11 +555,13 @@ const UserInformation = () => {
             className="eye unvisible"
             onClick={() => {
               console.log(phone);
-              if (code === "" && code === "") {
+              if ((code === "" && code === "") || num === "") {
                 alert("휴대전화 인증이 필요합니다.");
               } else if (code == code2) {
                 setPhone({ ...phone, check: true });
                 setUser({ ...user, phone_num: num });
+                setUser({ ...user, phone_verify: "Y" });
+                stop();
                 alert("인증되었습니다");
               } else {
                 alert("인증번호를 다시 확인해주세요.");
@@ -533,7 +570,9 @@ const UserInformation = () => {
           >
             {check ? "완료" : "확인"}
           </Button>
-          <span className="timer">3:00</span>
+          <span className="timer">
+            {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+          </span>
         </InputWrapper>
         {/* 주소 인풋창 */}
         <InputWrapper>
