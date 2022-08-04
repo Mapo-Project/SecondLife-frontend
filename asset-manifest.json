@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/SecondLife-frontend/static/js/main.a211eac1.js",
+    "main.js": "/SecondLife-frontend/static/js/main.2cd64621.js",
     "index.html": "/SecondLife-frontend/index.html",
-    "main.a211eac1.js.map": "/SecondLife-frontend/static/js/main.a211eac1.js.map"
+    "main.2cd64621.js.map": "/SecondLife-frontend/static/js/main.2cd64621.js.map"
   },
   "entrypoints": [
-    "static/js/main.a211eac1.js"
+    "static/js/main.2cd64621.js"
   ]
 }
