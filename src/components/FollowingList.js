@@ -110,20 +110,25 @@ const FollowingList = () => {
   }, [accessToken]);
 
   return (
-    <TopWrapper>
-      <TitleInHome title={title} />
-      <ItemsWrapper className="items" {...events} ref={containerRef}>
-        {followingList.map((datum) => (
-          <ItemWrapper key={datum.following_user_id}>
-            {parseInt(datum.product_count) > 0 && <Circle />}
-            <Link to="/">
-              <img src={datum.profile_img} alt={datum.name} />
-              <h5>{datum.name}</h5>
-            </Link>
-          </ItemWrapper>
-        ))}
-      </ItemsWrapper>
-    </TopWrapper>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {followingList ? (
+        <TopWrapper>
+          <TitleInHome title={title} />
+          <ItemsWrapper className="items" {...events} ref={containerRef}>
+            {followingList.map((datum) => (
+              <ItemWrapper key={datum.following_user_id}>
+                {parseInt(datum.product_count) > 0 && <Circle />}
+                <Link to="/">
+                  <img src={datum.profile_img} alt={datum.name} />
+                  <h5>{datum.name}</h5>
+                </Link>
+              </ItemWrapper>
+            ))}
+          </ItemsWrapper>
+        </TopWrapper>
+      ) : null}
+    </>
   );
 };
 export default FollowingList;
