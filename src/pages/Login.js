@@ -25,6 +25,9 @@ const Wrapper = styled.div`
   .error:focus {
     border-bottom: 2px solid red;
   }
+  .normal:focus {
+    border-bottom: 2px solid black;
+  }
   .true_type {
     background-color: ${({ theme }) => theme.colors.green300};
   }
@@ -230,12 +233,6 @@ const Login = () => {
     }
   }, [watch()]);
 
-  useEffect(() => {
-    if (active) {
-      setKeepLogin(true);
-    }
-  }, [active]);
-
   return (
     <>
       <Navbar />
@@ -247,27 +244,28 @@ const Login = () => {
             <label htmlFor="user_id">아이디</label>
             <Input
               {...register("user_id", {
-                required: "Please Enter Your ID",
-                maxLength: 10,
+                required: true,
+                minLength: 4,
+                maxLength: 15,
               })}
               type="text"
               placeholder="example123"
-              className={errors.user_id?.type === "required" && "error"}
+              className={errors.user_id?.type ? "error" : "normal"}
             />
             <ErrorMessage>
-              {errors.user_id?.type === "required" && "아이디를 입력해주세요."}
-              {errors.user_id?.type === "maxLength" &&
-                "올바르지 않은 아이디 입니다."}
+              {errors.user_id && "아이디를 다시 입력해주세요"}
             </ErrorMessage>
 
             <label htmlFor="password">비밀번호</label>
             <Input
               {...register("password", {
-                required: "Please Enter Your Password",
+                required: true,
+                minLength: 4,
+                maxLength: 20,
               })}
               type={!hidden ? "password" : "text"}
               placeholder="영어 대문자, 소문자, 숫자, 특수문자를 포함한 10자리 이상"
-              className={errors.password?.type === "required" && "error"}
+              className={errors.password?.type ? "error" : "normal"}
             />
             <FontAwesomeIcon
               className={!hidden ? "eye_default" : "eye_true"}
@@ -276,13 +274,12 @@ const Login = () => {
             />
 
             <ErrorMessage>
-              {errors.password && "패스워드를 입력해주세요."}
+              {errors.password && "비밀번호를 다시 입력해주세요!"}
             </ErrorMessage>
 
             <LoginBox>
-              <h5>
+              <h5 onClick={onKeepLogin}>
                 <img
-                  onClick={onKeepLogin}
                   src={
                     keepLogin
                       ? imgUrl + "check_true.png"
@@ -308,7 +305,7 @@ const Login = () => {
               <SimpleBtn type="submit">
                 <img src={imgUrl + "Union.svg"} alt="카카오" />
                 카카오 계정으로 로그인
-                <span></span>
+                <span />
               </SimpleBtn>
             </form>
 
@@ -316,7 +313,7 @@ const Login = () => {
               <GoogleBtn type="submit">
                 <img src={imgUrl + "google_logo.svg"} alt="구글" />
                 Google 계정으로 로그인
-                <span></span>
+                <span />
               </GoogleBtn>
             </form>
           </SimpleLogin>

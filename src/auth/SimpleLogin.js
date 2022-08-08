@@ -18,6 +18,8 @@ const SimpleLogin = () => {
       console.log("간편 로그인 성공 :", user.verify);
       return navigate("/");
     } else if (user.verify === "N") {
+      setRefreshToken(user.refreshToken);
+      dispatch(SET_TOKEN(user.accessToken));
       console.log("추가 정보 입력 :", user.verify);
       return navigate("/signup/add");
     } else if (user === null || undefined) {
