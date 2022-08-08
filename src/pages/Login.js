@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../api/User";
+import { loginUser, setValueOnLocalStorage } from "../api/User";
 import { setRefreshToken } from "../storage/Cookie";
 import { SET_TOKEN } from "../store/Auth";
 import styled from "styled-components";
@@ -167,6 +167,7 @@ const GoogleBtn = styled(SimpleBtn)`
   background: ${({ theme }) => theme.colors.white};
 `;
 
+//Login
 const Login = () => {
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState(false);
@@ -174,10 +175,12 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // 비밀번호 숨기기
   const onHidePassword = () => {
     setHidden(!hidden);
   };
 
+  // 로그인 유지 버튼
   const onKeepLogin = () => {
     setKeepLogin(!keepLogin);
   };
@@ -221,10 +224,12 @@ const Login = () => {
     }
   };
 
+  // 회원가입으로 이동
   const signUp = () => {
     navigate("/signup/agreement");
   };
 
+  // 로그인 폼 다 입력 되었는지 체크
   useEffect(() => {
     if (watch("user_id") !== "" && watch("password") !== "") {
       setActive(true);
@@ -232,6 +237,12 @@ const Login = () => {
       setActive(false);
     }
   }, [watch()]);
+
+  // 자동 로그인 유무 로컬스토리지에 저장
+  useEffect(() => {
+    setValueOnLocalStorage("AutoLogin", keepLogin);
+    console.log("AutoLogin", keepLogin);
+  }, [keepLogin]);
 
   return (
     <>
