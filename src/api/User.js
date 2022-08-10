@@ -136,3 +136,36 @@ export const setValueOnLocalStorage = (key, value) => {
   let val = JSON.stringify(value);
   localStorage.setItem(key, val);
 };
+
+// 회원정보 조회
+export const selectUserProfile = async (accessToken) => {
+  const option = {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  };
+
+  const data = await getPromise(
+    "https://hee-backend.shop:7179/user/profile/select",
+    option
+  ).catch(() => {
+    return statusError;
+  });
+
+  if (parseInt(Number(data.status) / 100) === 2) {
+    const status = data.ok;
+    const code = data.status;
+    const text = await data.text();
+    const json = text.length ? JSON.parse(text) : "";
+
+    return {
+      status,
+      code,
+      json,
+    };
+  } else {
+    return statusError;
+  }
+};
