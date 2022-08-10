@@ -3,9 +3,9 @@ import { useState } from "react";
 
 const TopWrapper = styled.div`
   width: 420px;
-  height: 518px;
-  margin: 0px auto;
-  padding: 20px 24px 0px;
+  /* height: 518px; */
+  margin: 0px auto 10px;
+  padding: 20px 24px 20px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
   h6 {
@@ -16,6 +16,22 @@ const TopWrapper = styled.div`
     letter-spacing: 0.25px;
     color: ${({ theme }) => theme.colors.gray900};
   }
+  .number {
+    ${({ theme }) => theme.korean.body1};
+    border: 0 solid black;
+    width: 24px;
+    text-align: center;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  /* 파이어폭스에서의 초기화 방법 */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 `;
 
 const Description = styled.p`
@@ -25,6 +41,9 @@ const Description = styled.p`
   line-height: 17px;
   letter-spacing: 0.1px;
   color: ${({ theme }) => theme.colors.gray500};
+  &.greenbag-des {
+    margin-bottom: 19px;
+  }
 `;
 
 const FirstWrapper = styled.div`
@@ -43,6 +62,7 @@ const InputWrapper = styled.div`
   align-items: center;
   width: 100%;
   /* background-color: aliceblue; */
+  color: ${({ theme }) => theme.colors.black};
   .range {
     display: flex;
     align-items: center;
@@ -59,9 +79,6 @@ const InputWrapper = styled.div`
   }
   .slider:hover {
     opacity: 1;
-  }
-  .changed {
-    background-color: ${({ theme }) => theme.colors.green300};
   }
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -85,11 +102,97 @@ const InputWrapper = styled.div`
   .slider.changed::-moz-range-thumb {
     background-color: ${({ theme }) => theme.colors.green300};
   }
-  .number {
-    ${({ theme }) => theme.korean.body1};
-    border: 0 solid black;
-    width: 24px;
-    text-align: center;
+`;
+
+const SecondTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .disable {
+    background-color: #616161;
+    color: #fff;
+  }
+`;
+
+const Directly = styled.button`
+  width: 96.33px;
+  height: 31px;
+  background-color: #eff0f2;
+  border-radius: 20px;
+  color: #adadad;
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #616161;
+    color: #fff;
+  }
+`;
+
+const GreenBags = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`;
+
+const GreenBag = styled.div`
+  width: 112px;
+  height: 112px;
+`;
+
+const BagCounterWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  /* background-color: aliceblue; */
+  width: 342px;
+  margin: 0 auto;
+  color: ${({ theme }) => theme.colors.black};
+`;
+
+const BagCounter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    cursor: pointer;
+  }
+  .minus {
+    margin-right: 6px;
+  }
+  .plus {
+    margin-left: 6px;
+  }
+  .disable {
+    pointer-events: none;
+  }
+`;
+
+const HowTo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  .active {
+    background-color: ${({ theme }) => theme.colors.green300};
+  }
+`;
+
+const HowToBtn = styled.button`
+  width: 116px;
+  height: 36px;
+  border: 2px solid ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.white};
+  ${({ theme }) => theme.korean.subtitle2};
+  color: ${({ theme }) => theme.colors.gray700};
+  border-radius: 20px;
+  cursor: pointer;
+`;
+
+const ThirdContents = styled.div`
+  margin-top: 35px;
+  h6 {
+    margin-bottom: 23px;
   }
 `;
 
@@ -98,11 +201,128 @@ const plusStyle = { marginLeft: "19.75px" };
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
 
-const PickUpOptions = () => {
-  const [clothesNum, setClothesNum] = useState(0);
-  const handleRangeChange = (e) => {
-    setClothesNum(e.target.value);
+const greenBagS = { backgroundImage: `url(${imgUrl}pickUpImg/greenbag_s.png)` };
+const sActive = {
+  backgroundImage: `url(${imgUrl}pickUpImg/s_active.png)`,
+};
+const greenBagM = { backgroundImage: `url(${imgUrl}pickUpImg/greenbag_m.png)` };
+const mActive = {
+  backgroundImage: `url(${imgUrl}pickUpImg/m_active.png)`,
+};
+const greenBagL = { backgroundImage: `url(${imgUrl}pickUpImg/greenbag_l.png)` };
+const lActive = {
+  backgroundImage: `url(${imgUrl}pickUpImg/l_active.png)`,
+};
+
+function GreenBagCounter({
+  size,
+  sizeNum,
+  greenBagNum,
+  setGreenBagNum,
+  availableNum,
+  setAvailableNum,
+  disabled,
+}) {
+  const handleMinusClick = (e) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+    minusBagNumChange(size, sizeNum);
   };
+  const handlePlusClick = (e) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+    plusBagNumChange(size, sizeNum);
+  };
+  const minusBagNumChange = (size, num) => {
+    if (num === 0) {
+      return;
+    } else {
+      setGreenBagNum({ ...greenBagNum, [size]: num - 1 });
+      setAvailableNum(availableNum + 1);
+    }
+  };
+
+  const plusBagNumChange = (size, num) => {
+    if (availableNum === 0) {
+      return;
+    } else {
+      setGreenBagNum({ ...greenBagNum, [size]: num + 1 });
+      setAvailableNum(availableNum - 1);
+    }
+  };
+
+  return (
+    <BagCounter>
+      <img
+        src={
+          sizeNum > 0
+            ? `${imgUrl}icons/bag_minus_active.png`
+            : `${imgUrl}icons/bag_minus.png`
+        }
+        alt="minus"
+        className="minus"
+        onClick={handleMinusClick}
+      />
+      <p>{sizeNum} 개</p>
+      <img
+        src={`${imgUrl}icons/bag_plus.png`}
+        alt="plus"
+        className="plus"
+        onClick={handlePlusClick}
+      />
+    </BagCounter>
+  );
+}
+
+const PickUpOptions = ({
+  clothesNum,
+  setClothesNum,
+  greenBagNum,
+  setGreenBagNum,
+  howto,
+  setHowto,
+}) => {
+  // const [clothesNum, setClothesNum] = useState(0);
+  const handleRangeChange = (e) => {
+    let value = Math.floor(e.target.value);
+    if (value < 0) {
+      setClothesNum(0);
+    } else if (value > 60) {
+      setClothesNum(60);
+    } else {
+      setClothesNum(value);
+    }
+  };
+
+  // const [greenBagNum, setGreenBagNum] = useState({
+  //   small: 0,
+  //   medium: 0,
+  //   large: 0,
+  // });
+
+  const { small, medium, large } = greenBagNum;
+  const [availableNum, setAvailableNum] = useState(3);
+
+  // const [howto, setHowto] = useState("");
+  const handleHowtoClick = (value) => {
+    setHowto(value);
+  };
+
+  const [disabled, setDisabled] = useState(false);
+
+  const handleDisableClick = () => {
+    setDisabled(!disabled);
+    if (!disabled) {
+      setGreenBagNum({ ...greenBagNum, small: 0, medium: 0, large: 0 });
+    } else {
+      setAvailableNum(3);
+    }
+  };
+
   return (
     <TopWrapper>
       <FirstWrapper>
@@ -114,7 +334,11 @@ const PickUpOptions = () => {
           <div className="range">
             <img
               style={minusStyle}
-              src={`${imgUrl}icons/minus.png`}
+              src={
+                clothesNum > 0
+                  ? `${imgUrl}icons/minus_active.png`
+                  : `${imgUrl}icons/minus.png`
+              }
               alt="minus"
             />
             <input
@@ -131,7 +355,9 @@ const PickUpOptions = () => {
           <div>
             <input
               className="number"
-              type="text"
+              type="number"
+              min="0"
+              max="60"
               value={clothesNum}
               onChange={handleRangeChange}
             />
@@ -139,12 +365,77 @@ const PickUpOptions = () => {
           </div>
         </InputWrapper>
       </FirstWrapper>
-      <h6>그린백을 선택해주세요.</h6>
-      <Description>
+      <SecondTitle>
+        <h6>그린백을 선택해주세요.</h6>
+        <Directly
+          className={disabled && "disable"}
+          onClick={handleDisableClick}
+        >
+          직접 준비할게요
+        </Directly>
+      </SecondTitle>
+      <Description className="greenbag-des">
         1회 픽업시, 그린백 최대 신청 가능 수량은 3개입니다.
         <br />
         도난, 분실 방지를 위해 백 수령 후 반드시 그린백에 물품을 준비해주세요.
       </Description>
+      <GreenBags>
+        <GreenBag style={small ? sActive : greenBagS} />
+        <GreenBag style={medium ? mActive : greenBagM} />
+        <GreenBag style={large ? lActive : greenBagL} />
+      </GreenBags>
+      <BagCounterWrapper>
+        <GreenBagCounter
+          size={"small"}
+          sizeNum={small}
+          greenBagNum={greenBagNum}
+          setGreenBagNum={setGreenBagNum}
+          availableNum={availableNum}
+          setAvailableNum={setAvailableNum}
+          disabled={disabled}
+        />
+        <GreenBagCounter
+          size={"medium"}
+          sizeNum={medium}
+          greenBagNum={greenBagNum}
+          setGreenBagNum={setGreenBagNum}
+          availableNum={availableNum}
+          setAvailableNum={setAvailableNum}
+          disabled={disabled}
+        />
+        <GreenBagCounter
+          size={"large"}
+          sizeNum={large}
+          greenBagNum={greenBagNum}
+          setGreenBagNum={setGreenBagNum}
+          availableNum={availableNum}
+          setAvailableNum={setAvailableNum}
+          disabled={disabled}
+        />
+      </BagCounterWrapper>
+      <ThirdContents>
+        <h6>어떻게 정리해 드릴까요?</h6>
+        <HowTo>
+          <HowToBtn
+            className={howto === "01" && "active"}
+            onClick={() => handleHowtoClick("01")}
+          >
+            그린포인트
+          </HowToBtn>
+          <HowToBtn
+            className={howto === "02" && "active"}
+            onClick={() => handleHowtoClick("02")}
+          >
+            판매등록
+          </HowToBtn>
+          <HowToBtn
+            className={howto === "03" && "active"}
+            onClick={() => handleHowtoClick("03")}
+          >
+            포인트+판매
+          </HowToBtn>
+        </HowTo>
+      </ThirdContents>
     </TopWrapper>
   );
 };

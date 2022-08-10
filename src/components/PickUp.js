@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import PickUpOptions from "./PickUpOptions";
+import PickUpLocation from "./PickUpLocation";
+import { useDispatch, useSelector } from "react-redux";
 
 const TopWrapper = styled.div`
   width: 480px;
-  height: 422px;
+  padding-bottom: 20px;
   background-color: ${({ theme }) => theme.colors.green300};
   border: 5px solid ${({ theme }) => theme.colors.black};
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
@@ -113,6 +115,10 @@ const Box = styled.div`
   background-color: ${({ theme }) => theme.colors.bg};
   border: 3px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
+  &.clicked {
+    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.black};
+  }
 `;
 
 const BoxTitle = styled.div`
@@ -120,6 +126,7 @@ const BoxTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
   p:nth-child(1) {
     ${({ theme }) => theme.korean.subtitle1};
     ${({ theme }) => theme.korean.gray900};
@@ -137,8 +144,43 @@ const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
 
 const PickUp = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const name = "차은우";
+  const name = "김뫄뫄";
   const number = 7;
+  const [isClicked, setIsClicked] = useState("");
+
+  // 픽업 방법 데이터
+  const [clothesNum, setClothesNum] = useState(0);
+  const [greenBagNum, setGreenBagNum] = useState({
+    small: 0,
+    medium: 0,
+    large: 0,
+  });
+  const { small, medium, large } = greenBagNum;
+  const [howto, setHowto] = useState("");
+
+  // console.log("clothesNum", clothesNum);
+  // console.log("greenBagNum", greenBagNum);
+  // console.log("howto", howto);
+  // console.log("tre", greenBagNum ? "true" : "false");
+
+  const showGreenBagNum = () => {};
+
+  const showHowto = () => {
+    if (howto === "01") {
+      return " | 포인트";
+    } else if (howto === "02") {
+      return " | 판매";
+    } else {
+      return " | 판매+포인트";
+    }
+  };
+
+  const handleBoxTitleClick = (value) => {
+    setIsClicked(`${value}`);
+  };
+
+  const [fullAdd, setFullAdd] = useState("");
+
   return (
     <TopWrapper>
       <CloseBtnWrapper>
@@ -208,18 +250,40 @@ const PickUp = () => {
           )}
         </div>
       </CenterContents>
-      <Box>
-        <BoxTitle>
+      <Box className={isClicked === "how" && "clicked"}>
+        <BoxTitle onClick={() => handleBoxTitleClick("how")}>
           <p>어떻게 픽업할까요?</p>
+          {/* <>
+            {clothesNum > 0 && `${clothesNum}개`}
+            {howto && showHowto()}
+          </> */}
+
           <p>Choose your Pick-up Options</p>
         </BoxTitle>
-        {isLogin && <PickUpOptions />}
+        {isLogin && isClicked === "how" && (
+          <PickUpOptions
+            clothesNum={clothesNum}
+            setClothesNum={setClothesNum}
+            greenBagNum={greenBagNum}
+            setGreenBagNum={setGreenBagNum}
+            howto={howto}
+            setHowto={setHowto}
+          />
+        )}
       </Box>
-      <Box>
-        <BoxTitle>
-          <p>어디서 픽업할까요?</p>
-          <p>Add your Location</p>
+      <Box className={isClicked === "where" && "clicked"}>
+        <BoxTitle onClick={() => handleBoxTitleClick("where")}>
+          {fullAdd && isClicked !== "where" ? (
+            <p>어디서</p>
+          ) : (
+            <p>어디서 픽업할까요?</p>
+          )}
+          {fullAdd && isClicked !== "where" && <p>{fullAdd}</p>}
+          {(!fullAdd || isClicked === "where") && <p>Add your Location</p>}
         </BoxTitle>
+        {isLogin && isClicked === "where" && (
+          <PickUpLocation fullAdd={fullAdd} setFullAdd={setFullAdd} />
+        )}
       </Box>
       <Box>
         <BoxTitle>
