@@ -5,15 +5,51 @@ import { loginUser, setValueOnLocalStorage } from "../api/User";
 import { setRefreshToken } from "../storage/Cookie";
 import { SET_TOKEN } from "../store/Auth";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import CryptoJS from "crypto-js";
-// import pbkdf2 from "pbkdf2-sha256";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 const BACKEND = "https://hee-backend.shop:7179";
+
+const NavbarWrapper = styled.nav`
+  width: 100%;
+  height: 90px;
+  display: flex;
+  border: 3px solid ${({ theme }) => theme.colors.black};
+  z-index: 10;
+  ul {
+    background-color: ${({ theme }) => theme.colors.bg};
+    display: flex;
+    li {
+      cursor: pointer;
+    }
+  }
+  .navbar-section1 {
+    width: 254px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-right: 3px solid ${({ theme }) => theme.colors.black};
+    padding-right: 32px;
+  }
+  .navbar-section2 {
+    width: calc(100% - 512px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-right: 3px solid ${({ theme }) => theme.colors.black};
+    padding-left: 37px;
+  }
+  .navbar-section3 {
+    width: 258px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 35px;
+  }
+`;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -185,6 +221,11 @@ const Login = () => {
     setKeepLogin(!keepLogin);
   };
 
+  //로고 클릭시 홈으로 돌아가기
+  const onGoHome = () => {
+    navigate("/");
+  };
+
   // useForm 사용을 위한 선언
   const {
     register,
@@ -246,7 +287,15 @@ const Login = () => {
 
   return (
     <>
-      <Navbar />
+      <NavbarWrapper>
+        <ul className="navbar-section1" />
+        <ul className="navbar-section2">
+          <li onClick={onGoHome}>
+            <img src={`${imgUrl}logo.svg`} className="logo" alt="logo button" />
+          </li>
+        </ul>
+        <ul className="navbar-section3" />
+      </NavbarWrapper>
       <Wrapper>
         <Container>
           <h1>Login</h1>
