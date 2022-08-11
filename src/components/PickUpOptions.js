@@ -18,9 +18,14 @@ const TopWrapper = styled.div`
   }
   .number {
     ${({ theme }) => theme.korean.body1};
-    border: 0 solid black;
-    width: 24px;
+    border: 1px solid #8a8a8a;
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
     text-align: center;
+    &:hover {
+      border: 3px solid black;
+    }
   }
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {

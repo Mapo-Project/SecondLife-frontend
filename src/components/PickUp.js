@@ -110,7 +110,7 @@ const ProfileImg = styled.div`
 `;
 
 const Box = styled.div`
-  margin: 0px auto;
+  margin: 0px auto 10px;
   width: 440px;
   background-color: ${({ theme }) => theme.colors.bg};
   border: 3px solid ${({ theme }) => theme.colors.black};
@@ -118,6 +118,9 @@ const Box = styled.div`
   &.clicked {
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.black};
+  }
+  &:nth-last-child(1) {
+    margin-bottom: 0px;
   }
 `;
 
