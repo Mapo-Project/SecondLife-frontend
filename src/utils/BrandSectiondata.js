@@ -11,18 +11,18 @@ export const BrandSectionData = [
     id: 1,
     name: "Patagonia",
     url: `${imgUrl}Patagonia.jpg`,
-    logo: `${imgUrl}NikeLogo.png`,
+    logo: `${imgUrl}PatagoniaLogo.png`,
   },
   {
     id: 2,
     name: "Levis",
     url: `${imgUrl}Levis.jpg`,
-    logo: `${imgUrl}NikeLogo.png`,
+    logo: `${imgUrl}LevisLogo.png`,
   },
   {
     id: 3,
     name: "Champion",
     url: `${imgUrl}Champion.jpg`,
-    logo: `${imgUrl}NikeLogo.png`,
+    logo: `${imgUrl}ChampionLogo.png`,
   },
 ];
