@@ -160,13 +160,13 @@ const RecentSearchWrapper = styled.div`
   }
 `;
 
-const PickUpLocation = ({ fullAdd, setFullAdd }) => {
+const PickUpLocation = ({ fullAdd, setFullAdd, setIsClicked }) => {
   const [address, setAddress] = useState("");
   const [detailAdd, setDetailAdd] = useState("");
-  const [isClicked, setIsClicked] = useState(false);
+  const [isClicked2, setIsClicked2] = useState(false);
 
   const toggle = () => {
-    setIsClicked(!isClicked);
+    setIsClicked2(!isClicked2);
   };
 
   const handleAddChange = (e) => {
@@ -180,13 +180,16 @@ const PickUpLocation = ({ fullAdd, setFullAdd }) => {
     console.log(result);
     setFullAdd(result);
     registPickupPlace(accessToken, result);
+    setTimeout(() => {
+      setIsClicked("when");
+    }, 1000);
   };
 
   const handleFullAddClick = () => {
     setAddress("");
     setDetailAdd("");
     setFullAdd("");
-    setIsClicked(false);
+    setIsClicked2(false);
   };
 
   return (
@@ -201,7 +204,7 @@ const PickUpLocation = ({ fullAdd, setFullAdd }) => {
           <h6>내 현재 위치 찾기</h6>
         )}
       </Title>
-      {!isClicked && !fullAdd && (
+      {!isClicked2 && !fullAdd && (
         <SearchSection>
           <p onClick={toggle}>도로명주소 또는 건물명을 입력하세요.</p>
           <img
@@ -210,11 +213,11 @@ const PickUpLocation = ({ fullAdd, setFullAdd }) => {
           />
         </SearchSection>
       )}
-      {isClicked && (
+      {isClicked2 && (
         <div>
           <PickUpPost
-            isClicked={isClicked}
-            setIsClicked={setIsClicked}
+            isClicked={isClicked2}
+            setIsClicked={setIsClicked2}
             address={address}
             setAddress={setAddress}
           />
@@ -242,10 +245,14 @@ const PickUpLocation = ({ fullAdd, setFullAdd }) => {
           </InputWrapper>
         </ResultWrapper>
       )}
-      {!isClicked && !fullAdd && (
+      {!isClicked2 && !fullAdd && (
         <RecentSearchWrapper>
           <h6>최근 검색어</h6>
-          <RecentSearch fullAdd={fullAdd} setFullAdd={setFullAdd} />
+          <RecentSearch
+            fullAdd={fullAdd}
+            setFullAdd={setFullAdd}
+            setIsClicked={setIsClicked}
+          />
         </RecentSearchWrapper>
       )}
       {fullAdd && (

@@ -6,6 +6,7 @@ import { useState } from "react";
 import PickUpOptions from "./PickUpOptions";
 import PickUpLocation from "./PickUpLocation";
 import { useDispatch, useSelector } from "react-redux";
+import PickUpDate from "./PickUpDate";
 
 const TopWrapper = styled.div`
   width: 480px;
@@ -166,15 +167,27 @@ const PickUp = () => {
   // console.log("howto", howto);
   // console.log("tre", greenBagNum ? "true" : "false");
 
-  const showGreenBagNum = () => {};
+  const showGreenBagNum = () => {
+    let greenBags = [small, medium, large];
+    let resultArr = greenBags.filter((bag) => bag !== 0);
+    let containOne = resultArr.filter((bag) => bag === 1);
+    if (containOne.length > 1) {
+      return "각 1개";
+    }
+    let resultToString = resultArr.toString().replace(",", "+");
+    console.log(resultToString);
+  };
 
+  showGreenBagNum();
   const showHowto = () => {
     if (howto === "01") {
       return " | 포인트";
     } else if (howto === "02") {
       return " | 판매";
-    } else {
+    } else if (howto === "03") {
       return " | 판매+포인트";
+    } else {
+      return;
     }
   };
 
@@ -183,6 +196,24 @@ const PickUp = () => {
   };
 
   const [fullAdd, setFullAdd] = useState("");
+
+  const tomorrow = new Date(Date.now() + 3600 * 1000 * 24);
+  const [pickupDate, setPickupDate] = useState(tomorrow);
+  const [pickupTime, setPickupTime] = useState("");
+
+  const showPickupTime = () => {
+    if (pickupTime === "01") {
+      return " | 06AM - 11AM";
+    } else if (pickupTime === "02") {
+      return " | 10AM - 14AM";
+    } else if (pickupTime === "03") {
+      return " | 14AM - 19AM";
+    } else if (pickupTime === "04") {
+      return " | 18AM - 20AM";
+    } else {
+      return;
+    }
+  };
 
   return (
     <TopWrapper>
@@ -256,12 +287,9 @@ const PickUp = () => {
       <Box className={isClicked === "how" && "clicked"}>
         <BoxTitle onClick={() => handleBoxTitleClick("how")}>
           <p>어떻게 픽업할까요?</p>
-          {/* <>
-            {clothesNum > 0 && `${clothesNum}개`}
-            {howto && showHowto()}
-          </> */}
-
-          <p>Choose your Pick-up Options</p>
+          {clothesNum > 0 && `${clothesNum}개`}
+          {showHowto()}
+          {/* <p>Choose your Pick-up Options</p> */}
         </BoxTitle>
         {isLogin && isClicked === "how" && (
           <PickUpOptions
@@ -274,7 +302,7 @@ const PickUp = () => {
           />
         )}
       </Box>
-      <Box className={isClicked === "where" && "clicked"}>
+      <Box className={(isClicked === "where" || fullAdd) && "clicked"}>
         <BoxTitle onClick={() => handleBoxTitleClick("where")}>
           {fullAdd && isClicked !== "where" ? (
             <p>어디서</p>
@@ -285,14 +313,38 @@ const PickUp = () => {
           {(!fullAdd || isClicked === "where") && <p>Add your Location</p>}
         </BoxTitle>
         {isLogin && isClicked === "where" && (
-          <PickUpLocation fullAdd={fullAdd} setFullAdd={setFullAdd} />
+          <PickUpLocation
+            fullAdd={fullAdd}
+            setFullAdd={setFullAdd}
+            setIsClicked={setIsClicked}
+          />
         )}
       </Box>
-      <Box>
-        <BoxTitle>
-          <p>언제 픽업할까요?</p>
-          <p>Select your Date</p>
+      <Box className={(isClicked === "when" || pickupTime) && "clicked"}>
+        <BoxTitle onClick={() => handleBoxTitleClick("when")}>
+          {pickupTime && isClicked !== "when" ? (
+            <p>언제</p>
+          ) : (
+            <p>언제 픽업할까요?</p>
+          )}
+          {pickupTime && isClicked !== "when" && (
+            <>
+              {`${pickupDate.getMonth() + 1}월 ${pickupDate.getDate()}일`}
+              {showPickupTime()}
+            </>
+          )}
+          {(!pickupTime || isClicked === "when") && <p>Select your Date</p>}
         </BoxTitle>
+        {isClicked === "when" && (
+          <PickUpDate
+            pickupDate={pickupDate}
+            setPickupDate={setPickupDate}
+            tomorrow={tomorrow}
+            pickupTime={pickupTime}
+            setPickupTime={setPickupTime}
+            setIsClicked={setIsClicked}
+          />
+        )}
       </Box>
     </TopWrapper>
   );

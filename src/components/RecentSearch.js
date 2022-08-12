@@ -34,11 +34,14 @@ const Location = styled.div`
   }
 `;
 
-const RecentSearch = ({ fullAdd, setFullAdd }) => {
+const RecentSearch = ({ fullAdd, setFullAdd, setIsClicked }) => {
   const [locationData, setLocationData] = useState([]);
   // const [recentSearch, setRecentSearch] = useState(locationData);
   const recentSearchClick = (address) => {
     setFullAdd(address);
+    setTimeout(() => {
+      setIsClicked("when");
+    }, 1000);
   };
 
   const { accessToken } = useSelector((state) => state.token);
