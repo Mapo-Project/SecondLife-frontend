@@ -7,12 +7,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { DELETE_TOKEN, SET_TOKEN } from "../store/Auth";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SET_USER } from "../store/UserData";
 
-const Check = () => {
+export const Check = () => {
   //로그인 체크
-  const [isAuth, setIsAuth] = useState(null);
+  const { login } = useSelector((state) => state.user);
+  const [isAuth, setIsAuth] = useState(login);
   //쿠키에서 refreshToken가져오기
   const refreshToken = getCookieToken();
   //store에서 인증과 기간만료 가져오기
@@ -25,12 +26,12 @@ const Check = () => {
     //refreshToken이 없다면 로그인 실패
     if (refreshToken === undefined) {
       dispatch(DELETE_TOKEN());
-      setIsAuth("Failed");
+      setIsAuth(false);
       console.log("로그인 실패(refreshToken 없음): ");
     } else {
       //인증이 true고 accessToken 만료기간보다 현재 시간이 작다면 로그인 성공
       if (authenticated && new Date().getTime() < expireTime) {
-        setIsAuth("Success");
+        setIsAuth(true);
         console.log("로그인 성공 (인증 / 만료기간): ", isAuth);
       } else {
         //refreshToken으로 accessToken을 다시 불러준다.
@@ -38,7 +39,7 @@ const Check = () => {
         if (response.status) {
           // store에 다시 Access Token 저장
           dispatch(SET_TOKEN(response.json.accessToken));
-          setIsAuth("Success");
+          setIsAuth(true);
           console.log(
             "로그인 성공 (refreshToken으로 accessToken 가져옴) : ",
             isAuth
@@ -47,7 +48,7 @@ const Check = () => {
           //백요청 실패 Token 일괄 삭제, 로그인 실패
           dispatch(DELETE_TOKEN());
           removeCookieToken();
-          setIsAuth("Failed");
+          setIsAuth(false);
           console.log("로그인 실패(토큰 다 삭제) : ", isAuth);
         }
       }
@@ -69,52 +70,38 @@ const Check = () => {
     //refreshToken
     checkRefresh();
     //윈도우 실행 전에 자동 로그인
-    window.addEventListener("beforeunload", () => {
+    window.addEventListener("load", () => {
       const autoLoginKey = getValueOnLocalStorage("AutoLogin");
-      if (!autoLoginKey) {
+      console.log("자동로그인", autoLoginKey);
+      if (autoLoginKey === false) {
         dispatch(DELETE_TOKEN());
         removeCookieToken();
+      } else {
+        checkRefresh();
       }
       return () => {
-        //unmount때
-        window.removeEventListener("beforeunload", () => {
-          const autoLoginKey = getValueOnLocalStorage("AutoLogin");
-          if (!autoLoginKey) {
-            console.log(autoLoginKey);
-            dispatch(DELETE_TOKEN());
-            removeCookieToken();
-          }
-        });
+        // //unmount때
+        // window.removeEventListener("beforeunload", () => {
+        //   const autoLoginKey = getValueOnLocalStorage("AutoLogin");
+        //   if (!autoLoginKey) {
+        //     console.log(autoLoginKey);
+        //     dispatch(DELETE_TOKEN());
+        //     removeCookieToken();
+        //   }
+        // });
       };
     });
   }, []);
 
   useEffect(() => {
     //로그인 체크 후 회원정보
-    if (isAuth === "Success") {
+    if (isAuth === true) {
       onSetUserData(accessToken);
       console.log("회원정보 : 등록 성공 ");
-    } else if (isAuth === "Failed") {
+    } else if (isAuth === false) {
       console.log("회원정보 : 등록 실패 ");
     }
   }, [isAuth]);
 
-  return (
-    <div>
-      {refreshToken ? (
-        <div
-          style={{
-            width: 500,
-            height: 200,
-            border: "2px solid black",
-            backgroundColor: "white",
-          }}
-        >
-          <Link to="/logout">테스트 로그아웃</Link>
-        </div>
-      ) : null}
-    </div>
-  );
+  return;
 };
-
-export default Check;
