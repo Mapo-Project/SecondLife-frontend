@@ -7,10 +7,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { DELETE_TOKEN, SET_TOKEN } from "../store/Auth";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SET_USER } from "../store/UserData";
 
-export const Check = () => {
+const Check = () => {
   //로그인 체크
   const { login } = useSelector((state) => state.user);
   const [isAuth, setIsAuth] = useState(login);
@@ -66,31 +66,19 @@ export const Check = () => {
     }
   };
 
+  // 자동 로그인
+  const onDeletUser = (auto) => {
+    if (auto === false) {
+      dispatch(DELETE_TOKEN());
+      removeCookieToken();
+    } else {
+      console.log("자동로그인 상태 :", auto);
+    }
+  };
+
   useEffect(() => {
     //refreshToken
     checkRefresh();
-    //윈도우 실행 전에 자동 로그인
-    window.addEventListener("load", () => {
-      const autoLoginKey = getValueOnLocalStorage("AutoLogin");
-      console.log("자동로그인", autoLoginKey);
-      if (autoLoginKey === false) {
-        dispatch(DELETE_TOKEN());
-        removeCookieToken();
-      } else {
-        checkRefresh();
-      }
-      return () => {
-        // //unmount때
-        // window.removeEventListener("beforeunload", () => {
-        //   const autoLoginKey = getValueOnLocalStorage("AutoLogin");
-        //   if (!autoLoginKey) {
-        //     console.log(autoLoginKey);
-        //     dispatch(DELETE_TOKEN());
-        //     removeCookieToken();
-        //   }
-        // });
-      };
-    });
   }, []);
 
   useEffect(() => {
@@ -103,5 +91,21 @@ export const Check = () => {
     }
   }, [isAuth]);
 
+  useEffect(() => {
+    //윈도우 실행 전에 자동 로그인
+    window.addEventListener("load", () => {
+      const autoLoginKey = getValueOnLocalStorage("AutoLogin");
+      onDeletUser(autoLoginKey);
+      return () => {
+        //unmount때
+        window.removeEventListener("beforeunload", () => {
+          const autoLoginKey = getValueOnLocalStorage("AutoLogin");
+          onDeletUser(autoLoginKey);
+        });
+      };
+    });
+  }, []);
   return;
 };
+
+export default Check;

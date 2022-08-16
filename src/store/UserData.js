@@ -12,9 +12,14 @@ export const userSlice = createSlice({
       state.data = action.payload;
       console.log("회원정보 저장소: ", state.data);
     },
+    DELETE_USER: (state) => {
+      state.login = false;
+      state.data = null;
+      console.log("회원정보 저장소: ", state.data);
+    },
   },
 });
 
-export const { SET_USER } = userSlice.actions;
+export const { SET_USER, DELETE_USER } = userSlice.actions;
 
 export default userSlice.reducer;

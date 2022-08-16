@@ -8,18 +8,13 @@ import Logout from "./pages/Logout";
 import SimpleLogin from "./auth/SimpleLogin";
 import AdditionalUserInform from "./pages/AdditionalUserInform";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { Check } from "./auth/Check";
 
 function App() {
+  //로그인 체크
   const { login } = useSelector((state) => state.user);
-  useEffect(() => {
-    console.log("login", login);
-  }, [login]);
   return (
     <>
       <GlobalStyle />
-      <Check />
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<Home />} />
