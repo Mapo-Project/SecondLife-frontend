@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { removeCookieToken } from "../storage/Cookie";
 import { DELETE_TOKEN } from "../store/Auth";
 import { logoutUser, setValueOnLocalStorage } from "../api/User";
+import { DELETE_USER } from "../store/UserData";
 
 const Logout = () => {
   // store에 저장된 Access Token 정보를 받아 온다
@@ -20,10 +21,11 @@ const Logout = () => {
       // 자동 로그인 취소
       setValueOnLocalStorage("AutoLogin", false);
       dispatch(DELETE_TOKEN());
+      dispatch(DELETE_USER());
       removeCookieToken();
       return navigate("/login");
     } else {
-      window.location.reload();
+      // window.location.reload();
       console.log("실패");
     }
   }

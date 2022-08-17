@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import CryptoJS from "crypto-js";
+import { Link } from "react-router-dom";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 const BACKEND = "https://hee-backend.shop:7179";
@@ -43,7 +44,6 @@ const NavbarWrapper = styled.nav`
     padding-left: 37px;
   }
   .navbar-section3 {
-    width: 258px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -291,7 +291,9 @@ const Login = () => {
         <ul className="navbar-section1" />
         <ul className="navbar-section2">
           <li onClick={onGoHome}>
-            <img src={`${imgUrl}logo.svg`} className="logo" alt="logo button" />
+            <Link to="/">
+              <img src={`${imgUrl}LOGO.png`} alt="logo button" />
+            </Link>
           </li>
         </ul>
         <ul className="navbar-section3" />
