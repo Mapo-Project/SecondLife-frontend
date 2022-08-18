@@ -1,8 +1,11 @@
 /* eslint-disable */
+import { Route, Routes, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import TodayClose from "./TodayClose";
 import { useState } from "react";
+import TodayClose from "./TodayClose";
+
+import PickUp from "./PickUp";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
@@ -29,6 +32,8 @@ const Floating = styled.div`
 `;
 
 const PickUpPopup = () => {
+  const navigate = useNavigate();
+
   // store에 저장된 Access Token 정보를 받아 온다
   const { accessToken } = useSelector((state) => state.token);
 
@@ -39,10 +44,10 @@ const PickUpPopup = () => {
       {floatingClose ? null : (
         <Floating
           onClick={() => {
-            alert("옷정리시작");
+            navigate("/pickup");
           }}
         >
-          <img src={`${imgUrl}Star6.png`} alt="" />
+          <img src={`${imgUrl}Star6.png`} alt="옷 정리" />
           <h6>
             옷정리
             <br />
@@ -57,6 +62,9 @@ const PickUpPopup = () => {
           setFloatingClose={setFloatingClose}
         />
       )}
+      <Routes>
+        <Route path="pickup" element={<PickUp />} />
+      </Routes>
     </>
   );
 };
