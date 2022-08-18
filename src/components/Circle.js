@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { theme } from "./../theme";
+import { useNavigate } from "react-router-dom";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
 
@@ -30,12 +31,14 @@ const Container = styled.div`
   } */
 `;
 const Circle = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <div
         className="circle"
         onClick={() => {
-          alert("옷정리시작");
+          navigate("/pickup");
         }}
       >
         <h6>
