@@ -19,7 +19,7 @@ const Container = styled.div`
   height: 911px;
   grid-template: 40% 25.38% 34.61% / 22.34% 22.34% 19.21% 36.09%;
   cursor: pointer;
-  margin-top:100px;
+  margin-top: 100px;
   margin-bottom: 100px;
   .item {
     height: 100%;
@@ -58,9 +58,10 @@ const Container = styled.div`
     border-right: 2px solid ${({ theme }) => theme.colors.black};
     display: flex;
     align-items: center;
+    text-align: center;
     justify-content: center;
     span {
-      ${({ theme }) => theme.korean.body2};
+      ${({ theme }) => theme.korean.headline6};
       color: ${({ theme }) => theme.colors.white};
       text-shadow: -1px 0 black, 0px 1px black, 1px 0px black, 0px -1px black;
       /* -webkit-text-stroke: 1px black */
@@ -105,19 +106,19 @@ const BottomBanners = () => {
       <Container>
         <div
           className="item"
-            onClick={() => {
-              navigate("/");
-            }}
+          onClick={() => {
+            navigate("/");
+          }}
         ></div>
 
         <div className="item"></div>
         <div className="item"></div>
         <div className="item">
           <span>
-            힘들게 한 옷정리
+            힘들게 한 옷 정리,
             <br />
             판매는
-            <br /> 빠르고 쉽게
+            <br /> 빠르고 쉽게!
           </span>
         </div>
         <div className="item"></div>

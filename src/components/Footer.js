@@ -11,7 +11,7 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 
-const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
+const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
 const Container = styled.div`
   max-height: 1920px;
@@ -61,6 +61,7 @@ const Button = styled.button`
   border-radius: 100px;
   border: none;
   margin-right: 17.47px;
+  cursor: pointer;
   .icon {
     margin-right: 21.35px;
   }
@@ -77,18 +78,18 @@ const FooterRight1 = styled.div`
     ${({ theme }) => theme.english.headline6};
     color: ${({ theme }) => theme.colors.gray900};
     white-space: nowrap;
+    cursor: pointer;
   }
   ul {
     margin-bottom: 7.03px;
     color: ${({ theme }) => theme.colors.gray900};
     li {
       margin-bottom: 15px;
-      a {
-        margin-right: 33.93px;
-        ${({ theme }) => theme.korean.body2};
-      }
-      a:nth-child(4) {
-        margin-right: 0px;
+      margin-right: 33.93px;
+      ${({ theme }) => theme.korean.body2};
+      cursor: pointer;
+      .SNS {
+        margin-right: 30px;
       }
     }
   }
@@ -113,7 +114,7 @@ const Footer = () => {
       <FooterSection>
         <SectionTop>
           <FooterLeft>
-            <img src={`${imgUrl}LOGO.png`} alt="" />
+            <img src={`${imgUrl}LogoFrame.png`} alt="" />
             <Body1>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
               voluptate voluptates officia voluptatum harum eveniet
@@ -134,72 +135,48 @@ const Footer = () => {
             <FooterRight1>
               <h6 className="title">COMPANY</h6>
               <ul>
-                <li>
-                  <a>회사소개</a>
-                </li>
-                <li>
-                  <a>인재채용</a>
-                </li>
-                <li>
-                  <a>Contact Us</a>
-                </li>
-                <li>
-                  <a>Blogs</a>
-                </li>
+                <li>회사소개</li>
+                <li>인재채용</li>
+                <li>Contact Us</li>
+                <li>Blogs</li>
               </ul>
             </FooterRight1>
             <FooterRight1>
               <h6 className="title">HELP CENTER</h6>
               <ul>
-                <li>
-                  <a>1:1 문의</a>
-                </li>
-                <li>
-                  <a>마케팅 제휴 | 입점 문의</a>
-                </li>
-                <li>
-                  <a>공지사항</a>
-                </li>
-                <li>
-                  <a>FAQs</a>
-                </li>
-                <li>
-                  <a>고객의 소리</a>
-                </li>
+                <li>1:1 문의</li>
+                <li>마케팅 제휴 | 입점 문의</li>
+                <li>공지사항</li>
+                <li>FAQs</li>
+                <li>고객의 소리</li>
               </ul>
             </FooterRight1>
             <FooterRight1>
               <h6 className="title">CONTACT INFO</h6>
               <ul>
+                <li>Phone: 1234567890</li>
+                <li>Email: company@email.com</li>
+                <li>Location: 100 Smart Street, LA, USA</li>
                 <li>
-                  <a>Phone:1234567890</a>
-                </li>
-                <li>
-                  <a>Email:company@emai.com</a>
-                </li>
-                <li>
-                  <a>Location:100 Samrt Street, LA, USA</a>
-                </li>
-                <li>
-                  <a href="#">
-                    <FontAwesomeIcon icon={faFacebookSquare} size="3x" />
-                  </a>
-                  <a href="#">
-                    <FontAwesomeIcon icon={faTwitter} size="3x" />
-                  </a>
-                  <a href="#">
-                    <FontAwesomeIcon icon={faInstagram} size="3x" />
-                  </a>
-                  <a href="#">
-                    <FontAwesomeIcon icon={faLinkedin} size="3x" />
-                  </a>
+                  <FontAwesomeIcon
+                    icon={faFacebookSquare}
+                    size="3x"
+                    className="SNS"
+                  />
+                  <FontAwesomeIcon icon={faTwitter} size="3x" className="SNS" />
+                  <FontAwesomeIcon
+                    icon={faInstagram}
+                    size="3x"
+                    className="SNS"
+                  />
+                  <FontAwesomeIcon icon={faLinkedin} size="3x" />
                 </li>
               </ul>
             </FooterRight1>
           </FooterRight>
         </SectionTop>
         <SectionBottom>
-          <a href="#">© 2022 마청단 | All rights raserved</a>
+          <a href="#">© 2022 마청단 | All rights reserved</a>
           <a href="#">Created with love by 마청단</a>
         </SectionBottom>
       </FooterSection>

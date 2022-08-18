@@ -5,8 +5,6 @@ import styled from "styled-components";
 import { BrandSectionData } from "../utils/BrandSectiondata";
 import TitleInHome from "./TitleInHome";
 
-const imgUrl = `${process.env.PUBLIC_URL}/assets/images/BottomBanners/`;
-
 const Section = styled.div`
   max-width: 1410px;
   margin-left: auto;
@@ -17,23 +15,29 @@ const Section = styled.div`
     margin-bottom: 100px;
     .brand {
       position: relative;
-      padding-right: 11px;
-      .logo{
+      margin-right: 11px;
+      cursor: pointer;
+      .logo {
         position: absolute;
-        top: 38%; 
-        left:25%;
-        opacity : 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        background: rgba(0, 0, 0, 0.5);
+        cursor: pointer;
       }
     }
-    .brand:hover{
-      opacity: 0.5;
+    .brand:hover > .logo {
+      opacity: 1;
     }
-    .brand:hover > .logo{
-        opacity: 1;
-      }
-    
-    a {
+
+    span {
       ${({ theme }) => theme.english.subtitle2};
+      cursor: pointer;
     }
   }
 `;
@@ -55,7 +59,7 @@ const BrandSection = () => {
                   <img src={brand[i].logo} alt="" />
                 </div>
               </div>
-              <a href="#">#{brand[i].name}</a>
+              <span>#{brand[i].name}</span>
             </div>
           );
         })}
