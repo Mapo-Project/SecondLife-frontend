@@ -171,6 +171,10 @@ const PickUp = () => {
   // console.log("howto", howto);
   // console.log("tre", greenBagNum ? "true" : "false");
 
+  const showGreenBagSize = () => {};
+
+  showGreenBagSize();
+
   const showGreenBagNum = () => {
     let greenBags = [small, medium, large];
     let resultArr = greenBags.filter((bag) => bag !== 0);
@@ -179,7 +183,7 @@ const PickUp = () => {
       return "각 1개";
     }
     let resultToString = resultArr.toString().replace(",", "+");
-    console.log(resultToString);
+    return `${resultToString}개`;
   };
 
   showGreenBagNum();
@@ -292,6 +296,7 @@ const PickUp = () => {
         <BoxTitle onClick={() => handleBoxTitleClick("how")}>
           <p>어떻게 픽업할까요?</p>
           {clothesNum > 0 && `${clothesNum}개`}
+          {showGreenBagNum()}
           {showHowto()}
           {/* <p>Choose your Pick-up Options</p> */}
         </BoxTitle>
