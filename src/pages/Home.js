@@ -10,7 +10,7 @@ import RollingBanner, {
 } from "../components/RollingBanner";
 import TopSellerSection from "../components/TopSellerSection";
 import BottomBanners from "../components/BottomBanner";
-import Circle from "../components/Circle";
+import PickUpBtn from "../components/PickUpBtn";
 import BrandSection from "../components/BrandSection";
 import NewItemSection from "../components/NewItemSection";
 import Footer from "../components/Footer";
@@ -36,7 +36,7 @@ const Home = () => {
       <BrandSection />
       <BottomBanners />
       <Footer />
-      <Circle />
+      <PickUpBtn />
     </>
   );
 };

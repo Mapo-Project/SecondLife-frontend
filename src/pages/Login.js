@@ -163,6 +163,7 @@ const LoginBtn = styled.button`
   font-weight: 700;
   border-radius: 100px;
   margin-top: 10px;
+  cursor: pointer;
 `;
 
 const SimpleLogin = styled.div`
@@ -355,7 +356,13 @@ const Login = () => {
                 로그인
               </LoginBtn>
               <div>
-                <p>아이디/비밀번호 찾기</p>
+                <p
+                  onClick={() => {
+                    alert("준비중...");
+                  }}
+                >
+                  아이디/비밀번호 찾기
+                </p>
                 <p onClick={signUp}>회원가입</p>
               </div>
             </LoginBox>
