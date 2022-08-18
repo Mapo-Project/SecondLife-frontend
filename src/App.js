@@ -20,6 +20,7 @@ function App() {
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/*" element={<Home />} />
           <Route
             path="/signup/*"
             element={login ? <Navigate replace to="/" /> : <SignUp />}
@@ -37,7 +38,6 @@ function App() {
           />
           <Route path="/simple" element={<SimpleLogin />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/pickup" element={<PickUp />} />
           <Route path="/post" element={<PickUpPost />} />
         </Routes>
       </BrowserRouter>

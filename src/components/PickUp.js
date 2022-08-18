@@ -15,6 +15,10 @@ const TopWrapper = styled.div`
   border: 5px solid ${({ theme }) => theme.colors.black};
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
+  position: fixed;
+  right: 129px;
+  bottom: 0px;
+  z-index: 19;
 `;
 
 const CloseBtnWrapper = styled.div`
