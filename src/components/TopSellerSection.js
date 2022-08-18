@@ -256,7 +256,7 @@ const TopSellerSection = () => {
                       </ToggleBtn>
                     </Link>
                   )}
-                  <span>{topSeller[i].HashTag}</span>
+                  <span className="hashtag">#{topSeller[i].name}</span>
                 </div>
                 <div className="bottom">
                   <p>{topSeller[i].ranking}</p>
