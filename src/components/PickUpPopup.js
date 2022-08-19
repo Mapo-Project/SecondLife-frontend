@@ -22,8 +22,8 @@ const Floating = styled.div`
     justify-content: center;
     align-items: center;
     position: fixed;
-    right: 95px;
-    bottom: 135px;
+    right: 75px;
+    bottom: 145px;
     z-index: 19;
     text-align: center;
     ${({ theme }) => theme.korean.headline6};
@@ -47,21 +47,18 @@ const PickUpPopup = () => {
             navigate("/pickup");
           }}
         >
-          <img src={`${imgUrl}Star6.png`} alt="옷 정리" />
+          <img src={`${imgUrl}Pickup.png`} alt="옷 정리" />
           <h6>
-            옷정리
+            안 입는 옷
             <br />
-            시작하기
+            픽업 신청하기
           </h6>
         </Floating>
       )}
-
-      {accessToken ? null : (
-        <TodayClose
-          floatingClose={floatingClose}
-          setFloatingClose={setFloatingClose}
-        />
-      )}
+      <TodayClose
+        floatingClose={floatingClose}
+        setFloatingClose={setFloatingClose}
+      />
       <Routes>
         <Route path="pickup" element={<PickUp />} />
       </Routes>

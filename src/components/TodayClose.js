@@ -6,8 +6,8 @@ const Today = styled.div`
   display: flex;
   align-items: center;
   position: fixed;
-  right: 40px;
-  bottom: 30px;
+  right: 35px;
+  bottom: 50px;
   z-index: 19;
   p {
     ${({ theme }) => theme.korean.body2};

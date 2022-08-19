@@ -46,11 +46,11 @@ const CenterWrapper = styled.div`
 `;
 
 const Logo = styled.div`
-  img {
+  /* img {
     width: 245px;
     height: 112px;
-  }
-  margin-bottom: 38px;
+  } */
+  margin-bottom: 85px;
 `;
 
 const Greeting = styled.h1`
@@ -131,7 +131,7 @@ const FinishSignUp = () => {
       <CenterWrapper>
         <div>
           <Logo>
-            <img src={`${imgURL}icons/logo.svg`} alt="logo" />
+            <img src={`${imgURL}icons/Logo.png`} alt="logo" />
           </Logo>
           <Greeting>환영합니다!</Greeting>
 

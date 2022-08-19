@@ -114,7 +114,7 @@ const Footer = () => {
       <FooterSection>
         <SectionTop>
           <FooterLeft>
-            <img src={`${imgUrl}LogoFrame.png`} alt="" />
+            <img src={`${imgUrl}Logo.png`} alt="" />
             <Body1>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
               voluptate voluptates officia voluptatum harum eveniet

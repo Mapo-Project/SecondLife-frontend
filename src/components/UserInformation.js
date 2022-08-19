@@ -80,10 +80,12 @@ const InputWrapper = styled.div`
   .visible {
     position: absolute;
     right: 0px;
+    cursor: pointer;
   }
   .unvisible {
     position: absolute;
     right: 0px;
+    cursor: pointer;
   }
   position: relative;
   margin-bottom: 30px;
@@ -123,6 +125,8 @@ const Button = styled.input`
   ${({ theme }) => theme.korean.caption};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.gray700};
+  background-color: ${(props) => (props.check ? "#BEBEBE" : "#FFFFFF")};
+
   width: 93px;
   border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
@@ -132,7 +136,7 @@ const Button = styled.input`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background-color: ${({ theme }) => theme.colors.green300};
+    background-color: ${(props) => (props.check ? "" : "#00FF85")};
   }
 `;
 const Submit = styled.sub;
@@ -394,7 +398,7 @@ const UserInformation = () => {
       .then((result) => {
         alert("인증번호가 전송되었습니다.");
         setPhone({ ...phone, code: result.data.code });
-        console.log(result.data);
+        console.log("인증번호 -> " + result.data.code);
         timerReset();
       })
       .catch((result) => {
@@ -661,6 +665,7 @@ const UserInformation = () => {
               disabled={check ? "disabled" : ""}
               onClick={getCertification}
               value="인증번호발급"
+              check={check}
             />
             {/* <span>인증번호발급</span>
             </Button> */}
@@ -684,7 +689,6 @@ const UserInformation = () => {
               disabled={check ? "disabled" : ""}
               className="eye unvisible"
               onClick={() => {
-                console.log(phone);
                 if ((code === "" && code === "") || num === "") {
                   alert("휴대전화 인증이 필요합니다.");
                 } else if (code == code2) {
@@ -693,10 +697,11 @@ const UserInformation = () => {
                   stop();
                   alert("인증되었습니다");
                 } else {
-                  alert("인증번호를 다시 확인해주세요.");
+                  alert("인증번호가 일치하지 않습니다.");
                 }
               }}
               value={check ? "완료" : "확인"}
+              check={check}
             />
             <span className="timer">
               {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
