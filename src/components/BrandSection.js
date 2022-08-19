@@ -4,15 +4,20 @@ import { useState } from "react";
 import styled from "styled-components";
 import { BrandSectionData } from "../utils/BrandSectiondata";
 import TitleInHome from "./TitleInHome";
+import { useRef } from "react";
+import { useDraggable } from "react-use-draggable-scroll";
 
 const Section = styled.div`
   max-width: 1410px;
   margin-left: auto;
   margin-right: auto;
   .content {
-    height: 508px;
     display: flex;
     margin-bottom: 100px;
+    width: 100%;
+    overflow: scroll;
+    scroll-margin-bottom: 0;
+    white-space: nowrap;
     .brand {
       position: relative;
       margin-right: 11px;
@@ -40,16 +45,23 @@ const Section = styled.div`
       cursor: pointer;
     }
   }
+  .content::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const BrandSection = () => {
   let title = "#브랜드 제품 모아보기";
   let [brand] = useState(BrandSectionData);
 
+  //마우스 드래그 스크롤
+  const containerRef = useRef(null);
+  const { events } = useDraggable(containerRef);
+
   return (
     <Section>
       <TitleInHome title={title} />
-      <div className="content">
+      <div className="content" {...events} ref={containerRef}>
         {brand.map((a, i) => {
           return (
             <div className="item" key={i}>

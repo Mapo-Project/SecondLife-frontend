@@ -50,11 +50,11 @@ const Step = styled.div`
 `;
 
 const Logo = styled.div`
-  img {
+  /* img {
     width: 215px;
     height: 112px;
-  }
-  margin-bottom: 7px;
+  } */
+  margin-bottom: 35px;
 `;
 
 const Description = styled.p`
@@ -214,7 +214,7 @@ const Agreement = () => {
       </Step>
       <BottomSection>
         <Logo>
-          <img src={`${iconImgURL}logo.svg`} alt="logo" />
+          <img src={`${iconImgURL}Logo.png`} alt="logo" />
         </Logo>
         <Description>
           지속가능한

@@ -15,6 +15,7 @@ import BrandSection from "../components/BrandSection";
 import NewItemSection from "../components/NewItemSection";
 import Footer from "../components/Footer";
 import Check from "../auth/Check";
+import StepSection from "../components/StepSection";
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
       <RollingBanner type={BannerData[0]}>
         {textData[0]} <span>짃</span> !{textData[1]} <span>짃</span> !
       </RollingBanner>
+      <StepSection />
       <FollowingPDSection />
       <PopularSection />
       <HashtagSection />

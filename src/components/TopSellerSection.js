@@ -59,12 +59,13 @@ const Section = styled.div`
       flex-direction: column;
       align-items: center;
       margin-top: 30px;
-      margin-bottom: 167px;
+      margin-bottom: 155px;
     }
     .top span:nth-child(2) {
       display: inline-block;
       ${({ theme }) => theme.korean.caption};
       color: ${({ theme }) => theme.colors.white};
+      margin-top: 10px;
     }
     .bottom {
       display: flex;
@@ -256,7 +257,7 @@ const TopSellerSection = () => {
                       </ToggleBtn>
                     </Link>
                   )}
-                  <span>{topSeller[i].HashTag}</span>
+                  <span className="hashtag">#{topSeller[i].name}</span>
                 </div>
                 <div className="bottom">
                   <p>{topSeller[i].ranking}</p>
