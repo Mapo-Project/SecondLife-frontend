@@ -1,11 +1,14 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useState } from "react";
 
 const TopWrapper = styled.div`
   width: 420px;
-  /* height: 518px; */
+  height: 518px;
   margin: 0px auto 10px;
-  padding: 20px 24px 20px;
+  padding: 20px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
   h6 {
@@ -58,6 +61,7 @@ const FirstWrapper = styled.div`
   p {
     margin-bottom: 19px;
   }
+  margin-bottom: 20px;
 `;
 
 const InputWrapper = styled.div`
@@ -173,6 +177,9 @@ const BagCounter = styled.div`
   .disable {
     pointer-events: none;
   }
+  .zero {
+    color: ${({ theme }) => theme.colors.gray300};
+  }
 `;
 
 const HowTo = styled.div`
@@ -272,7 +279,7 @@ function GreenBagCounter({
         className="minus"
         onClick={handleMinusClick}
       />
-      <p>{sizeNum} 개</p>
+      <p className={sizeNum === 0 && "zero"}>{sizeNum} 개</p>
       <img
         src={`${imgUrl}icons/bag_plus.png`}
         alt="plus"

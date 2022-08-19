@@ -7,8 +7,8 @@ import { registPickupPlace } from "../api/PickUpApi";
 
 const TopWrapper = styled.div`
   width: 420px;
-  margin: 0px auto 10px;
-  padding: 20px 24px 20px;
+  margin: 10px auto 10px;
+  padding: 20px 24px 22px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
   h6 {
@@ -51,7 +51,7 @@ const SearchSection = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0px 5px 0px 9px;
-  margin-top: 33px;
+  margin-top: 22px;
   p {
     font-family: "Montserrat";
     font-weight: 500;
@@ -130,9 +130,14 @@ const InputWrapper = styled.div`
     line-height: 18px;
     letter-spacing: 0.4px;
     cursor: pointer;
+    border: 2px solid ${({ theme }) => theme.colors.black};
     &.disable {
       background-color: ${({ theme }) => theme.colors.gray300};
       color: ${({ theme }) => theme.colors.gray500};
+    }
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.green300};
+      color: ${({ theme }) => theme.colors.black};
     }
   }
 `;
@@ -156,7 +161,7 @@ const AddressResult = styled.div`
 const RecentSearchWrapper = styled.div`
   margin-top: 35px;
   h6 {
-    margin-bottom: 10.56px;
+    margin-bottom: 10.5px;
   }
 `;
 

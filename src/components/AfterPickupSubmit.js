@@ -1,9 +1,25 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+const TopWrapper = styled.div`
+  margin-top: 24px;
+`;
+
+const CenterWrapper = styled.div`
+  width: 100%;
+  /* background-color: #fff; */
+  position: relative;
+  height: 362px;
+`;
 
 const BtnWrapper = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 0px;
 `;
 
 const Button = styled.div`
@@ -21,14 +37,15 @@ const Button = styled.div`
   font-size: 12px;
   line-height: 18px;
   letter-spacing: 0.4px;
-  margin-right: 49px;
+  cursor: pointer;
+  margin-right: 22px;
 `;
 
 const DescriptionWrapper = styled.div`
   margin: 16px auto 0px;
-  padding: 0px 30px 0px 30px;
+  padding: 0px 32px;
   width: 393px;
-  height: 129px;
+  height: 145px;
   background-color: ${({ theme }) => theme.colors.black};
   border: 8px solid ${({ theme }) => theme.colors.green100};
   border-radius: 50px;
@@ -36,7 +53,7 @@ const DescriptionWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   img {
-    margin-top: 15px;
+    margin-top: 25px;
     width: 12px;
     height: 12px;
     align-self: flex-start;
@@ -67,13 +84,30 @@ const Description = styled.div`
   }
 `;
 
+const Planet = styled.div`
+  width: 100%;
+  height: 320px;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+
+const buttonMargin = { marginTop: "7px" };
+const planetStyle = {
+  backgroundImage: `url(${process.env.PUBLIC_URL}/assets/images/pickUpImg/planet.png)`,
+};
+
 const AfterPickupSubmit = () => {
   return (
-    <>
-      <BtnWrapper>
-        <Button>신청내역 확인하기</Button>
-      </BtnWrapper>
-
+    <TopWrapper>
+      <CenterWrapper>
+        <Planet style={planetStyle} />
+        <BtnWrapper>
+          <Link to="/">
+            <Button>홈으로 이동</Button>
+          </Link>
+          <Button style={buttonMargin}>신청내역 확인하기</Button>
+        </BtnWrapper>
+      </CenterWrapper>
       <DescriptionWrapper>
         <Description>
           <p>픽업신청이 완료되었습니다.</p>
@@ -89,7 +123,7 @@ const AfterPickupSubmit = () => {
           alt=""
         />
       </DescriptionWrapper>
-    </>
+    </TopWrapper>
   );
 };
 

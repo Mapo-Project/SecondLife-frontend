@@ -10,6 +10,7 @@ import PickUpDate from "./PickUpDate";
 import { requestPickup } from "../api/PickUpApi";
 import { useEffect } from "react";
 import AfterPickupSubmit from "./AfterPickupSubmit";
+import { set } from "date-fns";
 
 const TopWrapper = styled.div`
   width: 480px;
@@ -28,7 +29,7 @@ const CloseBtnWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   .close-btn {
-    margin: 8px 9.5px 0 0;
+    margin: 8px 8px 0 0;
   }
   /* background-color: aliceblue; */
 `;
@@ -40,7 +41,7 @@ const CenterContents = styled.div`
   /* background-color: lightblue; */
   .right-contents {
     margin-right: 58px;
-    margin-bottom: 13px;
+    margin-bottom: 20px;
     color: ${({ theme }) => theme.colors.white};
     /* background-color: antiquewhite; */
     .firstP {
@@ -133,7 +134,7 @@ const Box = styled.div`
 `;
 
 const BoxTitle = styled.div`
-  padding: 20px 26px;
+  padding: 18px 26px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -152,7 +153,7 @@ const BoxTitle = styled.div`
 `;
 
 const SubmitBtn = styled.div`
-  margin: 99px auto 0px;
+  margin: 97px auto 0px;
   width: 439px;
   height: 75px;
   background-color: ${({ theme }) => theme.colors.green200};
@@ -180,13 +181,15 @@ const SubmitBtn = styled.div`
   }
 `;
 
+const BoxWrapper = styled.div``;
+
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
 
 const PickUp = () => {
   const { data } = useSelector((state) => state.user);
   const [isLogin, setIsLogin] = useState(false);
   // const name = data.name;
-  const number = "N";
+  const number = 7;
   const [isClicked, setIsClicked] = useState("");
 
   // 픽업 방법 데이터
@@ -295,6 +298,9 @@ const PickUp = () => {
       green_bag_yn: ynResult,
     };
     requestPickup(accessToken, pickUpData);
+    setTimeout(() => {
+      setIsSubmit(true);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -305,7 +311,7 @@ const PickUp = () => {
     }
   }, []);
 
-  const [isNotSubmit, setIsNotSubmit] = useState(true);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   return (
     <TopWrapper>
@@ -378,8 +384,8 @@ const PickUp = () => {
           )}
         </div>
       </CenterContents>
-      {isNotSubmit && (
-        <>
+      {!isSubmit && (
+        <BoxWrapper>
           <Box
             className={
               ((clothesNum > 0 &&
@@ -491,9 +497,9 @@ const PickUp = () => {
                 <p>신청내역 수정은 마이페이지에서 가능합니다.</p>
               </SubmitBtn>
             )}
-        </>
+        </BoxWrapper>
       )}
-      <AfterPickupSubmit />
+      {isSubmit && <AfterPickupSubmit />}
     </TopWrapper>
   );
 };
