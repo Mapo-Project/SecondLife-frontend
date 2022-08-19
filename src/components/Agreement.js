@@ -214,7 +214,7 @@ const Agreement = () => {
       </Step>
       <BottomSection>
         <Logo>
-          <img src={`${iconImgURL}Logo.png`} alt="logo" />
+          <img src={`${iconImgURL}LOGO.png`} alt="logo" />
         </Logo>
         <Description>
           지속가능한

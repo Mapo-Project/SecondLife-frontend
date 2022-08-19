@@ -131,7 +131,7 @@ const FinishSignUp = () => {
       <CenterWrapper>
         <div>
           <Logo>
-            <img src={`${imgURL}icons/Logo.png`} alt="logo" />
+            <img src={`${imgURL}icons/LOGO.png`} alt="logo" />
           </Logo>
           <Greeting>환영합니다!</Greeting>
 

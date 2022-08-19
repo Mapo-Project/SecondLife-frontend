@@ -92,7 +92,7 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="navbar-section2">
-          <img src={`${imgUrl}Logo.png`} className="logo" alt="logo button" />
+          <img src={`${imgUrl}LOGO.png`} className="logo" alt="logo button" />
         </div>
         <ul className="navbar-section3">
           {login ? (
