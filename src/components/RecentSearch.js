@@ -9,8 +9,8 @@ const TopWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e0e2e6;
-  padding-bottom: 11.09px;
-  margin-bottom: 14.92px;
+  padding-bottom: 11px;
+  margin-bottom: 15px;
   :nth-last-child(1) {
     margin-bottom: 0;
   }
@@ -60,8 +60,6 @@ const RecentSearch = ({ fullAdd, setFullAdd, setIsClicked }) => {
     const recentSearchPlace = await selectPickupPlace(accessToken);
     setLocationData(recentSearchPlace);
   };
-
-  console.log(locationData);
 
   useEffect(() => {
     showPickUpPlace();

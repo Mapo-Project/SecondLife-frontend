@@ -5,8 +5,12 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import PickUpOptions from "./PickUpOptions";
 import PickUpLocation from "./PickUpLocation";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import PickUpDate from "./PickUpDate";
+import { requestPickup } from "../api/PickUpApi";
+import { useEffect } from "react";
+import AfterPickupSubmit from "./AfterPickupSubmit";
+import { set } from "date-fns";
 
 const TopWrapper = styled.div`
   width: 480px;
@@ -25,7 +29,7 @@ const CloseBtnWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   .close-btn {
-    margin: 8px 9.5px 0 0;
+    margin: 8px 8px 0 0;
   }
   /* background-color: aliceblue; */
 `;
@@ -37,7 +41,7 @@ const CenterContents = styled.div`
   /* background-color: lightblue; */
   .right-contents {
     margin-right: 58px;
-    margin-bottom: 13px;
+    margin-bottom: 20px;
     color: ${({ theme }) => theme.colors.white};
     /* background-color: antiquewhite; */
     .firstP {
@@ -130,7 +134,7 @@ const Box = styled.div`
 `;
 
 const BoxTitle = styled.div`
-  padding: 20px 26px;
+  padding: 18px 26px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -148,11 +152,43 @@ const BoxTitle = styled.div`
   }
 `;
 
+const SubmitBtn = styled.div`
+  margin: 97px auto 0px;
+  width: 439px;
+  height: 75px;
+  background-color: ${({ theme }) => theme.colors.green200};
+  border: 3px solid #000000;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 27px 0px 23px;
+  cursor: pointer;
+
+  p:nth-child(1) {
+    font-family: "Noto Sans KR";
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+  }
+  p:nth-child(2) {
+    font-family: "Noto Sans KR";
+    font-weight: 350;
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 0.1px;
+  }
+`;
+
+const BoxWrapper = styled.div``;
+
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
 
 const PickUp = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const name = "김뫄뫄";
+  const { data } = useSelector((state) => state.user);
+  const [isLogin, setIsLogin] = useState(false);
+  // const name = data.name;
   const number = 7;
   const [isClicked, setIsClicked] = useState("");
 
@@ -166,10 +202,24 @@ const PickUp = () => {
   const { small, medium, large } = greenBagNum;
   const [howto, setHowto] = useState("");
 
-  // console.log("clothesNum", clothesNum);
-  // console.log("greenBagNum", greenBagNum);
-  // console.log("howto", howto);
-  // console.log("tre", greenBagNum ? "true" : "false");
+  const showGreenBagSize = () => {
+    let sizeArr = [];
+    for (let size in greenBagNum) {
+      if (greenBagNum[size] > 0) {
+        sizeArr.push(size);
+      }
+    }
+    let resultSize = sizeArr
+      .toString()
+      .replaceAll("small", "S")
+      .replaceAll("medium", "M")
+      .replaceAll("large", "L")
+      .replaceAll(",", "+");
+
+    return ` | 그린백 ${resultSize} : `;
+  };
+
+  showGreenBagSize();
 
   const showGreenBagNum = () => {
     let greenBags = [small, medium, large];
@@ -178,8 +228,8 @@ const PickUp = () => {
     if (containOne.length > 1) {
       return "각 1개";
     }
-    let resultToString = resultArr.toString().replace(",", "+");
-    console.log(resultToString);
+    let resultToString = resultArr.toString().replaceAll(",", "+");
+    return `${resultToString}개`;
   };
 
   showGreenBagNum();
@@ -219,14 +269,60 @@ const PickUp = () => {
     }
   };
 
+  const [disabled, setDisabled] = useState(false);
+
+  const greenBagYN = () => {
+    if (disabled) {
+      return "N";
+    } else {
+      return "Y";
+    }
+  };
+
+  const { accessToken } = useSelector((state) => state.token);
+
+  const handleSubmitBtnClick = () => {
+    let ynResult = greenBagYN();
+    let dateResult = `${pickupDate.getUTCFullYear()}-${
+      pickupDate.getUTCMonth() + 1
+    }-${pickupDate.getUTCDate()}`;
+    let pickUpData = {
+      pick_up_num: clothesNum,
+      address: fullAdd,
+      green_bag_s: small,
+      green_bag_m: medium,
+      green_bag_l: large,
+      method_org: howto,
+      pick_up_dt: pickupDate,
+      pick_up_tm: pickupTime,
+      green_bag_yn: ynResult,
+    };
+    requestPickup(accessToken, pickUpData);
+    setTimeout(() => {
+      setIsSubmit(true);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    if (data) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
+
+  const [isSubmit, setIsSubmit] = useState(false);
+
   return (
     <TopWrapper>
       <CloseBtnWrapper>
-        <img
-          className="close-btn"
-          src={`${process.env.PUBLIC_URL}/assets/images/icons/x.png`}
-          alt="close button"
-        />
+        <Link to="/">
+          <img
+            className="close-btn"
+            src={`${process.env.PUBLIC_URL}/assets/images/icons/x.png`}
+            alt="close button"
+          />
+        </Link>
       </CloseBtnWrapper>
       <CenterContents>
         <ProfileImg>
@@ -234,7 +330,7 @@ const PickUp = () => {
             <div
               className="profile-img"
               style={{
-                backgroundImage: `url(${imgUrl}followingListImg/follow2.jpg)`,
+                backgroundImage: `url(${data.profile_img}`,
               }}
             />
           ) : (
@@ -254,7 +350,7 @@ const PickUp = () => {
         <div className="right-contents">
           {isLogin ? (
             <p className="firstP isLogin">
-              {name}님의, {number}번째 옷장 정리로
+              {data.name}님의, {number}번째 옷장 정리로
               <br /> 0000/0000를 절감하셨어요!
             </p>
           ) : (
@@ -279,77 +375,131 @@ const PickUp = () => {
               </p>
             </SaveResult>
           ) : (
-            <Link to="/">
-              <button>
-                <span>픽업과정 보러가기</span>
-                <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
-              </button>
-            </Link>
+            // <Link to="/">
+            <button>
+              <span>픽업과정 보러가기</span>
+              <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
+            </button>
+            // </Link>
           )}
         </div>
       </CenterContents>
-      <Box className={isClicked === "how" && "clicked"}>
-        <BoxTitle onClick={() => handleBoxTitleClick("how")}>
-          <p>어떻게 픽업할까요?</p>
-          {clothesNum > 0 && `${clothesNum}개`}
-          {showHowto()}
-          {/* <p>Choose your Pick-up Options</p> */}
-        </BoxTitle>
-        {isLogin && isClicked === "how" && (
-          <PickUpOptions
-            clothesNum={clothesNum}
-            setClothesNum={setClothesNum}
-            greenBagNum={greenBagNum}
-            setGreenBagNum={setGreenBagNum}
-            howto={howto}
-            setHowto={setHowto}
-          />
-        )}
-      </Box>
-      <Box className={(isClicked === "where" || fullAdd) && "clicked"}>
-        <BoxTitle onClick={() => handleBoxTitleClick("where")}>
-          {fullAdd && isClicked !== "where" ? (
-            <p>어디서</p>
-          ) : (
-            <p>어디서 픽업할까요?</p>
-          )}
-          {fullAdd && isClicked !== "where" && <p>{fullAdd}</p>}
-          {(!fullAdd || isClicked === "where") && <p>Add your Location</p>}
-        </BoxTitle>
-        {isLogin && isClicked === "where" && (
-          <PickUpLocation
-            fullAdd={fullAdd}
-            setFullAdd={setFullAdd}
-            setIsClicked={setIsClicked}
-          />
-        )}
-      </Box>
-      <Box className={(isClicked === "when" || pickupTime) && "clicked"}>
-        <BoxTitle onClick={() => handleBoxTitleClick("when")}>
-          {pickupTime && isClicked !== "when" ? (
-            <p>언제</p>
-          ) : (
-            <p>언제 픽업할까요?</p>
-          )}
-          {pickupTime && isClicked !== "when" && (
-            <>
-              {`${pickupDate.getMonth() + 1}월 ${pickupDate.getDate()}일`}
-              {showPickupTime()}
-            </>
-          )}
-          {(!pickupTime || isClicked === "when") && <p>Select your Date</p>}
-        </BoxTitle>
-        {isClicked === "when" && (
-          <PickUpDate
-            pickupDate={pickupDate}
-            setPickupDate={setPickupDate}
-            tomorrow={tomorrow}
-            pickupTime={pickupTime}
-            setPickupTime={setPickupTime}
-            setIsClicked={setIsClicked}
-          />
-        )}
-      </Box>
+      {!isSubmit && (
+        <BoxWrapper>
+          <Box
+            className={
+              ((clothesNum > 0 &&
+                (small >= 0 || medium >= 0 || large >= 0) &&
+                howto) ||
+                isClicked === "how") &&
+              "clicked"
+            }
+          >
+            <BoxTitle onClick={() => isLogin && handleBoxTitleClick("how")}>
+              {clothesNum > 0 &&
+              (small >= 0 || medium >= 0 || large >= 0) &&
+              howto &&
+              isClicked !== "how" ? (
+                <p>어떻게</p>
+              ) : (
+                <p>어떻게 픽업할까요?</p>
+              )}
+              {clothesNum > 0 &&
+                (small >= 0 || medium >= 0 || large >= 0) &&
+                howto &&
+                isClicked !== "how" &&
+                `${clothesNum}개`}
+              {clothesNum > 0 &&
+                (small > 0 || medium > 0 || large > 0) &&
+                howto &&
+                isClicked !== "how" &&
+                showGreenBagSize()}
+              {clothesNum > 0 &&
+                (small > 0 || medium > 0 || large > 0) &&
+                howto &&
+                isClicked !== "how" &&
+                showGreenBagNum()}
+              {clothesNum > 0 &&
+                (small >= 0 || medium >= 0 || large >= 0) &&
+                howto &&
+                isClicked !== "how" &&
+                showHowto()}
+              {(clothesNum === 0 || !howto || isClicked === "how") && (
+                <p>Choose your Pick-up Options</p>
+              )}
+            </BoxTitle>
+            {isLogin && isClicked === "how" && (
+              <PickUpOptions
+                clothesNum={clothesNum}
+                setClothesNum={setClothesNum}
+                greenBagNum={greenBagNum}
+                setGreenBagNum={setGreenBagNum}
+                howto={howto}
+                setHowto={setHowto}
+                disabled={disabled}
+                setDisabled={setDisabled}
+                setIsClicked={setIsClicked}
+              />
+            )}
+          </Box>
+          <Box className={(isClicked === "where" || fullAdd) && "clicked"}>
+            <BoxTitle onClick={() => isLogin && handleBoxTitleClick("where")}>
+              {fullAdd && isClicked !== "where" ? (
+                <p>어디서</p>
+              ) : (
+                <p>어디서 픽업할까요?</p>
+              )}
+              {fullAdd && isClicked !== "where" && <p>{fullAdd}</p>}
+              {(!fullAdd || isClicked === "where") && <p>Add your Location</p>}
+            </BoxTitle>
+            {isLogin && isClicked === "where" && (
+              <PickUpLocation
+                fullAdd={fullAdd}
+                setFullAdd={setFullAdd}
+                setIsClicked={setIsClicked}
+              />
+            )}
+          </Box>
+          <Box className={(isClicked === "when" || pickupTime) && "clicked"}>
+            <BoxTitle onClick={() => isLogin && handleBoxTitleClick("when")}>
+              {pickupTime && isClicked !== "when" ? (
+                <p>언제</p>
+              ) : (
+                <p>언제 픽업할까요?</p>
+              )}
+              {pickupTime && isClicked !== "when" && (
+                <>
+                  {`${pickupDate.getMonth() + 1}월 ${pickupDate.getDate()}일`}
+                  {showPickupTime()}
+                </>
+              )}
+              {(!pickupTime || isClicked === "when") && <p>Select your Date</p>}
+            </BoxTitle>
+            {isLogin && isClicked === "when" && (
+              <PickUpDate
+                pickupDate={pickupDate}
+                setPickupDate={setPickupDate}
+                tomorrow={tomorrow}
+                pickupTime={pickupTime}
+                setPickupTime={setPickupTime}
+                setIsClicked={setIsClicked}
+              />
+            )}
+          </Box>
+          {clothesNum > 0 &&
+            (small >= 0 || medium >= 0 || large >= 0) &&
+            howto &&
+            fullAdd &&
+            pickupDate &&
+            pickupTime && (
+              <SubmitBtn onClick={handleSubmitBtnClick}>
+                <p>신청하기</p>
+                <p>신청내역 수정은 마이페이지에서 가능합니다.</p>
+              </SubmitBtn>
+            )}
+        </BoxWrapper>
+      )}
+      {isSubmit && <AfterPickupSubmit />}
     </TopWrapper>
   );
 };

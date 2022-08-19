@@ -224,13 +224,13 @@ const PickUpDate = ({
               className={pickupTime === "03" && "active"}
               onClick={() => handlePickupTimeClick("03")}
             >
-              18:00 PM - 22:00 PM
+              14:00 PM - 19:00 PM
             </Button>
             <Button
               className={pickupTime === "04" && "active"}
               onClick={() => handlePickupTimeClick("04")}
             >
-              14:00 PM - 19:00 PM
+              18:00 PM - 22:00 PM
             </Button>
           </Buttons>
         </ButtonsWrapper>
