@@ -61,8 +61,6 @@ const RecentSearch = ({ fullAdd, setFullAdd, setIsClicked }) => {
     setLocationData(recentSearchPlace);
   };
 
-  console.log(locationData);
-
   useEffect(() => {
     showPickUpPlace();
   }, [accessToken]);

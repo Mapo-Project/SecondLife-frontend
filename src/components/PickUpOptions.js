@@ -290,6 +290,9 @@ const PickUpOptions = ({
   setGreenBagNum,
   howto,
   setHowto,
+  disabled,
+  setDisabled,
+  setIsClicked,
 }) => {
   // const [clothesNum, setClothesNum] = useState(0);
   const handleRangeChange = (e) => {
@@ -315,9 +318,10 @@ const PickUpOptions = ({
   // const [howto, setHowto] = useState("");
   const handleHowtoClick = (value) => {
     setHowto(value);
+    setTimeout(() => {
+      setIsClicked("where");
+    }, 1000);
   };
-
-  const [disabled, setDisabled] = useState(false);
 
   const handleDisableClick = () => {
     setDisabled(!disabled);

@@ -1,5 +1,25 @@
 import axios from "axios";
 
+export const requestPickup = async (accessToken, pickupData) => {
+  try {
+    const option = {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await axios.post(
+      `https://hee-backend.shop:7179/pickup/request`,
+      pickupData,
+      option
+    );
+    const data = response.data;
+    console.log(data);
+  } catch (error) {
+    console.log("registPickupPlace Error", error);
+  }
+};
+
 export const selectPickupPlace = async (accessToken) => {
   try {
     const option = {
