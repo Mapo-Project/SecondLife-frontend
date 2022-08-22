@@ -78,6 +78,7 @@ const FollowingList = () => {
   let title = `${username}님이 팔로우한 셀러`;
 
   const { accessToken } = useSelector((state) => state.token);
+  const { data } = useSelector((state) => state.user);
 
   const getUserFollowingList = async (accessToken) => {
     try {
@@ -100,9 +101,10 @@ const FollowingList = () => {
 
   const showUserFollowingList = async () => {
     const data1 = await getUserFollowingList(accessToken);
-    const data2 = await selectUserProfile(accessToken);
+    // const data2 = await selectUserProfile(accessToken);
     setFollowingList(data1);
-    setUsername(data2.json.data.name);
+    // setUsername(data2.json.data.name);
+    setUsername(data.name);
   };
 
   useEffect(() => {

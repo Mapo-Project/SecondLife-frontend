@@ -21,6 +21,8 @@ const FollowingPDSection = () => {
 
   // store에 저장된 Access Token 정보를 받아 온다
   const { accessToken } = useSelector((state) => state.token);
+  // const userData = useSelector((state) => state.user);
+
   // 백으로부터 받은 응답
   const getFollowSellerItems = async (accessToken) => {
     try {
@@ -43,10 +45,11 @@ const FollowingPDSection = () => {
   };
 
   const showFollowSellerItems = async () => {
-    const data = await getFollowSellerItems(accessToken);
+    const data1 = await getFollowSellerItems(accessToken);
     const data2 = await selectUserProfile(accessToken);
-    setFollowSellerItems(data);
+    setFollowSellerItems(data1);
     setUsername(data2.json.data.name);
+    // setUsername(userData.data.name);
   };
 
   useEffect(() => {
