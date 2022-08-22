@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
@@ -395,7 +395,7 @@ const PickUp = () => {
           )}
         </div>
       </CenterContents>
-      {!isSubmit && (
+      {!isSubmit ? (
         <BoxWrapper>
           <Box
             className={
@@ -509,8 +509,9 @@ const PickUp = () => {
               </SubmitBtn>
             )}
         </BoxWrapper>
+      ) : (
+        <AfterPickupSubmit />
       )}
-      {isSubmit && <AfterPickupSubmit />}
     </TopWrapper>
   );
 };

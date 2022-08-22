@@ -8,8 +8,6 @@ import Logout from "./pages/Logout";
 import SimpleLogin from "./auth/SimpleLogin";
 import AdditionalUserInform from "./pages/AdditionalUserInform";
 import { useSelector } from "react-redux";
-import PickUp from "./components/PickUp";
-import PickUpPost from "./components/PickUpPost";
 
 function App() {
   //로그인 체크
@@ -38,7 +36,6 @@ function App() {
           />
           <Route path="/simple" element={<SimpleLogin />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/post" element={<PickUpPost />} />
         </Routes>
       </BrowserRouter>
     </>
