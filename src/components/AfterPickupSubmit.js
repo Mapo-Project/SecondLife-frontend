@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import RollingBanner, {
+  BannerData,
+  textData,
+} from "../components/RollingBanner";
 
 const TopWrapper = styled.div`
   margin-top: 24px;
@@ -89,6 +93,14 @@ const Planet = styled.div`
   height: 320px;
   background-repeat: no-repeat;
   background-position: center;
+  .bannerCenter {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 const buttonMargin = { marginTop: "7px" };
@@ -100,7 +112,11 @@ const AfterPickupSubmit = () => {
   return (
     <TopWrapper>
       <CenterWrapper>
-        <Planet style={planetStyle} />
+        <Planet style={planetStyle}>
+          <div className="bannerCenter">
+            <RollingBanner type={BannerData[3]}>{textData[0]}</RollingBanner>
+          </div>
+        </Planet>
         <BtnWrapper>
           <Link to="/">
             <Button>홈으로 이동</Button>
