@@ -40,6 +40,7 @@ const LeftWrapper = styled.div`
   .logo {
     width: 130px;
     height: 88.21px;
+    margin-top: 10px;
   }
   .menus {
     display: flex;
@@ -104,7 +105,9 @@ const SideNavigation = ({ active, onToggle }) => {
     data.map((datum) => {
       setData(
         data.map((datum) =>
-          datum.id === id ? { ...datum, active: !datum.active } : datum
+          datum.id === id && datum.items
+            ? { ...datum, active: !datum.active }
+            : datum
         )
       );
     });
@@ -116,7 +119,7 @@ const SideNavigation = ({ active, onToggle }) => {
         <TopWrapper>
           <LeftWrapper>
             <img
-              src={`${process.env.PUBLIC_URL}/assets/images/icons/logo.svg`}
+              src={`${process.env.PUBLIC_URL}/assets/images/icons/side_navi_logo.png`}
               className="logo"
               alt="logo"
             />
