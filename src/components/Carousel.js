@@ -9,7 +9,7 @@ const imgUrl = `${process.env.PUBLIC_URL}/assets/images/carouselImg/`;
 const carouselData = [
   {
     id: 1,
-    imgUrl: `${imgUrl}topbanner1.png`,
+    imgUrl: `${imgUrl}topbanner01.png`,
     title: `THE MONSTER \r\n IN OUR CLOSET`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -18,7 +18,7 @@ const carouselData = [
   },
   {
     id: 2,
-    imgUrl: `${imgUrl}topbanner2.jpg`,
+    imgUrl: `${imgUrl}topbanner02.gif`,
     title: `THE MONSTER \r\n IN OUR CLOSET2`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -27,7 +27,7 @@ const carouselData = [
   },
   {
     id: 3,
-    imgUrl: `${imgUrl}topbanner3.jpg`,
+    imgUrl: `${imgUrl}topbanner03.png`,
     title: `THE MONSTER \r\n IN OUR CLOSET3`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -36,7 +36,7 @@ const carouselData = [
   },
   {
     id: 4,
-    imgUrl: `${imgUrl}topbanner4.jpg`,
+    imgUrl: `${imgUrl}topbanner04.png`,
     title: `THE MONSTER \r\n IN OUR CLOSET4`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -45,7 +45,7 @@ const carouselData = [
   },
   {
     id: 5,
-    imgUrl: `${imgUrl}topbanner5.jpg`,
+    imgUrl: `${imgUrl}topbanner05.png`,
     title: `THE MONSTER \r\n IN OUR CLOSET5`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -64,7 +64,7 @@ const SlideWrapper = styled.div`
     height: 100%;
     position: absolute;
     display: none;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     z-index: 10;
@@ -167,7 +167,7 @@ const Carousel = () => {
                 slideIndex === index ? "slide-img active" : "slide-img"
               }
             />
-            <div
+            {/* <div
               className={
                 slideIndex === index
                   ? "slide-contents active"
@@ -180,7 +180,7 @@ const Carousel = () => {
                 {datum.button}
                 <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
               </Link>
-            </div>
+            </div> */}
           </SlideWrapper>
         </Link>
       ))}
