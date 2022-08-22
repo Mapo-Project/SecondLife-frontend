@@ -16,6 +16,9 @@ import NewItemSection from "../components/NewItemSection";
 import Footer from "../components/Footer";
 import Check from "../auth/Check";
 import StepSection from "../components/StepSection";
+import { selectUserProfile } from "../api/User";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   return (
