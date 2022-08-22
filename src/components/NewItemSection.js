@@ -6,6 +6,7 @@ import axios from "axios";
 
 const Section = styled.div`
   max-width: 1410px;
+  margin-top: 135px;
   margin-left: auto;
   margin-right: auto;
   .content {
@@ -15,7 +16,7 @@ const Section = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: space-between;
-    margin-bottom: 135px;
+    /* margin-bottom: 135px; */
     .info {
       position: absolute;
       width: 188px;

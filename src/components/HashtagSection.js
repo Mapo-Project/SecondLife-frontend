@@ -9,7 +9,7 @@ let nonloginTitle = `22 S/S 트렌드 키워드! #${hashtag} 상품 모아보기
 
 const TopWrapper = styled.div`
   width: 1410px;
-  margin: 0px auto 135px;
+  margin: 135px auto 0px;
 `;
 
 const HashtagSection = () => {

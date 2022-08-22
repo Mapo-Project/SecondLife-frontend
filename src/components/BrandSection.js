@@ -11,6 +11,7 @@ const Section = styled.div`
   max-width: 1410px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 102px;
   .content {
     display: flex;
     margin-bottom: 100px;

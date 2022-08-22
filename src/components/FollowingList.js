@@ -12,7 +12,7 @@ import { selectUserProfile } from "../api/User";
 const TopWrapper = styled.div`
   width: 1410px;
   height: 246px;
-  margin: 0 auto 140px;
+  margin: 135px auto 0;
   /* background-color: aliceblue; */
   /* 스크롤바 설정*/
   .items::-webkit-scrollbar {

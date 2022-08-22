@@ -23,7 +23,7 @@ const Section = styled.div`
     overflow: scroll;
     scroll-margin-bottom: 0;
     white-space: nowrap;
-    margin-bottom: 135px;
+    /* margin-bottom: 135px; */
   }
   .container::-webkit-scrollbar {
     display: none;

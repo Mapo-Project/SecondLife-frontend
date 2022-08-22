@@ -9,7 +9,7 @@ let title = "사람들이 많이 스크랩한 인기 상품이에요";
 
 const TopWrapper = styled.div`
   width: 1410px;
-  margin: 0px auto 135px;
+  margin: 135px auto 0px;
 `;
 
 const PopularSection = () => {
