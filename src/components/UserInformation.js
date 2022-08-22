@@ -69,7 +69,6 @@ const InputWrapper = styled.div`
     font-size: 12px;
     line-height: 24px;
     letter-spacing: 0.1px;
-    /* color: ${({ theme }) => theme.colors.gray700}; */
     img {
       margin-right: 6px;
     }
@@ -152,7 +151,6 @@ const BottomSection = styled.div`
 `;
 
 const SignUpBtn = styled.input`
-  /* position: sticky; */
   bottom: 0px;
   margin-top: 66px;
   margin-bottom: 38px;
@@ -206,7 +204,6 @@ const UserInformation = () => {
           `https://hee-backend.shop:7179/user/general/duplicate/id/${user_id}`
         );
         if (response.status === 200) {
-          // console.log(response.data);
           if (response.data.duplicate === "unDuplicate") {
             setCheckIdRes(true);
           } else {
@@ -225,9 +222,6 @@ const UserInformation = () => {
   const handleEyeClick = () => {
     setShowPW(!showPW);
   };
-
-  // 비밀번호 변수
-  // const [password, setPassword] = useState("");
   // 비밀번호 확인 변수
   const [pwChecked, setPwChecked] = useState("");
   // 비밀번호 확인 함수
@@ -237,7 +231,6 @@ const UserInformation = () => {
 
   // 생년월일 자동 하이픈(-) 추가
   const birthRef = useRef();
-  // const [birthNum, setBirthNum] = useState("");
   const changeBirth = (e) => {
     const value = birthRef.current.value.replace(/\D+/g, "");
     const numberLength = 8;
@@ -269,7 +262,6 @@ const UserInformation = () => {
   let navigate = useNavigate();
   // 폼 전송시 실행되는 함수
   const onSubmit = async () => {
-    console.log("onsubmit할때", user);
     // try {
     //비밀번호를 SHA256으로 해싱한다.
     const hash = CryptoJS.SHA256(user.password);
@@ -278,17 +270,19 @@ const UserInformation = () => {
     //패스워드로 다시 반환한다
 
     let newInform = { ...user, password: hashPassword };
-    console.log(newInform);
 
     try {
       const response = await axios.post(
         `https://hee-backend.shop:7179/user/general/signup`,
         newInform
       );
-      console.log(response);
       navigate("/signup/finishSignUp");
     } catch (error) {
-      console.log("encryptPW error:", error);
+      if (error.response.status === 409) {
+        alert("중복된 이메일입니다.");
+        return;
+      }
+      console.log("signup submit error:", error.response);
       alert("회원가입 실패");
     }
   };
@@ -503,9 +497,6 @@ const UserInformation = () => {
                   showPWError: () => {
                     setErrorActive({ ...errorActive, password: true });
                   },
-                  // getPassword: (v) => {
-                  //   setUser({ ...user, password: v });
-                  // },
                 },
                 minLength: 10,
               })}
