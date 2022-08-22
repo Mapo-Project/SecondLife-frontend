@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/carouselImg/`;
+
+const Slide = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
 
 const carouselData = [
   {
@@ -71,6 +80,7 @@ const SlideWrapper = styled.div`
     cursor: pointer;
     top: 0;
     left: 0;
+    animation: ${Slide} 1s linear;
   }
   .slide-contents {
     position: absolute;
