@@ -17,7 +17,7 @@ const korean = {
   headline3: `
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
-    font-size: 48px;
+    font-size: 48px; 
     line-height: 56px;
   `,
   headline4: `
@@ -42,14 +42,14 @@ const korean = {
   `,
   subtitle1: `
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.15px;
   `,
   subtitle2: `
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0.1px;
