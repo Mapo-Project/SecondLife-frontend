@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +23,7 @@ const TopWrapper = styled.div`
   right: 129px;
   bottom: 0px;
   z-index: 19;
+  transition: 0.5s;
 `;
 
 const CloseBtnWrapper = styled.div`
