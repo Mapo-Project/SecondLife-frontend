@@ -21,9 +21,11 @@ const TopWrapper = styled.div`
   border-radius: 20px;
   position: fixed;
   right: 129px;
-  bottom: 0px;
+  bottom: 10px;
   z-index: 19;
-  transition: 0.5s;
+  height: auto;
+  transform: scale(0.95);
+  transform-origin: bottom;
 `;
 
 const CloseBtnWrapper = styled.div`
@@ -119,12 +121,22 @@ const ProfileImg = styled.div`
   }
 `;
 
+const BoxWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+`;
+
 const Box = styled.div`
-  margin: 0px auto 10px;
-  width: 440px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   background-color: ${({ theme }) => theme.colors.bg};
   border: 3px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
+  height: 100%;
   &.clicked {
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.black};
@@ -134,7 +146,7 @@ const Box = styled.div`
   }
 `;
 
-const BoxTitle = styled.div`
+const BoxTitle = styled.span`
   padding: 18px 26px;
   display: flex;
   justify-content: space-between;
@@ -181,8 +193,6 @@ const SubmitBtn = styled.div`
     letter-spacing: 0.1px;
   }
 `;
-
-const BoxWrapper = styled.div``;
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
 
