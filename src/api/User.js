@@ -59,7 +59,7 @@ export const loginUser = async (credentials) => {
   }
 };
 
-// 백으로 로그아웃 요청
+// 백으로 로그아웃 요
 export const logoutUser = async (accessToken) => {
   const option = {
     method: "POST",

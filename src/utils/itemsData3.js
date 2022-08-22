@@ -3,38 +3,38 @@ const imgUrl = `${process.env.PUBLIC_URL}/assets/images/itemImg/`;
 export const itemsData3 = [
   {
     id: 1,
-    imgUrl: `${imgUrl}neon_shoes.jpg`,
+    product_img: `${imgUrl}neon_shoes.jpg`,
     size: "270mm",
     price: 9000,
   },
   {
     id: 2,
-    imgUrl: `${imgUrl}neon_beanie.jpg`,
+    product_img: `${imgUrl}neon_beanie.jpg`,
     size: "M",
     price: 12000,
   },
   {
     id: 3,
-    imgUrl: `${imgUrl}neon_tshirt.jpg`,
+    product_img: `${imgUrl}neon_tshirt.jpg`,
     size: "L",
     price: 5000,
   },
   {
     id: 4,
-    imgUrl: `${imgUrl}neon_shoes.jpg`,
-    size: "270mm",
+    product_img: `${imgUrl}neon_bag.jpg`,
+    size: "M",
     price: 9000,
   },
   {
     id: 5,
-    imgUrl: `${imgUrl}neon_beanie.jpg`,
-    size: "M",
+    product_img: `${imgUrl}neon_shoes1.jpg`,
+    size: "260mm",
     price: 12000,
   },
   {
     id: 6,
-    imgUrl: `${imgUrl}neon_tshirt.jpg`,
-    size: "L",
+    product_img: `${imgUrl}neon_shoes2.jpg`,
+    size: "255mm",
     price: 5000,
   },
 ];

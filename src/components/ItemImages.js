@@ -88,7 +88,7 @@ const ItemImages = ({ items }) => {
               <div
                 className="item-img"
                 style={{
-                  backgroundImage: `url(${item.imgUrl})`,
+                  backgroundImage: `url(${item.product_img})`,
                 }}
               />
             </ItemWrapper>
