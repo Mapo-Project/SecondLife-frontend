@@ -30,7 +30,7 @@ const StepSection = () => {
       <Content>
         {step.map((a, i) => {
           return (
-            <div>
+            <div key={i}>
               <img src={step[i].url} alt="step" />
             </div>
           );
