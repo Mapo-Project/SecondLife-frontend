@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/SecondLife-frontend/static/css/main.07b14217.css",
-    "main.js": "/SecondLife-frontend/static/js/main.0acb0f69.js",
+    "main.css": "/SecondLife-frontend/static/css/main.b2538a00.css",
+    "main.js": "/SecondLife-frontend/static/js/main.b6e89536.js",
     "index.html": "/SecondLife-frontend/index.html",
-    "main.07b14217.css.map": "/SecondLife-frontend/static/css/main.07b14217.css.map",
-    "main.0acb0f69.js.map": "/SecondLife-frontend/static/js/main.0acb0f69.js.map"
+    "main.b2538a00.css.map": "/SecondLife-frontend/static/css/main.b2538a00.css.map",
+    "main.b6e89536.js.map": "/SecondLife-frontend/static/js/main.b6e89536.js.map"
   },
   "entrypoints": [
-    "static/css/main.07b14217.css",
-    "static/js/main.0acb0f69.js"
+    "static/css/main.b2538a00.css",
+    "static/js/main.b6e89536.js"
   ]
 }
