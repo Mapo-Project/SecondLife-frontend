@@ -488,7 +488,7 @@ const AdditionalUserInform = () => {
               onChange={onChangeInput}
             />
           </InputWrapper>
-          <SignUpBtn type="submit" value="회원가입 하기" />
+          <SignUpBtn type="submit" value="가입하기" />
         </form>
       </BottomSection>
     </TopWrapper>

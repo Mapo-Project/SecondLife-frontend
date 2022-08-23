@@ -769,7 +769,7 @@ const UserInformation = () => {
               onChange={onChangeInput}
             />
           </InputWrapper>
-          <SignUpBtn type="submit" value="동의하기" />
+          <SignUpBtn type="submit" value="가입하기" />
         </form>
       </BottomSection>
     </>

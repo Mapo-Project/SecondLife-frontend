@@ -181,7 +181,7 @@ const PickUpDate = ({
     setPickupTime(time);
     setTimeout(() => {
       setIsClicked("");
-    }, 1000);
+    }, 500);
   };
 
   return (
