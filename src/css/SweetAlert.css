@@ -1,17 +1,18 @@
-.swal2-styled.swal2-confirm {
+.alert-button {
+  width: 75px;
+  margin: 0.3125em;
+  padding: 0.625em 1.1em;
+  transition: box-shadow 0.1s;
+  box-shadow: 0 0 0 3px transparent;
   color: black;
-  background-color: #ffffff;
+  background-color: white;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1em;
+  border-radius: 5px;
   border-width: 2px;
-  border-style: outset;
-  border-color: buttonborder;
-  /* font-family: "Noto Sans KR", sans-serif; */
+  border-color: black;
+  cursor: pointer;
 }
-.swal2-styled.swal2-confirm:hover {
+.alert-button:hover {
   background-color: #00ff85;
-}
-.swal2-popup .swal2-styled:focus {
-  box-shadow: none;
-}
-.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
-  background-image: none;
 }
