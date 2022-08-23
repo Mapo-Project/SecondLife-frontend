@@ -9,6 +9,7 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-x: hidden;
 
   .carousel {
     /* background-color: lightpink; */
