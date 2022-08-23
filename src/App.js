@@ -6,9 +6,8 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import SimpleLogin from "./auth/SimpleLogin";
-import AdditionalUserInform from "./pages/AdditionalUserInform";
 import { useSelector } from "react-redux";
-import PickUp from "./components/PickUp";
+import SimpleSignUp from "./pages/SimpleSignUp";
 
 function App() {
   //로그인 체크
@@ -25,7 +24,8 @@ function App() {
             element={login ? <Navigate replace to="/" /> : <SignUp />}
           />
           <Route path="/signup/finishSignUp" element={<FinishSignUp />} />
-          <Route path="/signup/add" element={<AdditionalUserInform />} />
+          <Route path="/simple" element={<SimpleLogin />} />
+          <Route path="/simple/signup" element={<SimpleSignUp />} />
           <Route
             path="/login"
             element={login ? <Navigate replace to="/" /> : <Login />}
@@ -35,7 +35,6 @@ function App() {
             path="/simple"
             element={login ? <Navigate replace to="/" /> : <SimpleLogin />}
           />
-          <Route path="/simple" element={<SimpleLogin />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
       </BrowserRouter>
