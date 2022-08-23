@@ -168,7 +168,7 @@ const Carousel = () => {
 
   return (
     <div className="carousel">
-      {carouselData.map((datum, index) => (
+      {/* {carouselData.map((datum, index) => (
         <Link to="/" key={datum.id}>
           <SlideWrapper>
             <div
@@ -177,7 +177,7 @@ const Carousel = () => {
                 slideIndex === index ? "slide-img active" : "slide-img"
               }
             />
-            {/* <div
+            <div
               className={
                 slideIndex === index
                   ? "slide-contents active"
@@ -190,10 +190,51 @@ const Carousel = () => {
                 {datum.button}
                 <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
               </Link>
-            </div> */}
+            </div>
           </SlideWrapper>
         </Link>
-      ))}
+      ))} */}
+      <Link to="/">
+        <SlideWrapper>
+          <div
+            style={{ backgroundImage: `url(${imgUrl}topbanner01.png)` }}
+            className={slideIndex === 0 ? "slide-img active" : "slide-img"}
+          />
+        </SlideWrapper>
+      </Link>
+      <Link to="/">
+        <SlideWrapper>
+          <div className={slideIndex === 1 ? "slide-img active" : "slide-img"}>
+            <video autoPlay muted loop>
+              <source src={`${imgUrl}topbanner2.mp4`} type="video/mp4" />
+            </video>
+          </div>
+        </SlideWrapper>
+      </Link>
+      <Link to="/">
+        <SlideWrapper>
+          <div
+            style={{ backgroundImage: `url(${imgUrl}topbanner03.png)` }}
+            className={slideIndex === 2 ? "slide-img active" : "slide-img"}
+          />
+        </SlideWrapper>
+      </Link>
+      <Link to="/">
+        <SlideWrapper>
+          <div
+            style={{ backgroundImage: `url(${imgUrl}topbanner04.png)` }}
+            className={slideIndex === 3 ? "slide-img active" : "slide-img"}
+          />
+        </SlideWrapper>
+      </Link>
+      <Link to="/">
+        <SlideWrapper>
+          <div
+            style={{ backgroundImage: `url(${imgUrl}topbanner05.png)` }}
+            className={slideIndex === 4 ? "slide-img active" : "slide-img"}
+          />
+        </SlideWrapper>
+      </Link>
       <BtnWrapper>
         {carouselData.map((datum, index) => {
           return (
