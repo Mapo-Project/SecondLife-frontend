@@ -341,7 +341,10 @@ const UserInformation = () => {
       icon: "success",
       text: text,
       confirmButtonText: "닫기",
-      confirmButtonColor: "#00FF85",
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: "alert-button",
+      },
     });
   };
   const FailAlert = (props) => {
@@ -350,6 +353,10 @@ const UserInformation = () => {
       icon: "error",
       html: text,
       confirmButtonText: "닫기",
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: "alert-button",
+      },
     });
   };
 
