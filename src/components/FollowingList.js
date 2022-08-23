@@ -58,6 +58,15 @@ const ItemWrapper = styled.div`
   position: relative;
 `;
 
+const FollowingImg = styled.div`
+  width: 124px;
+  height: 124px;
+  margin-bottom: 10px;
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
 const Circle = styled.div`
   width: 15px;
   height: 15px;
@@ -122,7 +131,10 @@ const FollowingList = () => {
               <ItemWrapper key={datum.following_user_id}>
                 {parseInt(datum.product_count) > 0 && <Circle />}
                 <Link to="/">
-                  <img src={datum.profile_img} alt={datum.name} />
+                  {/* <img src={datum.profile_img} alt={datum.name} /> */}
+                  <FollowingImg
+                    style={{ backgroundImage: `url(${datum.profile_img})` }}
+                  />
                   <h5>{datum.name}</h5>
                 </Link>
               </ItemWrapper>
