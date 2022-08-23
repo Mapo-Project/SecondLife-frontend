@@ -10,7 +10,6 @@ import PickUpDate from "./PickUpDate";
 import { requestPickup } from "../api/PickUpApi";
 import { useEffect } from "react";
 import AfterPickupSubmit from "./AfterPickupSubmit";
-import { set } from "date-fns";
 
 const TopWrapper = styled.div`
   width: 480px;
@@ -23,9 +22,10 @@ const TopWrapper = styled.div`
   right: 129px;
   bottom: 10px;
   z-index: 19;
-  height: auto;
   transform: scale(0.95);
+  height: auto;
   transform-origin: bottom;
+  transition: 0.5s;
 `;
 
 const CloseBtnWrapper = styled.div`
@@ -127,6 +127,7 @@ const BoxWrapper = styled.div`
   justify-content: center;
   align-content: center;
   flex-direction: column;
+  transition: 0.5s;
 `;
 
 const Box = styled.div`
@@ -136,7 +137,8 @@ const Box = styled.div`
   background-color: ${({ theme }) => theme.colors.bg};
   border: 3px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
-  height: 100%;
+  height: auto;
+  transition: 0.5s;
   &.clicked {
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.black};
@@ -255,9 +257,13 @@ const PickUp = () => {
       return;
     }
   };
+  const [randomData, setRandomData] = useState(
+    Math.floor(Math.random() * 1000)
+  );
 
   const handleBoxTitleClick = (value) => {
     setIsClicked(`${value}`);
+    setRandomData(Math.floor(Math.random() * 1000));
   };
 
   const [fullAdd, setFullAdd] = useState("");
@@ -325,7 +331,7 @@ const PickUp = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   return (
-    <TopWrapper>
+    <TopWrapper key={randomData}>
       <CloseBtnWrapper>
         <Link to="/">
           <img

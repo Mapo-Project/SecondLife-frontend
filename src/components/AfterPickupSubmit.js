@@ -1,12 +1,25 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import RollingBanner, {
   BannerData,
   textData,
 } from "../components/RollingBanner";
 
+const anim = keyframes`
+0%{
+transform: scaleY(0);
+opacity: 0.8;
+}
+100%{
+transform: scaleY(1);
+opacity: 1;
+}
+`;
+
 const TopWrapper = styled.div`
   margin-top: 24px;
+  animation: ${anim} 0.5s ease-in-out;
+  transform-origin: top;
 `;
 
 const CenterWrapper = styled.div`
