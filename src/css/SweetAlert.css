@@ -1,0 +1,17 @@
+.swal2-styled.swal2-confirm {
+  color: black;
+  background-color: #ffffff;
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonborder;
+  /* font-family: "Noto Sans KR", sans-serif; */
+}
+.swal2-styled.swal2-confirm:hover {
+  background-color: #00ff85;
+}
+.swal2-popup .swal2-styled:focus {
+  box-shadow: none;
+}
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+  background-image: none;
+}

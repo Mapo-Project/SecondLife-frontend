@@ -78,7 +78,7 @@ const NewItemSection = () => {
         // console.log(result.data.data);
       })
       .catch(() => {
-        alert("조회실패");
+        console.log("조회실패");
       });
   }, []);
 
