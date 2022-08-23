@@ -5,6 +5,8 @@ import { useCallback, useRef, useState } from "react";
 import axios from "axios";
 import DaumPost from "../components/Daumpost";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import "../css/SweetAlert.css";
 
 const BACKEND = "https://hee-backend.shop:7179";
 
@@ -231,7 +233,7 @@ const AdditionalUserInform = () => {
       navigate("/");
     } catch (error) {
       console.log("encryptPW error:", error);
-      alert("간편 회원가입 실패");
+      FailAlert("회원정보를 입력해 주세요.");
     }
   };
 
@@ -266,6 +268,31 @@ const AdditionalUserInform = () => {
   const onPhoneInput = (e) => {
     const { name, value } = e.target;
     setPhone({ ...phone, [name]: value });
+  };
+  //ALERT 라이브러리 추가
+  const SuccessAlert = (props) => {
+    const text = props;
+    Swal.fire({
+      icon: "success",
+      text: text,
+      confirmButtonText: "닫기",
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: "alert-button",
+      },
+    });
+  };
+  const FailAlert = (props) => {
+    const text = props;
+    Swal.fire({
+      icon: "error",
+      html: text,
+      confirmButtonText: "닫기",
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: "alert-button",
+      },
+    });
   };
   //우편번호 API
   const [popup, setPopup] = useState(false);
@@ -324,16 +351,18 @@ const AdditionalUserInform = () => {
     axios
       .get(`${BACKEND}/user/general/signup/auth/phone/test/${phone.num}`)
       .then((result) => {
-        alert("인증번호가 전송되었습니다.");
+        SuccessAlert("입력한 휴대 전화로 인증 번호를 전송했습니다.");
         setPhone({ ...phone, code: result.data.code });
-        console.log(result.data);
+        console.log("인증번호 -> " + result.data.code);
         timerReset();
       })
       .catch((result) => {
         if (result.response.data.statusCode === 409) {
-          alert("이미 존재하는 번호입니다.");
+          FailAlert(
+            "이미 사용 중인 번호입니다.<br> 다른 휴대전화 번호를 입력해주세요."
+          );
         } else {
-          alert("전화번호를 다시 확인해주세요");
+          FailAlert("입력한 휴대전화 번호를 다시 확인해주세요.");
         }
       });
   };
@@ -434,14 +463,16 @@ const AdditionalUserInform = () => {
               onClick={() => {
                 console.log(phone);
                 if ((code === "" && code === "") || num === "") {
-                  alert("휴대전화 인증이 필요합니다.");
+                  FailAlert("인증번호를 먼저 발급받으세요.");
                 } else if (code == code2) {
                   setPhone({ ...phone, check: true });
                   setUser({ ...user, phone_num: num, phone_verify: "Y" });
                   stop();
-                  alert("인증되었습니다");
+                  SuccessAlert("인증이 완료되었습니다.");
                 } else {
-                  alert("인증번호를 다시 확인해주세요.");
+                  FailAlert(
+                    "인증 번호를 다시 입력해주세요.<br> 3분이 지났을 경우 재발급을 받아주세요."
+                  );
                 }
               }}
               value={check ? "완료" : "확인"}

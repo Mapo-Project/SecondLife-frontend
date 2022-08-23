@@ -19,7 +19,7 @@ const TopWrapper = styled.div`
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   position: fixed;
-  right: 129px;
+  right: 40px;
   bottom: 10px;
   z-index: 19;
   transform: scale(0.95);
