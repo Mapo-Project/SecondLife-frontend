@@ -23,7 +23,7 @@ const Logout = () => {
       dispatch(DELETE_TOKEN());
       dispatch(DELETE_USER());
       removeCookieToken();
-      return navigate("/login");
+      return navigate("/");
     } else {
       // window.location.reload();
       console.log("실패");

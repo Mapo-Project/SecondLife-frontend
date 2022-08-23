@@ -21,7 +21,7 @@ const SimpleLogin = () => {
       setRefreshToken(user.refreshToken);
       dispatch(SET_TOKEN(user.accessToken));
       console.log("추가 정보 입력 :", user.verify);
-      return navigate("/signup/add");
+      return navigate("/simple/signup");
     } else if (user === null || undefined) {
       console.log("실패");
       return <p>실패</p>;
