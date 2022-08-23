@@ -38,18 +38,19 @@ const FooterLeft = styled.div`
   align-items: flex-start;
   margin-right: 130px;
   img {
-    margin-bottom: 34px;
+    margin-bottom: 30px;
   }
   div {
     display: flex;
     flex-direction: row;
+    margin-bottom: 66px;
   }
 `;
 const Body1 = styled.p`
   height: 134.93px;
-  ${({ theme }) => theme.english.body1};
+  ${({ theme }) => theme.korean.body1};
   color: ${({ theme }) => theme.colors.gray900};
-  margin-bottom: 9px;
+  margin-top: 58px;
 `;
 
 const Button = styled.button`
@@ -116,8 +117,9 @@ const Footer = () => {
           <FooterLeft>
             <img src={`${imgUrl}LOGO.png`} alt="" />
             <Body1>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
-              voluptate voluptates officia voluptatum harum eveniet
+              환경을 생각하고 나만의 스타일을 찾을 수 있는 2nd LIFE
+              구글플레이스토어와 앱스토어에서 더욱 간편한 세컨드라이프를
+              경험해보세요.
               <br />
             </Body1>
             <div>
