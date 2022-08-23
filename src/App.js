@@ -8,6 +8,7 @@ import Logout from "./pages/Logout";
 import SimpleLogin from "./auth/SimpleLogin";
 import AdditionalUserInform from "./pages/AdditionalUserInform";
 import { useSelector } from "react-redux";
+import PickUp from "./components/PickUp";
 
 function App() {
   //로그인 체크

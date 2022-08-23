@@ -1,9 +1,20 @@
 import styled, { keyframes } from "styled-components";
 import { useState } from "react";
 
+const anim = keyframes`
+0%{
+transform: scaleY(0);
+opacity: 0.9;
+}
+100%{
+transform: scaleY(1);
+opacity: 1;
+}
+`;
+
 const TopWrapper = styled.div`
   width: 420px;
-  height: 518px;
+  /* height: 518px; */
   margin: 0px auto 10px;
   padding: 20px 24px 28px;
   display: flex;
@@ -11,6 +22,8 @@ const TopWrapper = styled.div`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
+  animation: ${anim} 0.5s ease-in-out;
+  transform-origin: top;
   h6 {
     font-family: "Noto Sans KR";
     font-weight: 700;

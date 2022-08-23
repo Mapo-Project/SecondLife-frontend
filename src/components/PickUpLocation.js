@@ -1,9 +1,20 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import PickUpPost from "./PickUpPost";
 import RecentSearch from "./RecentSearch";
 import { useSelector } from "react-redux";
 import { registPickupPlace } from "../api/PickUpApi";
+
+const anim = keyframes`
+0%{
+transform: scaleY(0);
+opacity: 0.9;
+}
+100%{
+transform: scaleY(1);
+opacity: 1;
+}
+`;
 
 const TopWrapper = styled.div`
   width: 420px;
@@ -11,6 +22,8 @@ const TopWrapper = styled.div`
   padding: 20px 24px 22px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
+  animation: ${anim} 0.5s ease-in-out;
+  transform-origin: top;
   h6 {
     font-family: "Noto Sans KR";
     font-weight: 350;

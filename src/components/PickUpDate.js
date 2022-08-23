@@ -1,20 +1,33 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // import Form from "react-bootstrap/Form";
 import { ko } from "date-fns/esm/locale";
 
+const anim = keyframes`
+0%{
+transform: scaleY(0);
+opacity: 0.9;
+}
+100%{
+transform: scaleY(1);
+opacity: 1;
+}
+`;
+
 const TopWrapper = styled.div`
   margin: 0 auto 10px;
   padding: 20px 24px;
   width: 420px;
-  height: 518px;
+  /* height: 518px; */
   background-color: #fff;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  animation: ${anim} 0.5s ease-in-out;
+  transform-origin: top;
 `;
 
 const Title = styled.p`
@@ -170,6 +183,7 @@ const PickUpDate = ({
       setIsClicked("");
     }, 1000);
   };
+
   return (
     <TopWrapper>
       <div>
