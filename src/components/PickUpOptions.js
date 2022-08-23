@@ -35,7 +35,6 @@ const TopWrapper = styled.div`
   .number {
     ${({ theme }) => theme.korean.body1};
     border: 1px solid #8a8a8a;
-    width: 25px;
     height: 25px;
     border-radius: 3px;
     text-align: center;
@@ -340,7 +339,7 @@ const PickUpOptions = ({
     setHowto(value);
     setTimeout(() => {
       setIsClicked("where");
-    }, 1000);
+    }, 500);
   };
 
   const handleDisableClick = () => {
@@ -389,8 +388,11 @@ const PickUpOptions = ({
               max="60"
               value={clothesNum}
               onChange={handleRangeChange}
+              onFocus={() => {
+                setClothesNum("");
+              }}
             />
-            개
+            &nbsp;개
           </div>
         </InputWrapper>
       </FirstWrapper>

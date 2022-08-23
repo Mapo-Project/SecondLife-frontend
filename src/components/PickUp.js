@@ -153,7 +153,10 @@ const BoxTitle = styled.span`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
+  &.isLogin {
+    cursor: pointer;
+  }
   p:nth-child(1) {
     ${({ theme }) => theme.korean.subtitle1};
     ${({ theme }) => theme.korean.gray900};
@@ -206,7 +209,7 @@ const PickUp = () => {
   const [isClicked, setIsClicked] = useState("");
 
   // 픽업 방법 데이터
-  const [clothesNum, setClothesNum] = useState(0);
+  const [clothesNum, setClothesNum] = useState("");
   const [greenBagNum, setGreenBagNum] = useState({
     small: 0,
     medium: 0,
@@ -412,7 +415,10 @@ const PickUp = () => {
               "clicked"
             }
           >
-            <BoxTitle onClick={() => isLogin && handleBoxTitleClick("how")}>
+            <BoxTitle
+              onClick={() => isLogin && handleBoxTitleClick("how")}
+              className={isLogin && "isLogin"}
+            >
               {clothesNum > 0 &&
               (small >= 0 || medium >= 0 || large >= 0) &&
               howto &&
@@ -460,7 +466,10 @@ const PickUp = () => {
             )}
           </Box>
           <Box className={(isClicked === "where" || fullAdd) && "clicked"}>
-            <BoxTitle onClick={() => isLogin && handleBoxTitleClick("where")}>
+            <BoxTitle
+              onClick={() => isLogin && handleBoxTitleClick("where")}
+              className={isLogin && "isLogin"}
+            >
               {fullAdd && isClicked !== "where" ? (
                 <p>어디서</p>
               ) : (
@@ -478,7 +487,10 @@ const PickUp = () => {
             )}
           </Box>
           <Box className={(isClicked === "when" || pickupTime) && "clicked"}>
-            <BoxTitle onClick={() => isLogin && handleBoxTitleClick("when")}>
+            <BoxTitle
+              onClick={() => isLogin && handleBoxTitleClick("when")}
+              className={isLogin && "isLogin"}
+            >
               {pickupTime && isClicked !== "when" ? (
                 <p>언제</p>
               ) : (

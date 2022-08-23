@@ -143,14 +143,15 @@ const InputWrapper = styled.div`
     line-height: 18px;
     letter-spacing: 0.4px;
     cursor: pointer;
-    border: 2px solid ${({ theme }) => theme.colors.black};
     &.disable {
       background-color: ${({ theme }) => theme.colors.gray300};
       color: ${({ theme }) => theme.colors.gray500};
+      pointer-events: none;
     }
     &:hover {
       background-color: ${({ theme }) => theme.colors.green300};
       color: ${({ theme }) => theme.colors.black};
+      border: 2px solid ${({ theme }) => theme.colors.black};
     }
   }
 `;
@@ -200,7 +201,7 @@ const PickUpLocation = ({ fullAdd, setFullAdd, setIsClicked }) => {
     registPickupPlace(accessToken, result);
     setTimeout(() => {
       setIsClicked("when");
-    }, 1000);
+    }, 500);
   };
 
   const handleFullAddClick = () => {
