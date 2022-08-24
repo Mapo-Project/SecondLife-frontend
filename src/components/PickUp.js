@@ -39,11 +39,10 @@ const CloseBtnWrapper = styled.div`
 
 const CenterContents = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   overflow: hidden;
   /* background-color: lightblue; */
   .right-contents {
-    margin-right: 58px;
     margin-bottom: 20px;
     color: ${({ theme }) => theme.colors.white};
     /* background-color: antiquewhite; */
@@ -103,9 +102,9 @@ const SaveResult = styled.div`
 const ProfileImg = styled.div`
   position: relative;
   /* background-color: aliceblue; */
+  margin-right: 30px;
   width: 120px;
   height: 120px;
-  margin-left: 20px;
   .profile-img {
     width: 120px;
     height: 120px;
