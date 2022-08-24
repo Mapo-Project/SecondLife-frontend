@@ -30,6 +30,9 @@ const NavbarWrapper = styled.nav`
     align-items: center;
     border-right: 3px solid ${({ theme }) => theme.colors.black};
     padding-left: 37px;
+    img {
+      margin-bottom: 5px;
+    }
   }
   .navbar-section3 {
     display: flex;
