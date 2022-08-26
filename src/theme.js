@@ -89,6 +89,27 @@ const korean = {
     line-height: 20px;
     letter-spacing: 0.4px;
   `,
+  overline2: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.4px;
+  `,
+  overline4: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 350;
+  font-size: 11px;
+  line-height: 17px;
+  letter-spacing: 0.1px;
+  `,
+  xs: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 8px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  `,
 };
 
 // 영문 폰트 타이포그래피
