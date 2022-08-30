@@ -168,7 +168,7 @@ const Menu = styled.div`
 
 const RightSection = styled.div`
   width: 100%;
-  background-color: lightgreen;
+  /* background-color: lightgreen; */
 `;
 
 const MyPageHeader = styled.div`
