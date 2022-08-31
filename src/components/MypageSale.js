@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { MypageSaledata } from "../utils/MypageSaledata";
+import { MypageSaleData } from "../utils/MypageSaleData";
 
-const imgUrl = `${process.env.PUBLIC_URL}/assets/images/NewItemSection/`;
+const imgUrl = `${process.env.PUBLIC_URL}/assets/images/Mypage/`;
 
 const MypageContent = styled.div`
   /* background-color: pink; */
@@ -58,13 +58,10 @@ const Title = styled.p`
 `;
 
 const List = styled.div`
-  /* background-color: aquamarine; */
   margin: 0 72px 0 63px;
   ul {
-    font-size: 70px;
   }
   li {
-    font-size: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -78,64 +75,71 @@ const List = styled.div`
         height: 18px;
       }
     }
-    .item-wrap {
-      display: flex;
-      width: 100%;
-      padding: 15px 0;
-      border-bottom: 0.5px solid #000000;
-      .item-img {
-        margin-right: 31px;
-        img {
-          width: 100px;
-          height: 100px;
-        }
-      }
-      .item {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        .item-info {
-          display: flex;
-          flex-direction: column;
-          /* margin-right: 103px; */
-          width: 100%;
-          .item-name {
-            ${({ theme }) => theme.korean.headline7};
-          }
-          .item-brand {
-            ${({ theme }) => theme.korean.button};
-            color: ${({ theme }) => theme.colors.gray700};
-          }
-          .item-status {
-            ${({ theme }) => theme.korean.button3};
-            color: ${({ theme }) => theme.colors.gray700};
-            .status {
-              color: ${({ theme }) => theme.colors.black};
-              margin-right: 6px;
-            }
-            .status-value {
-              margin-right: 15px;
-            }
-          }
-        }
-        .item-price {
-          ${({ theme }) => theme.korean.headline7};
-          margin-right: 100px;
-          /* width: 100%; */
-        }
-        .item-button {
-          width: 130px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          ${({ theme }) => theme.korean.overline};
-          a:nth-child(2) {
-            margin: 5px 0;
-          }
-        }
-      }
-    }
+  }
+`;
+
+const ItemWrap = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 15px 0;
+  border-bottom: 0.5px solid #000000;
+`;
+const ItemImg = styled.div`
+  margin-right: 31px;
+  img {
+    width: 100px;
+    height: 100px;
+  }
+`;
+
+const Item = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ItemInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* margin-right: 103px; */
+  width: 80%;
+  .item-name {
+    ${({ theme }) => theme.korean.headline7};
+  }
+  .item-brand {
+    ${({ theme }) => theme.korean.button};
+    color: ${({ theme }) => theme.colors.gray700};
+  }
+`;
+const ItemStatus = styled.div`
+  ${({ theme }) => theme.korean.button3};
+  /* color: red; */
+  color: ${({ theme }) => theme.colors.gray700};
+`;
+const Status = styled.span`
+  margin-right: 6px;
+`;
+const StatusValue = styled.span`
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: 700;
+  margin-right: 15px;
+`;
+
+const ItemPrice = styled.div`
+  ${({ theme }) => theme.korean.headline7};
+  margin-right: 80px;
+  white-space: nowrap;
+`;
+
+const ItemButton = styled.div`
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  ${({ theme }) => theme.korean.overline};
+  a:nth-child(2) {
+    margin: 5px 0;
   }
 `;
 
@@ -150,7 +154,7 @@ const ContentBottom = styled.div`
 `;
 
 const MypageSale = () => {
-  const [saleData] = useState(MypageSaledata);
+  const [saleData] = useState(MypageSaleData);
 
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
@@ -199,7 +203,6 @@ const MypageSale = () => {
             </Button>
           </CenterHeader>
           <CenterCenter className="scroll">
-            {/* 판매중인 상품 내역/등록된 상품 */}
             <List>
               <Title>날짜 + 등록된 상품</Title>
               <ul>
@@ -217,55 +220,46 @@ const MypageSale = () => {
                           checked={checkItems.includes(a.id) ? true : false}
                         />
                       </div>
-                      <div className="item-wrap">
-                        <div className="item-img" key={i}>
+                      <ItemWrap>
+                        <ItemImg key={i}>
                           <a href="#">
                             <img src={a.url} alt="url" />
                           </a>
-                        </div>
-                        <div className="item">
-                          <div className="item-info">
+                        </ItemImg>
+                        <Item>
+                          <ItemInfo>
                             <p className="item-name">{a.name}</p>
                             <span className="item-brand">{a.brand}</span>
                             <span className="item-brand">{a.hashtag}</span>
-                            <div className="item-status">
-                              <span className="status">사이즈</span>
-                              <span className="status-value">{a.size}</span>
-                              <span className="status">상태</span>
-                              <span className="status-value">{a.state}</span>
-                              <span className="status">하트</span>
-                              <span className="status-value">{a.likes}</span>
-                            </div>
-                          </div>
-                          <div className="item-price">{a.price}</div>
-                          <div className="item-button">
+                            <ItemStatus>
+                              <Status>사이즈</Status>
+                              <StatusValue>{a.size}</StatusValue>
+                              <Status>상태</Status>
+                              <StatusValue>{a.state}</StatusValue>
+                              <Status>
+                                <img src={`${imgUrl}heart.png`} alt="" />
+                              </Status>
+                              <StatusValue>{a.likes}</StatusValue>
+                            </ItemStatus>
+                          </ItemInfo>
+                          <ItemPrice>
+                            <span>
+                              {a.price
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              원
+                            </span>
+                          </ItemPrice>
+                          <ItemButton>
                             <a href="#">세일 등록하기</a>
                             <a href="#">포인트 전환하기</a>
                             <a href="#">재활용 전환하기</a>
-                          </div>
-                        </div>
-                      </div>
+                          </ItemButton>
+                        </Item>
+                      </ItemWrap>
                     </li>
                   );
                 })}
-              </ul>
-              <ul>
-                리스트 2<li>111111</li>
-                <li>
-                  <input
-                    type="checkbox"
-                    onChange={(e) => {
-                      console.log(e.currentTarget.checked);
-                    }}
-                  ></input>
-                  222222
-                </li>
-                <li>333333</li>
-                <li>444444</li>
-                <li>55555</li>
-                <li>66666</li>
-                <li>77777</li>
-                <li>888888</li>
               </ul>
             </List>
           </CenterCenter>

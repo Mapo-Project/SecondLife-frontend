@@ -354,7 +354,7 @@ const Mypage = () => {
               <div className="environment">
                 <div className="environment-saved">
                   <div className="environment-title">
-                    <p>지아님이 절약한 물</p>
+                    <p>{data.name}님이 절약한 물</p>
                     <p>Lv. Green</p>
                   </div>
                   <div className="environment-bar">
@@ -368,7 +368,7 @@ const Mypage = () => {
                 </div>
                 <div className="environment-saved">
                   <div className="environment-title">
-                    <p>지아님의 탄소저감량</p>
+                    <p>{data.name}님의 탄소저감량</p>
                     <p>Lv. Green</p>
                   </div>
                   <div className="environment-bar">

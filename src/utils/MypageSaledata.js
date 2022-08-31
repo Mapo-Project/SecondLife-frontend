@@ -1,11 +1,11 @@
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/NewItemSection/`;
 
-export const MypageSaledata = [
+export const MypageSaleData = [
   {
     id: 0,
     name: "네온패턴 부츠컷 부츠컷 부츠컷 ",
-    brand: "The Open Product",
-    hashtag: "#비비드 #부츠컷",
+    brand: "The Open Produasdfsfsafct",
+    hashtag: "#비비드 #부츠컷 #부츠컷 #부츠컷 #부츠컷 #부츠컷 #부츠컷",
     size: "S",
     state: "좋음",
     likes: "3",
@@ -18,9 +18,9 @@ export const MypageSaledata = [
     brand: "The Open Product",
     hashtag: "#비비드 #부츠컷",
     size: "S",
-    state: "좋음",
+    state: "매우 좋음",
     likes: "3",
-    price: "19000",
+    price: "129000",
     url: `${imgUrl}newitem.jpg`,
   },
   {
@@ -29,9 +29,9 @@ export const MypageSaledata = [
     brand: "The Open Product",
     hashtag: "#비비드 #부츠컷",
     size: "S",
-    state: "좋음",
+    state: "보통",
     likes: "3",
-    price: "19000",
+    price: "339000",
     url: `${imgUrl}newitem.jpg`,
   },
   {
@@ -42,7 +42,7 @@ export const MypageSaledata = [
     size: "S",
     state: "좋음",
     likes: "3",
-    price: "19000",
+    price: "49000",
     url: `${imgUrl}newitem.jpg`,
   },
   {
@@ -53,7 +53,7 @@ export const MypageSaledata = [
     size: "S",
     state: "좋음",
     likes: "3",
-    price: "19000",
+    price: "59000",
     url: `${imgUrl}newitem.jpg`,
   },
   {
@@ -64,7 +64,7 @@ export const MypageSaledata = [
     size: "S",
     state: "좋음",
     likes: "3",
-    price: "19000",
+    price: "69000",
     url: `${imgUrl}newitem.jpg`,
   },
   {
@@ -75,7 +75,7 @@ export const MypageSaledata = [
     size: "S",
     state: "좋음",
     likes: "3",
-    price: "19000",
+    price: "79000",
     url: `${imgUrl}newitem.jpg`,
   },
   {
