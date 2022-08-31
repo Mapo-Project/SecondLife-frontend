@@ -46,15 +46,23 @@ const NavbarWrapper = styled.nav`
     padding-right: 32px;
   }
   .navbar-section2 {
+    .search-disappear {
+      display: none;
+    }
     width: calc(100% - 512px);
     animation: ${GetNarrower} 0.3s linear;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
     border-right: 3px solid ${({ theme }) => theme.colors.black};
     padding-left: 37px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     img {
       margin-bottom: 5px;
+    }
+    ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     li {
       ${({ theme }) => theme.english.caption}
@@ -64,7 +72,7 @@ const NavbarWrapper = styled.nav`
     :nth-last-child(1) {
       margin-right: 52px;
     }
-    img {
+    .small-search {
       width: 32px;
       margin-right: 16px;
       cursor: pointer;
@@ -179,6 +187,12 @@ const MypageCircle = styled.div`
   border-radius: 100%;
 `;
 
+const InputWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 
 const Navbar = () => {
@@ -210,13 +224,13 @@ const Navbar = () => {
             onSearch ? "navbar-section2 search-change" : "navbar-section2"
           }
         >
+          <img src={`${imgUrl}LOGO.png`} className="logo" alt="logo button" />
+          {login && (
+            <Btn style={{ marginRight: 50 }}>
+              <Link to="/logout">Log out</Link>
+            </Btn>
+          )}
           <ul className={onSearch && "search-disappear"}>
-            {login && (
-              <Btn style={{ marginRight: 50 }}>
-                <Link to="/logout">Log out</Link>
-              </Btn>
-            )}
-            {/* <img src={`${imgUrl}LOGO.png`} className="logo" alt="logo button" /> */}
             <li>Woman</li>
             <li>Man</li>
             <li>Kids</li>
@@ -224,17 +238,15 @@ const Navbar = () => {
             <li>Community</li>
             <li>Event</li>
           </ul>
-          <input
-            className={!onSearch && "search-disappear"}
-            type="text"
-            placeholder="검색어를 입력하세요."
-          />
-          <img
-            onClick={handleSearchClick}
-            className={!onSearch && "search-disappear"}
-            src={`${imgUrl}search.png`}
-            alt="search button"
-          />
+          <InputWrapper className={!onSearch && "search-disappear"}>
+            <input type="text" placeholder="검색어를 입력하세요." />
+            <img
+              onClick={handleSearchClick}
+              className="small-search"
+              src={`${imgUrl}search.png`}
+              alt="search button"
+            />
+          </InputWrapper>
         </div>
         <ul
           className={
