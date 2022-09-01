@@ -23,9 +23,9 @@ const HashtagSection = () => {
   return (
     <TopWrapper>
       {data ? (
-        <TitleInHome title={loginTitle} />
+        <TitleInHome title={loginTitle} route={"collection/recom"} />
       ) : (
-        <TitleInHome title={nonloginTitle} />
+        <TitleInHome title={nonloginTitle} route={"collection/recom"} />
       )}
       <ItemImages items={itemsData3} />
     </TopWrapper>

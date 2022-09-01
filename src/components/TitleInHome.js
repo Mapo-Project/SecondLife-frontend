@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 const TopWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -38,16 +38,20 @@ const MoreButton = styled.button`
   }
 `;
 
-const TitleInHome = ({ title }) => {
+const TitleInHome = ({ title, route }) => {
+  const navigate = useNavigate();
+
   return (
     <TopWrapper>
       <h6>{title}</h6>
-      <Link to="/">
-        <MoreButton>
-          <span>더보기</span>
-          <FontAwesomeIcon icon={faAngleRight} />
-        </MoreButton>
-      </Link>
+      <MoreButton
+        onClick={() => {
+          navigate(`/${route}`);
+        }}
+      >
+        <span>더보기</span>
+        <FontAwesomeIcon icon={faAngleRight} />
+      </MoreButton>
     </TopWrapper>
   );
 };

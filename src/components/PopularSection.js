@@ -29,7 +29,7 @@ const PopularSection = () => {
   }, []);
   return (
     <TopWrapper>
-      <TitleInHome title={title} />
+      <TitleInHome title={title} route={"collection/popular"} />
       <ItemImages items={popularItems} />
     </TopWrapper>
   );

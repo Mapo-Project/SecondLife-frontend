@@ -55,7 +55,6 @@ const BigHeart = styled.div`
 const ProductImg = styled.div`
   width: 100%;
   height: 100%;
-  background-color: lightgreen;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

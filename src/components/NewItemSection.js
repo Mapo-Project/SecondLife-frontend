@@ -84,7 +84,7 @@ const NewItemSection = () => {
 
   return (
     <Section>
-      <TitleInHome title={title} />
+      <TitleInHome title={title} route={"collection/new"} />
       <div className="content">
         {test.map((a, i) => {
           return (
