@@ -27,6 +27,7 @@ const GetNarrower = keyframes`
 `;
 
 const NavbarWrapper = styled.nav`
+  background-color: ${({ theme }) => theme.colors.bg};
   width: 100%;
   height: 90px;
   display: flex;
@@ -52,7 +53,6 @@ const NavbarWrapper = styled.nav`
     width: calc(100% - 512px);
     animation: ${GetNarrower} 0.3s linear;
     border-right: 3px solid ${({ theme }) => theme.colors.black};
-    padding-left: 37px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -151,6 +151,9 @@ const NavbarWrapper = styled.nav`
   .search-active {
     width: 174px;
   }
+  .logo {
+    margin-left: 37px;
+  }
 `;
 
 const Btn = styled.span`
@@ -188,8 +191,10 @@ const MypageCircle = styled.div`
 `;
 
 const InputWrapper = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 `;
 
@@ -202,7 +207,8 @@ const Navbar = () => {
     setActive(!active);
   };
   const [onSearch, setOnSearch] = useState(false);
-  const handleSearchClick = () => {
+  const handleSearchClick = (event) => {
+    event.stopPropagation();
     setOnSearch(!onSearch);
   };
   return (
@@ -224,7 +230,13 @@ const Navbar = () => {
             onSearch ? "navbar-section2 search-change" : "navbar-section2"
           }
         >
-          <img src={`${imgUrl}LOGO.png`} className="logo" alt="logo button" />
+          <Link to="/">
+            <img
+              src={`${imgUrl}LOGO.png`}
+              className={onSearch ? "logo search-disappear" : "logo"}
+              alt="logo button"
+            />
+          </Link>
           {login && (
             <Btn style={{ marginRight: 50 }}>
               <Link to="/logout">Log out</Link>
@@ -238,8 +250,17 @@ const Navbar = () => {
             <li>Community</li>
             <li>Event</li>
           </ul>
-          <InputWrapper className={!onSearch && "search-disappear"}>
-            <input type="text" placeholder="검색어를 입력하세요." />
+          <InputWrapper
+            className={!onSearch && "search-disappear"}
+            onClick={handleSearchClick}
+          >
+            <input
+              type="text"
+              placeholder="검색어를 입력하세요."
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            />
             <img
               onClick={handleSearchClick}
               className="small-search"
