@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+const Sticker = styled.img`
+  margin-top: 16px;
+  margin-bottom: 35px;
+`;
+
 const MenuTitle = styled.div`
   width: 210px;
   height: 75px;
@@ -30,7 +35,7 @@ const imgUrl = `${process.env.PUBLIC_URL}/assets/images/filterImg/`;
 const FilterMenu = ({ imgName }) => {
   return (
     <>
-      <img src={`${imgUrl}${imgName}.png`} alt="new" />
+      <Sticker src={`${imgUrl}${imgName}.png`} alt="new" />
       <MenuTitle>필터</MenuTitle>
       <MenuList>
         <h3>종류</h3>
