@@ -61,7 +61,7 @@ const BrandSection = () => {
 
   return (
     <Section>
-      <TitleInHome title={title} />
+      <TitleInHome title={title} route={"collection/brand"} />
       <div className="content" {...events} ref={containerRef}>
         {brand.map((a, i) => {
           return (

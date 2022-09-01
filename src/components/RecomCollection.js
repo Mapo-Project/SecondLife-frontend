@@ -74,9 +74,14 @@ const RecomCollection = () => {
         <FilterMenu imgName={"recommend"} />
       </LeftWrapper>
       <RightWrapper>
-        <TitleInFilter
-          title={`${data.name}님이 관심있는 #${hashtag} 상품 모아보기`}
-        />
+        {data ? (
+          <TitleInFilter
+            title={`${data.name}님이 관심있는 #${hashtag} 상품 모아보기`}
+          />
+        ) : (
+          <TitleInFilter title={`#${hashtag} 상품 모아보기`} />
+        )}
+
         <FilterListWrapper>
           <FilterList>
             <li
