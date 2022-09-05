@@ -117,7 +117,11 @@ const BrandCollection = () => {
             <BarSection />
           </ListBar>
         </FilterListWrapper>
-        <ProductList products={products} setProducts={setProducts} />
+        <ProductList
+          products={products}
+          setProducts={setProducts}
+          grid={"1fr 1fr 1fr 1fr 1fr"}
+        />
       </RightWrapper>
     </>
   );

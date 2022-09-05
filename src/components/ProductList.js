@@ -105,9 +105,8 @@ const ProductImg = styled.div`
 
 const TopWrapper = styled.div`
   display: grid;
-  width: 1170px;
+  width: 100%;
   background-color: #fff;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   column-gap: 30px;
   row-gap: 52px;
   margin-top: 28px;
@@ -223,7 +222,7 @@ const ProductImage = ({ elm, products, setProducts }) => {
   );
 };
 
-const ProductList = ({ products, setProducts }) => {
+const ProductList = ({ products, setProducts, grid }) => {
   const handleCartClick = (id) => {
     let result = products.map((product) =>
       product.id === id
@@ -236,8 +235,10 @@ const ProductList = ({ products, setProducts }) => {
     setProducts(result);
   };
 
+  const gridStyle = { gridTemplateColumns: `${grid}` };
+
   return (
-    <TopWrapper>
+    <TopWrapper style={gridStyle}>
       {products.map((elm) => {
         let price = 0;
         if (elm.price) {
@@ -250,8 +251,8 @@ const ProductList = ({ products, setProducts }) => {
               setProducts={setProducts}
               products={products}
             />
-            <h6 style={brandNameStyle}>H&M</h6>
-            <h6>레오파드 맥시스커트</h6>
+            <h6 style={brandNameStyle}>{elm.brand}</h6>
+            <h6>{elm.name}</h6>
             <AboutPrice>
               <h5>{price}원</h5>
               {elm.inCart ? (

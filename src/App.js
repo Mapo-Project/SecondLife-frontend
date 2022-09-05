@@ -10,7 +10,9 @@ import { useSelector } from "react-redux";
 import SimpleSignUp from "./pages/SimpleSignUp";
 import MypageHome from "./components/MypageHome";
 import ProductCollection from "./pages/ProductCollection";
-import FirstDetail from "./components/FirstDetail";
+import Top from "./components/Top";
+import Tshirts from "./components/Tshirts";
+import MTM from "./components/MTM";
 
 function App() {
   //로그인 체크
@@ -23,7 +25,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/*" element={<Home />} />
           <Route path="/collection/*" element={<ProductCollection />} />
-          <Route path="/fdetail" element={<FirstDetail />} />
+          <Route path="/top" element={<Top />} />
+          <Route path="/tshirts" element={<Tshirts />} />
+          <Route path="/mtm" element={<MTM />} />
           <Route
             path="/signup/*"
             element={login ? <Navigate replace to="/" /> : <SignUp />}

@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./Navbar";
+import ProductList from "./ProductList";
+import { newFilterData } from "../utils/newFilterData";
+import TopDetail from "./TopDetail";
+
+const TopWrapper = styled.div`
+  width: 100%;
+  background-color: #fff;
+  padding-bottom: 125px;
+`;
 
 const ContentsWrapper = styled.div`
   width: 1410px;
@@ -12,29 +22,11 @@ const CategoryRoute = styled.ul`
   ${({ theme }) => theme.korean.body2}
   color: ${({ theme }) => theme.gray700};
   margin-top: 16px;
-  margin-bottom: 32px;
-`;
-
-const CategoryList = styled.ul`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: ${({ theme }) => theme.gray900};
-  li {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 167.25px;
-    height: 42px;
-    ${({ theme }) => theme.korean.headline6}
-  }
 `;
 
 const FirstDetail = () => {
   return (
-    <>
+    <TopWrapper>
       <Navbar />
       <ContentsWrapper>
         <CategoryRoute>
@@ -43,19 +35,11 @@ const FirstDetail = () => {
           </Link>
           <li>&nbsp;/ 카테고리</li>
         </CategoryRoute>
-        <CategoryList>
-          <li>아우터</li>
-          <li>상의</li>
-          <li>하의</li>
-          <li>점프수트</li>
-          <li>드레스</li>
-          <li>신발</li>
-          <li>가방</li>
-          <li>기타</li>
-        </CategoryList>
+        <Routes>
+          <Route path="top" element={<TopDetail />} />
+        </Routes>
       </ContentsWrapper>
-      <h3>지금 올라온 상품들</h3>
-    </>
+    </TopWrapper>
   );
 };
 
