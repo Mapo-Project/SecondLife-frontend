@@ -67,7 +67,9 @@ const Top = () => {
         </CategoryRoute>
         <CategoryList>
           <li>아우터</li>
-          <li style={borderStyle}>상의</li>
+          <Link to="/tshirts">
+            <li style={borderStyle}>상의</li>
+          </Link>
           <li>하의</li>
           <li>점프수트</li>
           <li>드레스</li>

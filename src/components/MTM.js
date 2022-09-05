@@ -69,11 +69,15 @@ const MTM = () => {
           <li>&nbsp;/ 상의</li>
         </CategoryRoute>
         <CategoryList>
-          <li>티셔츠</li>
+          <Link to="/tshirts">
+            <li>티셔츠</li>
+          </Link>
           <li>셔츠</li>
           <li>탑</li>
           <li>니트</li>
-          <li style={borderStyle}>맨투맨</li>
+          <Link to="/mtm" style={borderStyle}>
+            <li>맨투맨</li>
+          </Link>
         </CategoryList>
         <CategoryProducts>
           <h3>지금 올라온 상품들</h3>

@@ -46,7 +46,9 @@ const TitleInHome = ({ title, route }) => {
       <h6>{title}</h6>
       <MoreButton
         onClick={() => {
-          navigate(`/${route}`);
+          if (route) {
+            navigate(`/${route}`);
+          }
         }}
       >
         <span>더보기</span>

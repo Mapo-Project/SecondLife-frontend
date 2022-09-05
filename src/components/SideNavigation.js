@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { sideNavigationData } from "../utils/sideNavigationData";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TopWrapper = styled.div`
   position: fixed;
@@ -48,11 +48,14 @@ const LeftWrapper = styled.div`
     /* background-color: gray; */
     margin-bottom: 32px;
     padding-right: 31px;
-    cursor: pointer;
   }
   li h1 {
     ${({ theme }) => theme.korean.headline6};
     color: ${({ theme }) => theme.colors.white};
+    cursor: pointer;
+  }
+  li h1:hover {
+    color: ${({ theme }) => theme.colors.green300};
   }
   .items {
     margin: 32px 24px;
@@ -65,6 +68,7 @@ const LeftWrapper = styled.div`
   }
   .items li:hover {
     color: ${({ theme }) => theme.colors.green300};
+    cursor: pointer;
   }
 `;
 
@@ -86,6 +90,7 @@ const LinkList = styled.ul`
 
   li {
     margin-bottom: 20px;
+    cursor: pointer;
   }
   li:hover {
     text-decoration: underline;
@@ -112,6 +117,7 @@ const SideNavigation = ({ active, onToggle }) => {
       );
     });
   };
+  const navigate = useNavigate();
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
@@ -128,48 +134,54 @@ const SideNavigation = ({ active, onToggle }) => {
               친환경 그린커머스 플랫폼입니다.
             </Description>
             <LinkList>
-              <li>
-                <Link to="/">인사이드 세컨드라이프</Link>
-              </li>
-              <li>
-                <Link to="/">우리의 지속가능 여정</Link>
-              </li>
-              <li>
-                <Link to="/">쓰임 있는 옷장 만들기</Link>
-              </li>
-              <li>
-                <Link to="/">지속가능 제로라이프</Link>
-              </li>
+              <li>인사이드 세컨드라이프</li>
+              <li>우리의 지속가능 여정</li>
+              <li>쓰임 있는 옷장 만들기</li>
+              <li>지속가능 제로라이프</li>
             </LinkList>
             <HorizonLine />
             <ul>
               {data.map((datum) => (
                 <li key={datum.id}>
-                  <div
-                    className="menus"
-                    onClick={() => handleClickDropdownBtn(datum.id)}
-                  >
-                    <h1>{datum.menu}</h1>
+                  <div className="menus">
+                    <h1
+                      onClick={() => {
+                        if (datum.menu_url) {
+                          navigate(`/${datum.menu_url}`);
+                        }
+                      }}
+                    >
+                      {datum.menu}
+                    </h1>
                     {datum.items &&
                       (datum.active ? (
                         <img
                           src={`${process.env.PUBLIC_URL}/assets/images/icons/shootup_btn.svg`}
                           className="shootup-btn"
                           alt="shootup button"
+                          onClick={() => handleClickDropdownBtn(datum.id)}
                         />
                       ) : (
                         <img
                           src={`${process.env.PUBLIC_URL}/assets/images/icons/dropdown_btn.svg`}
                           className="dropdowm-btn"
                           alt="dropdown button"
+                          onClick={() => handleClickDropdownBtn(datum.id)}
                         />
                       ))}
                   </div>
                   {datum.active && (
                     <ul className="items">
-                      {datum.items.map((item) => (
-                        <li key={datum.id}>
-                          <Link to="/">{item}</Link>
+                      {datum.items.map((elm) => (
+                        <li
+                          key={datum.id}
+                          onClick={() => {
+                            if (elm.item_url) {
+                              navigate(`/${elm.item_url}`);
+                            }
+                          }}
+                        >
+                          {elm.item}
                         </li>
                       ))}
                     </ul>
