@@ -1,5 +1,9 @@
 const MyPage = () => {
-  return <p>마이페이지</p>;
+  return (
+    <div>
+      <h1>마이페이지</h1>
+    </div>
+  );
 };
 
 export default MyPage;

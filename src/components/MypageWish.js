@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { MypageSaleData } from "../utils/MypageSaleData";
+import { MypageWishData } from "../utils/MypageWishData";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import axios from "axios";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/Mypage/`;
 
@@ -25,10 +28,11 @@ const ContentCenter = styled.div`
     border-radius: 8px;
   }
 `;
+
 const CenterHeader = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin: 13px 80px 13px 0;
+  margin: 13px 80px 7px 0;
   button:nth-child(1) {
     margin-right: 7px;
   }
@@ -50,16 +54,31 @@ const CenterCenter = styled.div`
   overflow-y: auto;
 `;
 
-const Title = styled.p`
-  ${({ theme }) => theme.korean.body1};
-  margin-left: 41px;
-  border-top: 2px solid #000000;
-  border-bottom: 2px solid #000000;
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 90px;
+  margin-bottom: 10px;
+  p {
+    ${({ theme }) => theme.korean.headline7};
+  }
+  img {
+    width: 22px;
+    height: 20px;
+    margin-top: 3px;
+    margin-right: 11px;
+  }
 `;
 
 const List = styled.div`
-  margin: 0 72px 50px 63px;
+  margin: 0 68px 50px 68px;
   ul {
+    .first {
+      border-top: 2px solid #000000;
+    }
+    .last {
+      border-bottom: 2px solid #000000;
+    }
   }
   li {
     display: flex;
@@ -91,9 +110,6 @@ const List = styled.div`
     }
     .middle-border {
       border-bottom: 1px solid black;
-    }
-    .last-border {
-      border-bottom: 2px solid black;
     }
   }
 `;
@@ -148,38 +164,24 @@ const StatusValue = styled.span`
 
 const ItemPrice = styled.div`
   ${({ theme }) => theme.korean.headline7};
-  margin-right: 80px;
   white-space: nowrap;
-`;
-
-const ItemButton = styled.div`
-  width: 130px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  ${({ theme }) => theme.korean.overline};
-  a:nth-child(2) {
-    margin: 5px 0;
-  }
-  a:hover {
-    font-size: 12.5px;
-  }
 `;
 
 const ContentBottom = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 9px;
-  button:nth-child(2) {
-    margin-left: 8px;
+  button:nth-child(1) {
     margin-right: 8px;
   }
 `;
 
-const MypageSale = () => {
-  const [saleData] = useState(MypageSaleData);
+const MypageWish = () => {
+  const { data } = useSelector((state) => state.user);
+
+  const [wishData, setWishdata] = useState(MypageWishData);
   //li데이터의 갯수
-  const saleLength = saleData.length - 1;
+  const saleLength = wishData.length - 1;
 
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
@@ -198,7 +200,7 @@ const MypageSale = () => {
   const AllCheckHandler = () => {
     // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
     const idArray = [];
-    saleData.forEach((a) => idArray.push(a.id));
+    wishData.forEach((a) => idArray.push(a.id));
     setCheckItems(idArray);
   };
 
@@ -207,8 +209,53 @@ const MypageSale = () => {
     // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
     setCheckItems([]);
   };
+
+  //API 호출(구현X)
+  /* 
+  const { accessToken } = useSelector((state) => state.token);
+
+  const getWishList = async (accessToken) => {
+    try {
+      const option = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          // Authorization: "Bearer " + accessToken,
+        },
+      };
+      const response = await axios.get(
+        `https://hee-backend.shop:7179/product/wish/select`,
+        option
+      );
+      // console.log(response);
+      const data = response.data.data;
+      return data;
+    } catch (error) {
+      console.log("상품 찜 조회 error" + error);
+      return;
+    }
+  };
+  const showWishList = async () => {
+    const accessData = await getWishList(accessToken);
+    console.log(accessData);
+    accessData.map((a, i) => {
+      let copy = [...wishData];
+      copy[i].product_id = accessData[i].product_id;
+      copy[i].product_img = a.product_img;
+
+      setWishdata(copy);
+    });
+  };
+
+  useEffect(() => {
+    showWishList();
+  }, [accessToken]);
+*/
   return (
-    <div>
+    <>
+      <Title>
+        <img src={`${imgUrl}wishheart.png`} alt="wish" />
+        <p>{data.name}님이 찜한 상품</p>
+      </Title>
       <MypageContent>
         <ContentCenter>
           <CenterHeader>
@@ -229,26 +276,28 @@ const MypageSale = () => {
           </CenterHeader>
           <CenterCenter className="scroll">
             <List>
-              <Title>날짜 + 등록된 상품</Title>
               <ul>
-                {saleData.map((a, i) => {
+                {wishData.map((a, i) => {
                   return (
-                    <li key={i}>
+                    <li
+                      key={i}
+                      className={
+                        i === 0 ? "first" : i === saleLength ? "last" : ""
+                      }
+                    >
                       <div className="item-check">
                         <input
                           type="checkbox"
                           id={a.id}
                           onChange={(e) => {
                             changeHandler(e.currentTarget.checked, a.id);
-                            // console.log(checkItems);
+                            console.log(a.id);
                           }}
                           checked={checkItems.includes(a.id) ? true : false}
                         />
                       </div>
                       <ItemWrap
-                        className={
-                          i === saleLength ? "last-border" : "middle-border"
-                        }
+                        className={i === saleLength ? "" : "middle-border"}
                       >
                         <ItemImg key={i}>
                           <a href="#">
@@ -265,10 +314,10 @@ const MypageSale = () => {
                               <StatusValue>{a.size}</StatusValue>
                               <Status>상태</Status>
                               <StatusValue>{a.state}</StatusValue>
-                              <Status>
+                              {/* <Status>
                                 <img src={`${imgUrl}heart.png`} alt="" />
                               </Status>
-                              <StatusValue>{a.likes}</StatusValue>
+                              <StatusValue>{a.likes}</StatusValue> */}
                             </ItemStatus>
                           </ItemInfo>
                           <ItemPrice>
@@ -279,11 +328,6 @@ const MypageSale = () => {
                               원
                             </span>
                           </ItemPrice>
-                          <ItemButton>
-                            <a href="#">세일 등록하기</a>
-                            <a href="#">포인트 전환하기</a>
-                            <a href="#">재활용 전환하기</a>
-                          </ItemButton>
                         </Item>
                       </ItemWrap>
                     </li>
@@ -295,18 +339,15 @@ const MypageSale = () => {
         </ContentCenter>
         <ContentBottom>
           <Button>
-            <p>선택 세일등록</p>
+            <p>선택상품 삭제</p>
           </Button>
           <Button>
-            <p>선택 포인트등록</p>
-          </Button>
-          <Button>
-            <p>선택 재활용등록</p>
+            <p>장바구니</p>
           </Button>
         </ContentBottom>
       </MypageContent>
-    </div>
+    </>
   );
 };
 
-export default MypageSale;
+export default MypageWish;

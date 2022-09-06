@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useEffect, useState } from "react";
 import { MypagePurchaseData } from "../utils/MypagePurchaseData";
+import MypageTab from "./MypageTab";
 
 const Content = styled.div`
   /* 스크롤바 설정*/
@@ -18,7 +19,7 @@ const Content = styled.div`
 `;
 const ContentCenter = styled.div`
   position: relative;
-  top: -3px;
+  top: -5.5px;
   height: 891px;
   background: #ffffff;
   border: 2px solid #000000;
@@ -45,7 +46,7 @@ const Title = styled.div`
 
 const List = styled.div`
   /* background-color: aquamarine; */
-  margin: 0 84px;
+  margin: 0 84px 50px 84px;
   ul {
   }
   li {
@@ -58,7 +59,13 @@ const List = styled.div`
 `;
 const Itemwrap = styled.div`
   width: 100%;
-  margin-top: 5px;
+  /* margin-top: 5px; */
+  .middle-border {
+    border-bottom: 1px solid black;
+  }
+  .last-border {
+    border-bottom: 2px solid black;
+  }
 `;
 const Header = styled.div`
   display: flex;
@@ -78,12 +85,14 @@ const Item = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 13px 0;
-  /* border-top: 2px solid #000000; */
-  border-bottom: 2px solid #000000;
+  /* border-bottom: 2px solid green; */
   img {
     width: 70px;
     height: 70px;
     margin-right: 15px;
+  }
+  .purchase-img {
+    margin-left: 15px;
   }
 `;
 const ItemInfo = styled.div`
@@ -217,6 +226,11 @@ const MypagePurchase = () => {
   //배송완료 데이터
   const [delivered, setDelivered] = useState([]);
 
+  //배송중 li데이터의 개수
+  const deliveryLength = delivery.length - 1;
+  //배송완료 li데이터의 개수
+  const deliveredLength = delivered.length - 1;
+
   useEffect(() => {
     const copyDelivery = [];
     const copyDelivered = [];
@@ -254,7 +268,11 @@ const MypagePurchase = () => {
                         <span>{a.orderNo}</span>
                       </div>
                     </Header>
-                    <Item>
+                    <Item
+                      className={
+                        i === deliveryLength ? "last-border" : "middle-border"
+                      }
+                    >
                       <div>
                         <a href="#">
                           <img src={a.url} alt="url" />
@@ -319,15 +337,22 @@ const MypagePurchase = () => {
               return (
                 <li key={i}>
                   <Itemwrap>
-                    {/* <Item style={{ borderbottom: "1px solid black" }}> */}
-                    <Item>
+                    <Item
+                      className={
+                        i === deliveredLength ? "last-border" : "middle-border"
+                      }
+                    >
                       <YMD>
                         <span>{a.purchaseYMD}</span>
                       </YMD>
                       <Product>
                         <div>
                           <a href="#">
-                            <img src={a.url} alt="url" />
+                            <img
+                              src={a.url}
+                              alt="url"
+                              className="purchase-img"
+                            />
                           </a>
                         </div>
                         <InnerProduct>

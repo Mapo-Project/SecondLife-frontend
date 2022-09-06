@@ -1,4 +1,4 @@
-const imgUrl = `${process.env.PUBLIC_URL}/assets/images/NewItemSection/`;
+const imgUrl = `${process.env.PUBLIC_URL}/assets/images/Mypage/purchase/`;
 
 export const MypagePurchaseData = [
   {
@@ -9,8 +9,8 @@ export const MypagePurchaseData = [
     price: 50000,
     tool: "현대카드",
     state: "배송완료",
-    purchaseYMD: 20210701,
-    url: `${imgUrl}newitem.jpg`,
+    purchaseYMD: "2021-07-01",
+    url: `${imgUrl}purchase0.png`,
   },
   {
     id: 1,
@@ -20,8 +20,8 @@ export const MypagePurchaseData = [
     price: 156000,
     tool: "국민카드",
     state: "배송완료",
-    purchaseYMD: 20210801,
-    url: `${imgUrl}newitem.jpg`,
+    purchaseYMD: "2021-08-01",
+    url: `${imgUrl}purchase1.png`,
   },
   {
     id: 2,
@@ -31,8 +31,8 @@ export const MypagePurchaseData = [
     price: 88886000,
     tool: "삼성카드",
     state: "배송완료",
-    purchaseYMD: 20210901,
-    url: `${imgUrl}newitem.jpg`,
+    purchaseYMD: "2021-09-01",
+    url: `${imgUrl}purchase2.png`,
   },
   {
     id: 3,
@@ -42,8 +42,8 @@ export const MypagePurchaseData = [
     price: 118000,
     tool: "신한카드",
     state: "배송완료",
-    purchaseYMD: 20211001,
-    url: `${imgUrl}newitem.jpg`,
+    purchaseYMD: "2021-10-01",
+    url: `${imgUrl}purchase3.png`,
   },
   {
     id: 4,
@@ -53,8 +53,8 @@ export const MypagePurchaseData = [
     price: 187000,
     tool: "무통장입금",
     state: "배송완료",
-    purchaseYMD: 20211101,
-    url: `${imgUrl}newitem.jpg`,
+    purchaseYMD: "2021-11-01",
+    url: `${imgUrl}purchase4.png`,
   },
   {
     id: 5,
@@ -64,8 +64,8 @@ export const MypagePurchaseData = [
     price: 187000,
     tool: "현대카드",
     state: "배송완료",
-    purchaseYMD: 20221201,
-    url: `${imgUrl}newitem.jpg`,
+    purchaseYMD: "2021-12-01",
+    url: `${imgUrl}purchase5.png`,
   },
   {
     id: 6,
@@ -75,8 +75,8 @@ export const MypagePurchaseData = [
     price: 187000,
     tool: "현대카드",
     state: "배송중",
-    purchaseYMD: 20220901,
-    url: `${imgUrl}newitem.jpg`,
+    purchaseYMD: "2022-01-01",
+    url: `${imgUrl}purchase6.png`,
   },
   {
     id: 7,
@@ -85,8 +85,8 @@ export const MypagePurchaseData = [
     brand: "Realization par",
     price: 46000,
     tool: "카카오페이",
-    state: "배송중",
-    purchaseYMD: 20220831,
-    url: `${imgUrl}newitem.jpg`,
+    state: "배송완료",
+    purchaseYMD: "2021-08-01",
+    url: `${imgUrl}purchase6.png`,
   },
 ];

@@ -110,6 +110,13 @@ const korean = {
   line-height: 18px;
   letter-spacing: 0.4px;
   `,
+  overline3: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 350;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  `,
   overline4: `
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 350;

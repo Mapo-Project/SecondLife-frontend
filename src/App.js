@@ -8,7 +8,7 @@ import Logout from "./pages/Logout";
 import SimpleLogin from "./auth/SimpleLogin";
 import { useSelector } from "react-redux";
 import SimpleSignUp from "./pages/SimpleSignUp";
-import Mypage from "./components/Mypage";
+import MypageHome from "./components/MypageHome";
 
 function App() {
   //로그인 체크
@@ -37,7 +37,8 @@ function App() {
             element={login ? <Navigate replace to="/" /> : <SimpleLogin />}
           />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/mypage" element={<Mypage />} />
+          <Route path="/mypage" element={<MypageHome />} />
+          {/* <Route path="/mypage/wish" element={<MypageWish />} /> */}
         </Routes>
       </BrowserRouter>
     </>

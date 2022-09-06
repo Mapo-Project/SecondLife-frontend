@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import Footer from "../components/Footer";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
-import MypageSale from "./MypageSale";
-import MypagePurchase from "./MypagePurchase";
-import MypageSold from "./MypageSold";
 import Check from "../auth/Check";
+import MypageTab from "./MypageTab";
+import MypageWish from "./MypageWish";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/Mypage/`;
 
@@ -19,6 +19,7 @@ const Container = styled.div`
   width: 1410px;
   margin: 0 auto;
   margin-top: 105px;
+  margin-bottom: 140px;
 `;
 const LeftSection = styled.div`
   width: 315px;
@@ -43,37 +44,79 @@ const LeftSection = styled.div`
 const TopProfile = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: lightsalmon;
-  .profile {
+  .profile-img {
     width: 131px;
     height: 131px;
     border: 7px solid ${({ theme }) => theme.colors.green300};
     border-radius: 100%;
     background-size: contain;
     background-position: center;
-    margin-right: 30px;
+    /* margin-right: 30px; */
     box-shadow: 1px 1px 7px 1px rgba(0, 0, 0, 0.15);
   }
   .profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-right: 20px;
+    span:nth-child(1) {
+      font-family: "Noto Sans";
+      font-weight: 700;
+      font-size: 30px;
+      line-height: 160%;
+      letter-spacing: 0.15px;
+    }
+    span:nth-child(2) {
+      font-family: "Noto Sans";
+      font-weight: 350;
+      font-size: 14px;
+      line-height: 24px;
+      letter-spacing: 0.15px;
+    }
+    p:nth-child(3) {
+      display: flex;
+      align-items: center;
+      img {
+        width: 18px;
+        height: 18px;
+        margin-right: 3px;
+      }
+      span {
+        ${({ theme }) => theme.korean.subtitle2};
+      }
+    }
+    p:nth-child(4) {
+      display: flex;
+      align-items: center;
+      img {
+        width: 13.5px;
+        height: 17px;
+        margin-right: 5px;
+      }
+      span {
+        font-family: "Noto Sans";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 24px;
+        margin-right: 3px;
+      }
+      span:nth-child(3) {
+        font-weight: 500;
+        font-size: 14px;
+      }
+    }
   }
   span {
-    font-family: "Noto Sans";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 160%;
-    letter-spacing: 0.15px;
-    color: #000000;
   }
-  p:nth-child(2) {
+  /* p:nth-child(2) {
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 350;
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0.15px;
-  }
+  } */
 `;
 const BotttomProfile = styled.div`
   display: flex;
@@ -195,42 +238,10 @@ const Headercontent = styled.div`
     ${({ theme }) => theme.korean.headline4};
   }
 `;
-const ContentHeader = styled.div`
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center; */
-`;
-const ContentTab = styled.div`
-  display: flex;
-  margin-top: 90px;
-  .tab {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 141px;
-    height: 43px;
-    border: 2px solid #000000;
-    border-radius: 8px;
-    background: #e7e6e4;
-    cursor: pointer;
-  }
-  .tab.active {
-    background: white;
-  }
-  span {
-    ${({ theme }) => theme.korean.subtitle1};
-    color: ${({ theme }) => theme.colors.gray500};
-  }
-  span.active {
-    color: ${({ theme }) => theme.colors.black};
-  }
-  .pick {
-    color: black;
-    background-color: ${({ theme }) => theme.colors.white};
-  }
-`;
 
-const Mypage = () => {
+const MypageHome = () => {
+  const navigate = useNavigate();
+
   const { data } = useSelector((state) => state.user);
   const [isLogin, setIsLogin] = useState(false);
 
@@ -261,22 +272,14 @@ const Mypage = () => {
   //사이드 메뉴 클릭 핸들러
   const SideMenuClickHandler = (i) => {
     setSideMenuChange({ ...sideMenuChange, activeSideMenu: i });
-    // console.log(i);
-  };
 
-  //탭 타이틀
-  const tabTitle = ["구매한 상품", "판매 중인 상품", "판매 된 상품"];
-  //탭에따른 컨텐츠 컴포넌트
-  const TabContent = {
-    0: <MypagePurchase />,
-    1: <MypageSale />,
-    2: <MypageSold />,
-  };
-  //탭 변경
-  const [tabChange, setTabChange] = useState({ activeTab: 1 });
-  //탭 클릭 핸들러
-  const TabClickHandler = (e) => {
-    setTabChange({ ...tabChange, activeTab: e });
+    // if (i === 0) {
+    //   navigate("/mypage");
+
+    // }
+    // if (i === 1) {
+    //   console.log("찜");
+    // }
   };
 
   useEffect(() => {
@@ -295,17 +298,24 @@ const Mypage = () => {
         <LeftSection>
           <TopProfile>
             <div
-              className="profile"
+              className="profile-img"
               style={{
                 backgroundImage: `url(${data.profile_img}`,
               }}
             ></div>
             <div className="profile-info">
-              {/* <span>{data.name} 님</span> */}
-              <span>최지아 님</span>
-              <p>@JJiasClosett</p>
-              <p>Lv. Green</p>
-              <p>읽지 않은 알람 1개</p>
+              <span>{data.name}님</span>
+              {/* <span>다섯글자님님</span> */}
+              <span>@JJiasClosett</span>
+              <p>
+                <img src={`${imgUrl}levelgreen.png`} alt="level" />
+                <span>Lv. Green</span>
+              </p>
+              <p>
+                <img src={`${imgUrl}alarm.png`} alt="level" />
+                <span>읽지 않은 알람</span>
+                <span>1개</span>
+              </p>
             </div>
           </TopProfile>
           <BotttomProfile>
@@ -340,7 +350,7 @@ const Mypage = () => {
             <span
               onClick={() => {
                 // console.log(data);
-                console.log(infoCount);
+                console.log(sideMenuNo);
               }}
             >
               내 셀러페이지로 이동
@@ -422,32 +432,12 @@ const Mypage = () => {
               <p>2개</p>
             </Headercontent>
           </MyPageHeader>
-          <ContentHeader>
-            <ContentTab>
-              {tabTitle.map((a, i) => {
-                return (
-                  <div
-                    className={tabChange.activeTab === i ? "tab active" : "tab"}
-                    key={i}
-                    onClick={() => {
-                      TabClickHandler(i);
-                    }}
-                  >
-                    <span className={tabChange.activeTab === i ? "active" : ""}>
-                      {a}
-                    </span>
-                  </div>
-                );
-              })}
-            </ContentTab>
-          </ContentHeader>
-          {TabContent[tabChange.activeTab]}
+          {sideMenuChange.activeSideMenu == 1 ? <MypageWish /> : <MypageTab />}
         </RightSection>
       </Container>
-
       {/* <Footer /> */}
     </>
   );
 };
 
-export default Mypage;
+export default MypageHome;

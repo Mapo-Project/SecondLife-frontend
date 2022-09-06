@@ -1,38 +1,38 @@
-const imgUrl = `${process.env.PUBLIC_URL}/assets/images/NewItemSection/`;
+const imgUrl = `${process.env.PUBLIC_URL}/assets/images/Mypage/sale/`;
 
 export const MypageSaleData = [
   {
     id: 0,
-    name: "네온패턴 부츠컷 부츠컷 부츠컷 ",
-    brand: "The Open Produasdfsfsafct",
-    hashtag: "#비비드 #부츠컷 #부츠컷 #부츠컷 #부츠컷 #부츠컷 #부츠컷",
+    name: "네온패턴 부츠컷 팬츠",
+    brand: "The Open Product",
+    hashtag: "#비비드 #부츠컷 #네온 #유니크 #Y2K",
     size: "S",
     state: "좋음",
     likes: "3",
     price: "19000",
-    url: `${imgUrl}newitem.jpg`,
+    url: `${imgUrl}sale0.png`,
   },
   {
     id: 1,
-    name: "네온패턴 부츠컷 팬츠2",
+    name: "니트 크롭탑",
     brand: "The Open Product",
-    hashtag: "#비비드 #부츠컷",
-    size: "S",
-    state: "매우 좋음",
-    likes: "3",
-    price: "129000",
-    url: `${imgUrl}newitem.jpg`,
+    hashtag: "#비비드 #부츠컷 #네온 #유니크 #Y2K",
+    size: "XS",
+    state: "보통",
+    likes: "10",
+    price: "9000",
+    url: `${imgUrl}sale1.png`,
   },
   {
     id: 2,
-    name: "네온패턴 부츠컷 팬츠3",
-    brand: "The Open Product",
+    name: "뉴발란스 N392",
+    brand: "New Balance",
     hashtag: "#비비드 #부츠컷",
     size: "S",
     state: "보통",
     likes: "3",
     price: "339000",
-    url: `${imgUrl}newitem.jpg`,
+    url: `${imgUrl}sale2.png`,
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ export const MypageSaleData = [
     state: "좋음",
     likes: "3",
     price: "49000",
-    url: `${imgUrl}newitem.jpg`,
+    url: `${imgUrl}sale3.png`,
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ export const MypageSaleData = [
     state: "좋음",
     likes: "3",
     price: "59000",
-    url: `${imgUrl}newitem.jpg`,
+    url: `${imgUrl}sale4.png`,
   },
   {
     id: 5,
@@ -65,7 +65,7 @@ export const MypageSaleData = [
     state: "좋음",
     likes: "3",
     price: "69000",
-    url: `${imgUrl}newitem.jpg`,
+    url: `${imgUrl}sale4.png`,
   },
   {
     id: 6,
@@ -76,7 +76,7 @@ export const MypageSaleData = [
     state: "좋음",
     likes: "3",
     price: "79000",
-    url: `${imgUrl}newitem.jpg`,
+    url: `${imgUrl}sale4.png`,
   },
   {
     id: 7,
@@ -87,7 +87,7 @@ export const MypageSaleData = [
     state: "좋음",
     likes: "3",
     price: "19000",
-    url: `${imgUrl}newitem.jpg`,
+    url: `${imgUrl}sale4.png`,
   },
   {
     id: 8,
@@ -98,6 +98,6 @@ export const MypageSaleData = [
     state: "좋음",
     likes: "3",
     price: "19000",
-    url: `${imgUrl}newitem.jpg`,
+    url: `${imgUrl}sale4.png`,
   },
 ];
