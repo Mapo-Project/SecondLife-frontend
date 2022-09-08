@@ -79,6 +79,9 @@ const List = styled.div`
     .last {
       border-bottom: 2px solid #000000;
     }
+    .delete {
+      display: none;
+    }
   }
   li {
     display: flex;
@@ -210,6 +213,13 @@ const MypageWish = () => {
     setCheckItems([]);
   };
 
+  // 상품 삭제를 누른 상품번호 배열
+  const [deleteItems, setDeleteItems] = useState([]);
+  //선택상품 삭제
+  const DeleteHandler = () => {
+    setDeleteItems(checkItems);
+  };
+
   //API 호출(구현X)
   /* 
   const { accessToken } = useSelector((state) => state.token);
@@ -282,7 +292,13 @@ const MypageWish = () => {
                     <li
                       key={i}
                       className={
-                        i === 0 ? "first" : i === saleLength ? "last" : ""
+                        deleteItems.includes(a.id)
+                          ? "delete"
+                          : i === 0
+                          ? "first"
+                          : i === saleLength
+                          ? "last"
+                          : ""
                       }
                     >
                       <div className="item-check">
@@ -291,7 +307,7 @@ const MypageWish = () => {
                           id={a.id}
                           onChange={(e) => {
                             changeHandler(e.currentTarget.checked, a.id);
-                            console.log(a.id);
+                            // console.log(a.id);
                           }}
                           checked={checkItems.includes(a.id) ? true : false}
                         />
@@ -338,7 +354,11 @@ const MypageWish = () => {
           </CenterCenter>
         </ContentCenter>
         <ContentBottom>
-          <Button>
+          <Button
+            onClick={() => {
+              DeleteHandler();
+            }}
+          >
             <p>선택상품 삭제</p>
           </Button>
           <Button>

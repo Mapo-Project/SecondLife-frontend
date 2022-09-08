@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Check from "../auth/Check";
 import MypageTab from "./MypageTab";
 import MypageWish from "./MypageWish";
+import Logout from "../pages/Logout";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/Mypage/`;
 
@@ -272,14 +273,20 @@ const MypageHome = () => {
   //사이드 메뉴 클릭 핸들러
   const SideMenuClickHandler = (i) => {
     setSideMenuChange({ ...sideMenuChange, activeSideMenu: i });
+  };
 
-    // if (i === 0) {
-    //   navigate("/mypage");
-
-    // }
-    // if (i === 1) {
-    //   console.log("찜");
-    // }
+  //사이드 메뉴에 따른 컴포넌트
+  const SideMenuContent = {
+    0: <MypageTab />,
+    1: <MypageWish />,
+    2: <Prepare />,
+    3: <Prepare />,
+    4: <Prepare />,
+    5: <Prepare />,
+    6: <Prepare />,
+    7: <Prepare />,
+    8: <Prepare />,
+    9: <Logout />,
   };
 
   useEffect(() => {
@@ -347,14 +354,7 @@ const MypageHome = () => {
             </div> */}
           </BotttomProfile>
           <button className="sellerBtn">
-            <span
-              onClick={() => {
-                // console.log(data);
-                console.log(sideMenuNo);
-              }}
-            >
-              내 셀러페이지로 이동
-            </span>
+            <span>내 셀러페이지로 이동</span>
           </button>
           <Challenge>
             <div>
@@ -432,7 +432,8 @@ const MypageHome = () => {
               <p>2개</p>
             </Headercontent>
           </MyPageHeader>
-          {sideMenuChange.activeSideMenu == 1 ? <MypageWish /> : <MypageTab />}
+          {/* {sideMenuChange.activeSideMenu == 1 ? <MypageWish /> : <MypageTab />} */}
+          {SideMenuContent[sideMenuChange.activeSideMenu]}
         </RightSection>
       </Container>
       {/* <Footer /> */}
@@ -440,4 +441,21 @@ const MypageHome = () => {
   );
 };
 
+const Wrap = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    font-size: 20px;
+  }
+`;
+const Prepare = () => {
+  return (
+    <Wrap>
+      <h1>준비 중🔒</h1>
+    </Wrap>
+  );
+};
 export default MypageHome;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MypageSaleData } from "../utils/MypageSaleData";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/Mypage/`;
@@ -55,6 +55,10 @@ const Title = styled.p`
   margin-left: 41px;
   border-top: 2px solid #000000;
   border-bottom: 2px solid #000000;
+  margin-top: 30px;
+  span {
+    margin-left: 11px;
+  }
 `;
 
 const List = styled.div`
@@ -90,7 +94,7 @@ const List = styled.div`
       }
     }
     .middle-border {
-      border-bottom: 1px solid black;
+      border-bottom: 0.5px solid black;
     }
     .last-border {
       border-bottom: 2px solid black;
@@ -178,8 +182,36 @@ const ContentBottom = styled.div`
 
 const MypageSale = () => {
   const [saleData] = useState(MypageSaleData);
-  //li데이터의 갯수
-  const saleLength = saleData.length - 1;
+
+  //등록 날짜만 추출
+  const [saleYMD, setSaleYMD] = useState([]);
+
+  //등록 날짜별 하단 테두리 위해서
+  const [border, setBorder] = useState([]);
+
+  useEffect(() => {
+    let saleYMD = [];
+    saleData.forEach((a) => {
+      saleYMD.push(a.saleYMD);
+      //날짜별 상품 개수 구하기
+      //a: 콜백함수 , i: 초기값
+      const saleYMDProduct = saleYMD.reduce((a, i) => {
+        a[i] = (a[i] || 0) + 1;
+        return a;
+      }, {});
+      //등록한 상품 누적 개수
+      let cumulativeProduct = [];
+      cumulativeProduct.push(Object.values(saleYMDProduct)[0] - 1); //초기값 추가
+      Object.values(saleYMDProduct).reduce((a, i) => {
+        cumulativeProduct.push(a + i - 1); //i값 위해 -1
+        return a + i;
+      });
+      setBorder(cumulativeProduct);
+      //등록날짜 중복제거
+      const newSaleYMD = Array.from(new Set(saleYMD));
+      setSaleYMD(newSaleYMD);
+    });
+  }, []);
 
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
@@ -229,67 +261,98 @@ const MypageSale = () => {
           </CenterHeader>
           <CenterCenter className="scroll">
             <List>
-              <Title>날짜 + 등록된 상품</Title>
-              <ul>
-                {saleData.map((a, i) => {
-                  return (
-                    <li key={i}>
-                      <div className="item-check">
-                        <input
-                          type="checkbox"
-                          id={a.id}
-                          onChange={(e) => {
-                            changeHandler(e.currentTarget.checked, a.id);
-                            // console.log(checkItems);
-                          }}
-                          checked={checkItems.includes(a.id) ? true : false}
-                        />
-                      </div>
-                      <ItemWrap
-                        className={
-                          i === saleLength ? "last-border" : "middle-border"
-                        }
-                      >
-                        <ItemImg key={i}>
-                          <a href="#">
-                            <img src={a.url} alt="url" />
-                          </a>
-                        </ItemImg>
-                        <Item>
-                          <ItemInfo>
-                            <p className="item-name">{a.name}</p>
-                            <span className="item-brand">{a.brand}</span>
-                            <span className="item-brand">{a.hashtag}</span>
-                            <ItemStatus>
-                              <Status>사이즈</Status>
-                              <StatusValue>{a.size}</StatusValue>
-                              <Status>상태</Status>
-                              <StatusValue>{a.state}</StatusValue>
-                              <Status>
-                                <img src={`${imgUrl}heart.png`} alt="" />
-                              </Status>
-                              <StatusValue>{a.likes}</StatusValue>
-                            </ItemStatus>
-                          </ItemInfo>
-                          <ItemPrice>
-                            <span>
-                              {a.price
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                              원
-                            </span>
-                          </ItemPrice>
-                          <ItemButton>
-                            <a href="#">세일 등록하기</a>
-                            <a href="#">포인트 전환하기</a>
-                            <a href="#">재활용 전환하기</a>
-                          </ItemButton>
-                        </Item>
-                      </ItemWrap>
-                    </li>
-                  );
-                })}
-              </ul>
+              {saleYMD.map((arr, i) => {
+                return (
+                  <div key={arr}>
+                    <Title>
+                      {arr}
+                      <span>등록된 상품</span>
+                    </Title>
+                    <ul>
+                      {saleData.map((a, i) => {
+                        return (
+                          // eslint-disable-next-line react/jsx-no-useless-fragment
+                          <div key={a.id}>
+                            {arr === a.saleYMD ? (
+                              <li key={a.id}>
+                                <div className="item-check" key={a.id}>
+                                  <input
+                                    type="checkbox"
+                                    id={a.id}
+                                    onChange={(e) => {
+                                      changeHandler(
+                                        e.currentTarget.checked,
+                                        a.id
+                                      );
+                                    }}
+                                    checked={
+                                      checkItems.includes(a.id) ? true : false
+                                    }
+                                  />
+                                </div>
+                                <ItemWrap
+                                  className={
+                                    border.includes(i)
+                                      ? "last-border"
+                                      : "middle-border"
+                                  }
+                                  name="count"
+                                >
+                                  <ItemImg key={i}>
+                                    <a href="#">
+                                      <img src={a.url} alt="url" />
+                                    </a>
+                                  </ItemImg>
+                                  <Item>
+                                    <ItemInfo>
+                                      <p className="item-name">{a.name}</p>
+                                      <span className="item-brand">
+                                        {a.brand}
+                                      </span>
+                                      <span className="item-brand">
+                                        {a.hashtag}
+                                      </span>
+                                      <ItemStatus>
+                                        <Status>사이즈</Status>
+                                        <StatusValue>{a.size}</StatusValue>
+                                        <Status>상태</Status>
+                                        <StatusValue>{a.state}</StatusValue>
+                                        <Status>
+                                          <img
+                                            src={`${imgUrl}heart.png`}
+                                            alt=""
+                                          />
+                                        </Status>
+                                        <StatusValue>{a.likes}</StatusValue>
+                                      </ItemStatus>
+                                    </ItemInfo>
+                                    <ItemPrice>
+                                      <span>
+                                        {a.price
+                                          .toString()
+                                          .replace(
+                                            /\B(?=(\d{3})+(?!\d))/g,
+                                            ","
+                                          )}
+                                        원
+                                      </span>
+                                    </ItemPrice>
+                                    <ItemButton>
+                                      <a href="">세일 등록하기</a>
+                                      <a href="">포인트 전환하기</a>
+                                      <a href="">재활용 전환하기</a>
+                                    </ItemButton>
+                                  </Item>
+                                </ItemWrap>
+                              </li>
+                            ) : null}
+                          </div>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                );
+              })}
             </List>
           </CenterCenter>
         </ContentCenter>

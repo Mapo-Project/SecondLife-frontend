@@ -56,6 +56,9 @@ const List = styled.div`
     align-items: center;
     /* padding: 15px 0; */
   }
+  .title-bottom {
+    margin-top: 60px;
+  }
 `;
 const Itemwrap = styled.div`
   width: 100%;
@@ -280,7 +283,9 @@ const MypagePurchase = () => {
                       </div>
                       <ItemInfo>
                         <div className="product">
-                          <span>{a.name}외 8건</span>
+                          <span>
+                            {a.name}외 {a.others}건
+                          </span>
                           <span>{a.brand}</span>
                         </div>
                         <div className="price">
@@ -305,7 +310,7 @@ const MypagePurchase = () => {
               );
             })}
           </ul>
-          <Title>
+          <Title className="title-bottom">
             <p>구매내역</p>
             <span>
               더보기
@@ -356,7 +361,9 @@ const MypagePurchase = () => {
                           </a>
                         </div>
                         <InnerProduct>
-                          <span>{a.name}외 3건</span>
+                          <span>
+                            {a.name}외 {a.others}건
+                          </span>
                           <span>{a.brand}</span>
                         </InnerProduct>
                       </Product>

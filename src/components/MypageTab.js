@@ -68,7 +68,10 @@ const MypageTab = () => {
                   TabClickHandler(i);
                 }}
               >
-                <span className={tabChange.activeTab === i ? "active" : ""}>
+                <span
+                  className={tabChange.activeTab === i ? "active" : ""}
+                  key={i}
+                >
                   {a}
                 </span>
               </div>

@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { MypageSoldData, Chart, SalesData } from "../utils/MypageSoldData";
+import {
+  MypageSoldData,
+  Chart,
+  Chart2,
+  SalesData,
+} from "../utils/MypageSoldData";
 import ReactApexChart from "react-apexcharts";
 
 const Content = styled.div`
@@ -231,17 +236,23 @@ const OrderPrice = styled.div`
 
 const MypageSold = () => {
   const [chart] = useState(Chart);
+  const [chart2] = useState(Chart2);
   const [soldData] = useState(MypageSoldData);
   const [salesData] = useState(SalesData);
+  const [monthRate, setMonthRate] = useState(false);
 
   const unit = [
     { unit1: "원", unit2: "건", unit3: "원" },
     { unit1: "건", unit2: "건", unit3: "건" },
     { unit1: "건", unit2: "개", unit3: "" },
   ];
-
+  const ChangeChart = () => {
+    setMonthRate(true);
+    console.log(monthRate);
+  };
   const date = new Date(); //현재 날짜 및 시간
   const dateMonth = date.getMonth() + 1;
+
   //li데이터의 갯수
   const soldLength = soldData.length - 1;
   return (
@@ -250,12 +261,15 @@ const MypageSold = () => {
         <List>
           <Rate>
             <Title>
-              <p>{dateMonth}월 판매율</p>
+              <p>{monthRate ? "2022년 " : dateMonth + "월 "}판매율</p>
             </Title>
             <SalesRate>
               <ReactApexChart
-                options={chart.options}
-                series={chart.series}
+                // options={chart.options}
+                // series={chart.series}
+                // height={256}
+                options={monthRate ? chart2.options : chart.options}
+                series={monthRate ? chart2.series : chart.series}
                 height={256}
               />
             </SalesRate>
@@ -299,7 +313,11 @@ const MypageSold = () => {
                 );
               })}
               <StatusBox className="rate-button">
-                <Button>
+                <Button
+                  onClick={() => {
+                    ChangeChart();
+                  }}
+                >
                   <p>월별 판매율</p>
                 </Button>
                 <Button>

@@ -38,7 +38,6 @@ function App() {
           />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/mypage" element={<MypageHome />} />
-          {/* <Route path="/mypage/wish" element={<MypageWish />} /> */}
         </Routes>
       </BrowserRouter>
     </>
