@@ -13,6 +13,7 @@ import ProductCollection from "./pages/ProductCollection";
 import Top from "./components/Top";
 import Tshirts from "./components/Tshirts";
 import MTM from "./components/MTM";
+import Detail from "./components/Detail";
 
 function App() {
   //로그인 체크
@@ -28,6 +29,7 @@ function App() {
           <Route path="/top" element={<Top />} />
           <Route path="/tshirts" element={<Tshirts />} />
           <Route path="/mtm" element={<MTM />} />
+          <Route path="/detail" element={<Detail />} />
           <Route
             path="/signup/*"
             element={login ? <Navigate replace to="/" /> : <SignUp />}
