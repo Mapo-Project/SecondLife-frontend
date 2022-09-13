@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-// import { locationData } from "../utils/locationData";
 import { useSelector } from "react-redux";
 import { selectPickupPlace, deletePickupPlace } from "../api/PickUpApi";
 
@@ -34,9 +33,9 @@ const Location = styled.div`
   }
 `;
 
-const RecentSearch = ({ fullAdd, setFullAdd, setIsClicked }) => {
+const RecentSearch = ({ setFullAdd, setIsClicked }) => {
   const [locationData, setLocationData] = useState([]);
-  // const [recentSearch, setRecentSearch] = useState(locationData);
+  // 최근 검색 주소로 픽업 주소 설정
   const recentSearchClick = (address) => {
     setFullAdd(address);
     setTimeout(() => {
@@ -46,6 +45,7 @@ const RecentSearch = ({ fullAdd, setFullAdd, setIsClicked }) => {
 
   const { accessToken } = useSelector((state) => state.token);
 
+  // 최근 검색 주소 삭제
   const onRemove = async (id) => {
     const status = await deletePickupPlace(accessToken, id);
     if (status === 200) {
@@ -56,6 +56,7 @@ const RecentSearch = ({ fullAdd, setFullAdd, setIsClicked }) => {
     }
   };
 
+  // 최근 검색 주소 조회
   const showPickUpPlace = async () => {
     const recentSearchPlace = await selectPickupPlace(accessToken);
     setLocationData(recentSearchPlace);

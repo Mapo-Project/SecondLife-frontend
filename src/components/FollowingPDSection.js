@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { itemsData } from "../utils/itemsData";
 import ItemImages from "./ItemImages";
 import TitleInHome from "./TitleInHome";
 import { useSelector } from "react-redux";
@@ -13,17 +12,18 @@ const TopWrapper = styled.div`
 `;
 
 const FollowingPDSection = () => {
+  // 팔로우한 셀러 상품
   const [followSellerItems, setFollowSellerItems] = useState([]);
+  // 회원이름
   const [username, setUsername] = useState("");
 
-  // let user = "김뫄뫄";
+  // 섹션 제목
   let title = `${username}님이 팔로우한 셀러의 상품 모아보기`;
 
-  // store에 저장된 Access Token 정보를 받아 온다
+  // 엑세스 토큰
   const { accessToken } = useSelector((state) => state.token);
-  // const userData = useSelector((state) => state.user);
 
-  // 백으로부터 받은 응답
+  // 팔로우한 셀러 상품 조회
   const getFollowSellerItems = async (accessToken) => {
     try {
       const option = {
@@ -46,10 +46,10 @@ const FollowingPDSection = () => {
 
   const showFollowSellerItems = async () => {
     const data1 = await getFollowSellerItems(accessToken);
+    // 회원이름 조회
     const data2 = await selectUserProfile(accessToken);
     setFollowSellerItems(data1);
     setUsername(data2.json.data.name);
-    // setUsername(userData.data.name);
   };
 
   useEffect(() => {

@@ -98,12 +98,10 @@ const SlideWrapper = styled.div`
     color: ${({ theme }) => theme.colors.green300};
     line-height: 70px;
     text-shadow: -4px 0 #000, 0 4px #000, 4px 0 #000, 0 -4px #000;
-    /* background-color: aliceblue; */
   }
   .slide-content {
     margin-bottom: 86px;
     ${({ theme }) => theme.korean.caption};
-    /* background-color: aqua; */
   }
   .slide-link {
     padding: 7px 16px 7px 20px;
