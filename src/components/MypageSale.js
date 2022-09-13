@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { MypageSaleData } from "../utils/MypageSaleData";
+import { MypageSaleData } from "../utils/MypageSaledata";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/Mypage/`;
 
