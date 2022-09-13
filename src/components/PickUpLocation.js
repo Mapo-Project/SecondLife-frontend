@@ -180,23 +180,25 @@ const RecentSearchWrapper = styled.div`
 `;
 
 const PickUpLocation = ({ fullAdd, setFullAdd, setIsClicked }) => {
+  // 기본주소
   const [address, setAddress] = useState("");
+  // 상세주소
   const [detailAdd, setDetailAdd] = useState("");
-  const [isClicked2, setIsClicked2] = useState(false);
-
-  const toggle = () => {
-    setIsClicked2(!isClicked2);
-  };
-
   const handleAddChange = (e) => {
     setDetailAdd(e.target.value);
   };
 
+  const [isClicked2, setIsClicked2] = useState(false);
+  const toggle = () => {
+    setIsClicked2(!isClicked2);
+  };
+
+  // 엑세스 토큰
   const { accessToken } = useSelector((state) => state.token);
 
+  // 상세주소 입력
   const handleAddClick = () => {
     const result = `${address} ${detailAdd}`;
-    console.log(result);
     setFullAdd(result);
     registPickupPlace(accessToken, result);
     setTimeout(() => {
@@ -204,6 +206,7 @@ const PickUpLocation = ({ fullAdd, setFullAdd, setIsClicked }) => {
     }, 500);
   };
 
+  // 주소 재입력
   const handleFullAddClick = () => {
     setAddress("");
     setDetailAdd("");

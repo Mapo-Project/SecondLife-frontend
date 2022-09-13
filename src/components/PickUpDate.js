@@ -2,7 +2,6 @@ import styled, { keyframes } from "styled-components";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import Form from "react-bootstrap/Form";
 import { ko } from "date-fns/esm/locale";
 
 const anim = keyframes`
@@ -20,7 +19,6 @@ const TopWrapper = styled.div`
   margin: 0 auto 10px;
   padding: 20px 24px;
   width: 420px;
-  /* height: 518px; */
   background-color: #fff;
   border-radius: 20px;
   display: flex;
@@ -167,6 +165,7 @@ const PickUpDate = ({
   setPickupTime,
   setIsClicked,
 }) => {
+  // 픽업 시간 필터링
   const [isDisable, setIsDisable] = useState(true);
   const handleDateChange = (date) => {
     setPickupDate(date);
@@ -177,6 +176,7 @@ const PickUpDate = ({
       setIsDisable(false);
     }
   };
+  // 픽업 시간 설정
   const handlePickupTimeClick = (time) => {
     setPickupTime(time);
     setTimeout(() => {
@@ -199,10 +199,6 @@ const PickUpDate = ({
             dateFormat="yyyy.MM.dd (eee)" // 시간 포맷 변경
             showPopperArrow={false} // 화살표 변경
             minDate={tomorrow} // 오늘 날짜 전은 선택 못하게
-            // customInput={
-            //   // 날짜 뜨는 인풋 커스텀
-            //   <Form.Control as="textarea" rows={1} style={{ width: "250px" }} />
-            // }
             inline
           />
         </DatePickerWrapper>
