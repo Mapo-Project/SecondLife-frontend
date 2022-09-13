@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -333,6 +333,8 @@ const PickUp = () => {
     }
   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <TopWrapper key={randomData}>
       <CloseBtnWrapper>
@@ -395,7 +397,7 @@ const PickUp = () => {
               </p>
             </SaveResult>
           ) : (
-            <button>
+            <button onClick={() => navigate(`/login`)}>
               <span>픽업과정 보러가기</span>
               <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
             </button>
