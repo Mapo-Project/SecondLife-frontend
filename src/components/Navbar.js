@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import SideNavigation from "./SideNavigation";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const GetWider = keyframes`
@@ -203,6 +203,7 @@ const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 const Navbar = () => {
   const [active, setActive] = useState(false);
   const { login } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const onToggle = () => {
     setActive(!active);
   };
@@ -288,12 +289,16 @@ const Navbar = () => {
                 <img src={`${imgUrl}cart.png`} alt="cart button" />
                 <h6>Cart</h6>
               </li>
-              <Link to="/">
-                <li className="mypage">
-                  <MypageCircle />
-                  <h6>My page</h6>
-                </li>
-              </Link>
+              {/* <Link to="/"> */}
+              <li className="mypage">
+                <MypageCircle
+                  onClick={() => {
+                    navigate("/mypage");
+                  }}
+                />
+                <h6>My page</h6>
+              </li>
+              {/* </Link> */}
             </>
           ) : (
             <>
