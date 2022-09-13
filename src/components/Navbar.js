@@ -289,12 +289,16 @@ const Navbar = () => {
                 <img src={`${imgUrl}cart.png`} alt="cart button" />
                 <h6>Cart</h6>
               </li>
-              <Link to="/">
-                <li className="mypage">
-                  <MypageCircle />
-                  <h6>My page</h6>
-                </li>
-              </Link>
+              {/* <Link to="/"> */}
+              <li className="mypage">
+                <MypageCircle
+                  onClick={() => {
+                    navigate("/mypage");
+                  }}
+                />
+                <h6>My page</h6>
+              </li>
+              {/* </Link> */}
             </>
           ) : (
             <>
@@ -315,13 +319,7 @@ const Navbar = () => {
               </li>
               <Link to="/login">
                 <li className="mypage">
-                  <img
-                    src={`${imgUrl}mypage.png`}
-                    alt="mypage button"
-                    onClick={() => {
-                      navigate("/mypage");
-                    }}
-                  />
+                  <img src={`${imgUrl}mypage.png`} alt="mypage button" />
                   <h6>Sign-In</h6>
                 </li>
               </Link>
