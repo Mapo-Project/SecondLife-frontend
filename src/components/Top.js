@@ -3,7 +3,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import ProductList from "./ProductList";
-import { newFilterData } from "../utils/newFilterData";
+import { topItemsData } from "../utils/topItemsData";
 
 const TopWrapper = styled.div`
   width: 100%;
@@ -49,7 +49,7 @@ const CategoryProducts = styled.div`
 `;
 
 const Top = () => {
-  const [products, setProducts] = useState(newFilterData);
+  const [products, setProducts] = useState(topItemsData);
 
   const borderStyle = {
     borderBottom: `2px solid #212121`,

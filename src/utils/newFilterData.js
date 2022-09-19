@@ -83,7 +83,7 @@ export const newFilterData = [
     like_num: 16,
     size: "245",
     isLike: false,
-    brand: "New Balance",
+    brand: "NEW BALANCE",
     name: "뉴발란스 블랙 245",
     product_img_url: `${filterImgUrl}sl_newitem8.png`,
     price: 35000,

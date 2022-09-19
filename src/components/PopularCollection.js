@@ -3,8 +3,8 @@ import styled from "styled-components";
 import FilterMenu from "./FilterMenu";
 import TitleInFilter from "./TitleInFilter";
 import ProductList from "./ProductList";
-import { newFilterData } from "../utils/newFilterData";
 import { useNavigate } from "react-router-dom";
+import { popularFilterData } from "../utils/popularFilterData";
 
 const LeftWrapper = styled.div`
   display: flex;
@@ -61,7 +61,7 @@ const barSectionStyle = {
 };
 
 const PopularCollection = () => {
-  const [products, setProducts] = useState(newFilterData);
+  const [products, setProducts] = useState(popularFilterData);
   const navigate = useNavigate();
 
   return (
