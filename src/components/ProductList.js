@@ -58,6 +58,9 @@ const ProductImg = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   .like {
     margin-top: 5px;
     margin-left: 13px;
@@ -88,8 +91,10 @@ const ProductImg = styled.div`
     color: #fff;
   }
   .size {
-    width: 26px;
+    min-width: 28px;
     height: 28px;
+    padding-left: 4px;
+    padding-right: 4px;
     background-color: ${({ theme }) => theme.colors.gray900};
     color: #fff;
     display: flex;

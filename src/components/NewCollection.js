@@ -88,7 +88,7 @@ const NewCollection = () => {
             <li>만원특가</li>
             <li
               onClick={() => {
-                navigate(`/collection/brand`);
+                // navigate(`/collection/brand`);
               }}
             >
               브랜드
@@ -96,7 +96,7 @@ const NewCollection = () => {
             <li>FleaLIVE 상품</li>
             <li
               onClick={() => {
-                navigate(`/collection/recom`);
+                // navigate(`/collection/recom`);
               }}
             >
               추천상품
