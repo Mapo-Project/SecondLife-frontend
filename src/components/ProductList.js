@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Appear = keyframes`
   0%{
@@ -61,6 +62,7 @@ const ProductImg = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  cursor: pointer;
   .like {
     margin-top: 5px;
     margin-left: 13px;
@@ -162,8 +164,10 @@ const brandNameStyle = { margin: `5px 0` };
 
 const ProductImage = ({ elm, products, setProducts }) => {
   const [appearance, setAppearance] = useState(false);
+  let navigate = useNavigate();
 
-  const handleBlankClick = (id) => {
+  const handleBlankClick = (e, id) => {
+    e.stopPropagation();
     let result = products.map((product) =>
       product.id === id
         ? {
@@ -180,7 +184,8 @@ const ProductImage = ({ elm, products, setProducts }) => {
     }, 1000);
   };
 
-  const handleFilledClick = (id) => {
+  const handleFilledClick = (e, id) => {
+    e.stopPropagation();
     let result = products.map((product) =>
       product.id === id
         ? {
@@ -195,7 +200,12 @@ const ProductImage = ({ elm, products, setProducts }) => {
 
   return (
     <ProductImgWrapper>
-      <ProductImg style={{ backgroundImage: `url(${elm.product_img_url})` }}>
+      <ProductImg
+        style={{ backgroundImage: `url(${elm.product_img_url})` }}
+        onClick={() => {
+          navigate(`/detail/${elm.id}`);
+        }}
+      >
         <div className="like">
           <img src={`${imgUrl}icons/like.svg`} alt="" />
           {elm.like_num}
@@ -206,13 +216,13 @@ const ProductImage = ({ elm, products, setProducts }) => {
             <img
               src={`${imgUrl}icons/filled_heart.svg`}
               alt=""
-              onClick={() => handleFilledClick(elm.id)}
+              onClick={(e) => handleFilledClick(e, elm.id)}
             />
           ) : (
             <img
               src={`${imgUrl}icons/blank_heart.svg`}
               alt=""
-              onClick={() => handleBlankClick(elm.id)}
+              onClick={(e) => handleBlankClick(e, elm.id)}
             />
           )}
         </div>

@@ -30,6 +30,7 @@ function App() {
           <Route path="/tshirts" element={<Tshirts />} />
           <Route path="/mtm" element={<MTM />} />
           <Route path="/detail" element={<Detail />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route
             path="/signup/*"
             element={login ? <Navigate replace to="/" /> : <SignUp />}
