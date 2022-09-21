@@ -3,6 +3,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Appear = keyframes`
   0%{
@@ -165,37 +166,47 @@ const brandNameStyle = { margin: `5px 0` };
 const ProductImage = ({ elm, products, setProducts }) => {
   const [appearance, setAppearance] = useState(false);
   let navigate = useNavigate();
+  // 회원정보
+  const { data } = useSelector((state) => state.user);
 
   const handleBlankClick = (e, id) => {
     e.stopPropagation();
-    let result = products.map((product) =>
-      product.id === id
-        ? {
-            ...product,
-            like_num: product.like_num + 1,
-            isLike: !product.isLike,
-          }
-        : product
-    );
-    setProducts(result);
-    setAppearance(true);
-    setTimeout(() => {
-      setAppearance(false);
-    }, 1000);
+    if (data) {
+      let result = products.map((product) =>
+        product.id === id
+          ? {
+              ...product,
+              like_num: product.like_num + 1,
+              isLike: !product.isLike,
+            }
+          : product
+      );
+      setProducts(result);
+      setAppearance(true);
+      setTimeout(() => {
+        setAppearance(false);
+      }, 1000);
+    } else {
+      navigate(`/login`);
+    }
   };
 
   const handleFilledClick = (e, id) => {
     e.stopPropagation();
-    let result = products.map((product) =>
-      product.id === id
-        ? {
-            ...product,
-            like_num: product.like_num - 1,
-            isLike: !product.isLike,
-          }
-        : product
-    );
-    setProducts(result);
+    if (data) {
+      let result = products.map((product) =>
+        product.id === id
+          ? {
+              ...product,
+              like_num: product.like_num - 1,
+              isLike: !product.isLike,
+            }
+          : product
+      );
+      setProducts(result);
+    } else {
+      navigate(`/login`);
+    }
   };
 
   return (
@@ -203,7 +214,12 @@ const ProductImage = ({ elm, products, setProducts }) => {
       <ProductImg
         style={{ backgroundImage: `url(${elm.product_img_url})` }}
         onClick={() => {
-          navigate(`/detail/${elm.id}`);
+          let idArr = [100, 101, 102, 103];
+          idArr.forEach((id) => {
+            if (elm.id === id) {
+              navigate(`/detail/${elm.id}`);
+            }
+          });
         }}
       >
         <div className="like">
@@ -238,19 +254,26 @@ const ProductImage = ({ elm, products, setProducts }) => {
 };
 
 const ProductList = ({ products, setProducts, grid }) => {
+  let navigate = useNavigate();
   const handleCartClick = (id) => {
-    let result = products.map((product) =>
-      product.id === id
-        ? {
-            ...product,
-            inCart: !product.inCart,
-          }
-        : product
-    );
-    setProducts(result);
+    if (data) {
+      let result = products.map((product) =>
+        product.id === id
+          ? {
+              ...product,
+              inCart: !product.inCart,
+            }
+          : product
+      );
+      setProducts(result);
+    } else {
+      navigate(`/login`);
+    }
   };
 
   const gridStyle = { gridTemplateColumns: `${grid}` };
+
+  const { data } = useSelector((state) => state.user);
 
   return (
     <TopWrapper style={gridStyle}>

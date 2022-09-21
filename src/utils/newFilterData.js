@@ -2,7 +2,7 @@ const filterImgUrl = `${process.env.PUBLIC_URL}/assets/images/newCollectionImg/`
 
 export const newFilterData = [
   {
-    id: 1,
+    id: 100,
     like_num: 15,
     size: "XS",
     isLike: false,
@@ -13,7 +13,7 @@ export const newFilterData = [
     inCart: false,
   },
   {
-    id: 2,
+    id: 101,
     like_num: 6,
     size: "M",
     isLike: false,

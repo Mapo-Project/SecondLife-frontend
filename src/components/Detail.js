@@ -5,6 +5,8 @@ import TitleInHome from "./TitleInHome";
 import ItemImages from "./ItemImages";
 import { itemsData } from "../utils/itemsData";
 import CartModal from "./CartModal";
+import { useParams } from "react-router-dom";
+import { detailData } from "../utils/detailData";
 
 const TopWrapper = styled.div`
   background-color: #fafafa;
@@ -30,6 +32,9 @@ const LeftContents = styled.div`
 const RightContents = styled.div``;
 
 const BigImg = styled.div`
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 690px;
   height: 690px;
   transition: 0.4s ease-in-out;
@@ -212,181 +217,160 @@ const DetailImages = styled.div`
   .detail-img {
     width: 100%;
     height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     /* border: 1px solid #000000; */
   }
 `;
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
 
-const detailData = [
-  {
-    images: [
-      `${imgUrl}detailImg/1.png`,
-      `${imgUrl}detailImg/2.png`,
-      `${imgUrl}detailImg/3.png`,
-      `${imgUrl}detailImg/4.png`,
-    ],
-    seller_img: `${imgUrl}detailImg/seller_img.png`,
-    seller_id: "XXXfkjeXXX",
-    description: `90년대 빈티지한 무드의 형광팬츠입니다.
-
-    200n년도에 구입을 했었고
-    아까워서 몇번 못입다가 팔게되었습니다.
-    
-    착용이 3번 미만이라 새거나 다름이 없어요.
-    사이즈는 xl 인데 오버사이즈로 
-    입으시면 예쁩니다. 정사이즈 핏도 
-    괜찮아요!
-    
-    신축성이 좋아 착용감에 불편함이 없고
-    포인트룩으로 입기 좋아요...! 
-    예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.예쁘게 입으시길 바랍니다.`,
-    hashtags: [
-      "맨투맨",
-      "네온",
-      "비비드",
-      "빈티지",
-      "캐주얼 맨투맨",
-      "맨투맨",
-      "네온",
-      "비비드",
-      "빈티지",
-      "팬츠",
-    ],
-    product_name: "그레이 이글 맨투맨",
-    product_size: "M",
-    product_condition: "좋음",
-    product_brand: "Ralph Lauren",
-    product_color: "그레이, 브라운",
-    product_price: 18000,
-  },
-];
-
 let price = 0;
 
 const Detail = () => {
-  const [detailImg, setDetailImg] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  let paramsId = parseInt(useParams().id);
+
+  let productData = {};
 
   useEffect(() => {
-    detailData.forEach((elm) => {
-      setDetailImg(elm.images[0]);
-    });
+    setDetailImg(images[0]);
   }, []);
+
+  detailData.forEach((it) => {
+    if (it.id === paramsId) {
+      productData = { ...it };
+    }
+  });
+
+  let {
+    images,
+    seller_img,
+    seller_id,
+    description,
+    hashtags,
+    product_name,
+    product_size,
+    product_condition,
+    product_brand,
+    product_color,
+    product_price,
+    water,
+    carbon,
+  } = { ...productData };
+  const [detailImg, setDetailImg] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const handleClickCart = () => {
     setShowModal(true);
   };
+
+  if (product_price) {
+    price = product_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
   return (
     <TopWrapper>
       <CartModal showModal={showModal} setShowModal={setShowModal} />
       <Navbar />
       <Wrapper>
-        {detailData.map((elm) => {
-          if (elm.product_price) {
-            price = elm.product_price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          }
-          return (
-            <>
-              <ContentsWrapper>
-                <LeftContents>
-                  <BigImg style={{ backgroundImage: `url(${detailImg})` }} />
-                  <SmallImages>
-                    {elm.images.map((img, idx) => {
-                      return (
-                        <SmallImgWrapper key={idx}>
-                          <SmallImgCover
-                            className={detailImg !== img && "cover"}
-                            onClick={() => {
-                              setDetailImg(img);
-                            }}
-                          />
-                          <SmallImg
-                            style={{ backgroundImage: `url(${img})` }}
-                          />
-                        </SmallImgWrapper>
-                      );
-                    })}
-                  </SmallImages>
-                </LeftContents>
-                <RightContents>
-                  <SellerProfile>
-                    <div
-                      className="profile-img"
-                      style={{ backgroundImage: `url(${elm.seller_img})` }}
+        <ContentsWrapper>
+          <LeftContents>
+            <BigImg style={{ backgroundImage: `url(${detailImg})` }} />
+            <SmallImages>
+              {images.map((img, idx) => {
+                return (
+                  <SmallImgWrapper key={idx}>
+                    <SmallImgCover
+                      className={detailImg !== img && "cover"}
+                      onClick={() => {
+                        setDetailImg(img);
+                      }}
                     />
-                    <h2 className="profile-id">{elm.seller_id}</h2>
-                  </SellerProfile>
-                  <Description>
-                    <p>{elm.description}</p>
-                  </Description>
-                  <Hashtags>
-                    {elm.hashtags.map((hashtag, idx) => {
-                      return <Hashtag key={idx}>#{hashtag}</Hashtag>;
-                    })}
-                  </Hashtags>
-                  <Information>
-                    <InformTitle>
-                      <h2>그레이 이글 맨투맨</h2>
-                      <div>
-                        <img
-                          src={`${imgUrl}icons/detail_heart.svg`}
-                          alt="like"
-                        />
-                        <img src={`${imgUrl}icons/share.svg`} alt="share" />
-                      </div>
-                    </InformTitle>
-                    <InformTable>
-                      <tr>
-                        <td>사이즈</td>
-                        <td>{elm.product_size}</td>
-                        <td>상태</td>
-                        <td>{elm.product_condition}</td>
-                      </tr>
-                      <tr>
-                        <td>브랜드</td>
-                        <td>{elm.product_brand}</td>
-                        <td>물</td>
-                        <td>1,150L 절약</td>
-                      </tr>
-                      <tr>
-                        <td>색상</td>
-                        <td>{elm.product_color}</td>
-                        <td>탄소</td>
-                        <td>5.3kg 절약</td>
-                      </tr>
-                    </InformTable>
-                    <InformPrice>
-                      <h3>{price} 원</h3>
-                    </InformPrice>
-                    <ButtonWrapper>
-                      <button className="cart" onClick={handleClickCart}>
-                        장바구니
-                      </button>
-                      <button className="purchase">바로구매</button>
-                    </ButtonWrapper>
-                  </Information>
-                </RightContents>
-              </ContentsWrapper>
-              <DetailImages>
-                {elm.images.map((img, idx) => {
-                  return (
-                    <div
-                      key={idx}
-                      className="detail-img"
-                      style={{ backgroundImage: `url(${img})` }}
-                    />
-                  );
-                })}
-              </DetailImages>
-              <TitleInHome title={"이 셀러가 판매하는 다른 상품"} />
-              <ItemImages items={itemsData} />
-            </>
-          );
-        })}
+                    <SmallImg style={{ backgroundImage: `url(${img})` }} />
+                  </SmallImgWrapper>
+                );
+              })}
+            </SmallImages>
+          </LeftContents>
+          <RightContents>
+            <SellerProfile>
+              <div
+                className="profile-img"
+                style={{ backgroundImage: `url(${seller_img})` }}
+              />
+              <h2 className="profile-id">{seller_id}</h2>
+            </SellerProfile>
+            <Description>
+              <p>
+                {description.split("\n").map((elm) => (
+                  <>
+                    {elm}
+                    <br />
+                  </>
+                ))}
+              </p>
+            </Description>
+            <Hashtags>
+              {hashtags.map((hashtag, idx) => {
+                return <Hashtag key={idx}>#{hashtag}</Hashtag>;
+              })}
+            </Hashtags>
+            <Information>
+              <InformTitle>
+                <h2>{product_name}</h2>
+                <div>
+                  <img src={`${imgUrl}icons/detail_heart.svg`} alt="like" />
+                  <img src={`${imgUrl}icons/share.svg`} alt="share" />
+                </div>
+              </InformTitle>
+              <InformTable>
+                <tr>
+                  <td>사이즈</td>
+                  <td>{product_size}</td>
+                  <td>상태</td>
+                  <td>{product_condition}</td>
+                </tr>
+                <tr>
+                  <td>브랜드</td>
+                  <td>{product_brand}</td>
+                  <td>물</td>
+                  <td>{water}L 절약</td>
+                </tr>
+                <tr>
+                  <td>색상</td>
+                  <td>{product_color}</td>
+                  <td>탄소</td>
+                  <td>{carbon}kg 절약</td>
+                </tr>
+              </InformTable>
+              <InformPrice>
+                <h3>{price} 원</h3>
+              </InformPrice>
+              <ButtonWrapper>
+                <button className="cart" onClick={handleClickCart}>
+                  장바구니
+                </button>
+                <button className="purchase">바로구매</button>
+              </ButtonWrapper>
+            </Information>
+          </RightContents>
+        </ContentsWrapper>
+        <DetailImages>
+          {images.map((img, idx) => {
+            if (idx > 0) {
+              return (
+                <div
+                  key={idx}
+                  className="detail-img"
+                  style={{ backgroundImage: `url(${img})` }}
+                />
+              );
+            }
+          })}
+        </DetailImages>
+        <TitleInHome title={"이 셀러가 판매하는 다른 상품"} />
+        <ItemImages items={itemsData} />
       </Wrapper>
     </TopWrapper>
   );

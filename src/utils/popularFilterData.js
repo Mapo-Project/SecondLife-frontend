@@ -13,7 +13,7 @@ export const popularFilterData = [
     inCart: false,
   },
   {
-    id: 200,
+    id: 102,
     like_num: 20,
     size: "250",
     isLike: false,
@@ -24,7 +24,7 @@ export const popularFilterData = [
     inCart: false,
   },
   {
-    id: 3,
+    id: 103,
     like_num: 17,
     size: "S",
     isLike: false,

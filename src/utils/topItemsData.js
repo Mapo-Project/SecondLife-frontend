@@ -3,7 +3,7 @@ const popularImgUrl = `${process.env.PUBLIC_URL}/assets/images/popularImg/`;
 
 export const topItemsData = [
   {
-    id: 1,
+    id: 100,
     like_num: 15,
     size: "XS",
     isLike: false,
@@ -102,7 +102,7 @@ export const topItemsData = [
     inCart: false,
   },
   {
-    id: 10,
+    id: 103,
     like_num: 17,
     size: "S",
     isLike: false,
