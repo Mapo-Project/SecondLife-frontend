@@ -9,6 +9,7 @@ import SimpleLogin from "./auth/SimpleLogin";
 import { useSelector } from "react-redux";
 import SimpleSignUp from "./pages/SimpleSignUp";
 import MypageHome from "./components/MypageHome";
+import NewSection from "./components/NewSection";
 
 function App() {
   //로그인 체크
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/*" element={<Home />} />
+          <Route path="/new" element={<NewSection />} />
           <Route
             path="/signup/*"
             element={login ? <Navigate replace to="/" /> : <SignUp />}
