@@ -30,6 +30,10 @@ export const detailData = [
     product_price: 6000,
     water: "900",
     carbon: "3.5",
+    parent1_name: "탑",
+    parent2_name: "상의",
+    parent1_url: "tops",
+    parent2_url: "top",
   },
   {
     id: 101,
@@ -60,6 +64,8 @@ export const detailData = [
     product_price: 12000,
     water: "1,100",
     carbon: "4.1",
+    parent1_name: "팬츠",
+    parent2_name: "하의",
   },
   {
     id: 102,
@@ -90,7 +96,7 @@ export const detailData = [
       "블랙",
       "심플",
     ],
-    product_name: "그레이 크롭 나시",
+    product_name: "뉴발란스 화이트 슈즈",
     product_size: "250",
     product_condition: "매우 좋음",
     product_brand: "NEW BALANCE",
@@ -98,6 +104,8 @@ export const detailData = [
     product_price: 41000,
     water: "1,500",
     carbon: "5",
+    parent1_name: "운동화",
+    parent2_name: "신발",
   },
   {
     id: 103,
@@ -127,5 +135,10 @@ export const detailData = [
     product_price: 13000,
     water: "970",
     carbon: "2.9",
+    parent_url: "tops",
+    parent1_name: "탑",
+    parent2_name: "상의",
+    parent1_url: "tops",
+    parent2_url: "top",
   },
 ];

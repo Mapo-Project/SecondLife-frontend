@@ -5,7 +5,7 @@ import TitleInHome from "./TitleInHome";
 import ItemImages from "./ItemImages";
 import { itemsData } from "../utils/itemsData";
 import CartModal from "./CartModal";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { detailData } from "../utils/detailData";
 
 const TopWrapper = styled.div`
@@ -16,7 +16,6 @@ const Wrapper = styled.div`
   width: 1410px;
   margin: 0 auto;
   background-color: #fafafa;
-  padding-top: 41px;
   padding-bottom: 130px;
   position: relative;
 `;
@@ -24,6 +23,7 @@ const Wrapper = styled.div`
 const ContentsWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 41px;
 `;
 
 const LeftContents = styled.div`
@@ -224,6 +224,16 @@ const DetailImages = styled.div`
   }
 `;
 
+const CategoryRoute = styled.ul`
+  display: flex;
+  ${({ theme }) => theme.korean.body2}
+  color: ${({ theme }) => theme.gray700};
+  margin-top: 16px;
+  li {
+    cursor: pointer;
+  }
+`;
+
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
 
 let price = 0;
@@ -257,6 +267,10 @@ const Detail = () => {
     product_price,
     water,
     carbon,
+    parent1_name,
+    parent2_name,
+    parent1_url,
+    parent2_url,
   } = { ...productData };
   const [detailImg, setDetailImg] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -269,11 +283,39 @@ const Detail = () => {
     price = product_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  const navigate = useNavigate();
+
   return (
     <TopWrapper>
       <CartModal showModal={showModal} setShowModal={setShowModal} />
       <Navbar />
       <Wrapper>
+        <CategoryRoute>
+          <Link to="/">
+            <li>홈</li>
+          </Link>
+          <li
+            onClick={() => {
+              if (parent2_url) {
+                navigate(`/${parent2_url}`);
+              }
+              return;
+            }}
+          >
+            &nbsp;/ 카테고리
+          </li>
+          <li
+            onClick={() => {
+              if (parent1_url) {
+                navigate(`/${parent1_url}`);
+              }
+              return;
+            }}
+          >
+            &nbsp;/ {parent2_name}
+          </li>
+          <li>&nbsp;/ {parent1_name}</li>
+        </CategoryRoute>
         <ContentsWrapper>
           <LeftContents>
             <BigImg style={{ backgroundImage: `url(${detailImg})` }} />
