@@ -3,7 +3,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import ProductList from "./ProductList";
-import { newFilterData } from "../utils/newFilterData";
+import { tshirtsData } from "../utils/tshirtsData";
 
 const TopWrapper = styled.div`
   width: 100%;
@@ -49,7 +49,7 @@ const CategoryProducts = styled.div`
 `;
 
 const Tshirts = () => {
-  const [products, setProducts] = useState(newFilterData);
+  const [products, setProducts] = useState(tshirtsData);
 
   const borderStyle = {
     borderBottom: `2px solid #212121`,
@@ -73,11 +73,11 @@ const Tshirts = () => {
             <li style={borderStyle}>티셔츠</li>
           </Link>
           <li>셔츠</li>
-          <li>탑</li>
-          <li>니트</li>
-          <Link to="/mtm">
-            <li>맨투맨</li>
+          <Link to="/tops">
+            <li>탑</li>
           </Link>
+          <li>니트</li>
+          <li>맨투맨</li>
         </CategoryList>
         <CategoryProducts>
           <h3>지금 올라온 상품들</h3>

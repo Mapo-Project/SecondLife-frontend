@@ -12,7 +12,7 @@ import MypageHome from "./components/MypageHome";
 import ProductCollection from "./pages/ProductCollection";
 import Top from "./components/Top";
 import Tshirts from "./components/Tshirts";
-import MTM from "./components/MTM";
+import Tops from "./components/Tops";
 import Detail from "./components/Detail";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
           <Route path="/collection/*" element={<ProductCollection />} />
           <Route path="/top" element={<Top />} />
           <Route path="/tshirts" element={<Tshirts />} />
-          <Route path="/mtm" element={<MTM />} />
+          <Route path="/tops" element={<Tops />} />
           <Route path="/detail" element={<Detail />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route

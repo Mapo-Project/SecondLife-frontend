@@ -3,7 +3,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import ProductList from "./ProductList";
-import { newFilterData } from "../utils/newFilterData";
+import { topsData } from "../utils/topsData";
 
 const TopWrapper = styled.div`
   width: 100%;
@@ -48,8 +48,8 @@ const CategoryProducts = styled.div`
   }
 `;
 
-const MTM = () => {
-  const [products, setProducts] = useState(newFilterData);
+const Tops = () => {
+  const [products, setProducts] = useState(topsData);
 
   const borderStyle = {
     borderBottom: `2px solid #212121`,
@@ -73,11 +73,11 @@ const MTM = () => {
             <li>티셔츠</li>
           </Link>
           <li>셔츠</li>
-          <li>탑</li>
-          <li>니트</li>
-          <Link to="/mtm" style={borderStyle}>
-            <li>맨투맨</li>
+          <Link to="/tops" style={borderStyle}>
+            <li>탑</li>
           </Link>
+          <li>니트</li>
+          <li>맨투맨</li>
         </CategoryList>
         <CategoryProducts>
           <h3>지금 올라온 상품들</h3>
@@ -92,4 +92,4 @@ const MTM = () => {
   );
 };
 
-export default MTM;
+export default Tops;

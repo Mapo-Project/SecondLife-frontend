@@ -35,13 +35,13 @@ export const sideNavigationData = [
       },
       {
         item: "탑",
+        item_url: "tops",
       },
       {
         item: "니트",
       },
       {
         item: "맨투맨",
-        item_url: "mtm",
       },
     ],
     active: false,
