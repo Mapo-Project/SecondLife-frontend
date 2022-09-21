@@ -14,7 +14,6 @@ opacity: 1;
 
 const TopWrapper = styled.div`
   width: 420px;
-  /* height: 518px; */
   margin: 0px auto 10px;
   padding: 20px 24px 28px;
   display: flex;
@@ -82,7 +81,6 @@ const InputWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* background-color: aliceblue; */
   color: ${({ theme }) => theme.colors.black};
   .range {
     display: flex;
@@ -167,7 +165,6 @@ const GreenBag = styled.div`
 const BagCounterWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  /* background-color: aliceblue; */
   width: 342px;
   margin: 0 auto;
   color: ${({ theme }) => theme.colors.black};
@@ -238,6 +235,7 @@ const lActive = {
   backgroundImage: `url(${imgUrl}pickUpImg/l_active.png)`,
 };
 
+// 그린백 선택 섹션
 function GreenBagCounter({
   size,
   sizeNum,
@@ -247,19 +245,13 @@ function GreenBagCounter({
   setAvailableNum,
   disabled,
 }) {
+  // 그린백 개수 줄이기
   const handleMinusClick = (e) => {
     if (disabled) {
       e.preventDefault();
       return;
     }
     minusBagNumChange(size, sizeNum);
-  };
-  const handlePlusClick = (e) => {
-    if (disabled) {
-      e.preventDefault();
-      return;
-    }
-    plusBagNumChange(size, sizeNum);
   };
   const minusBagNumChange = (size, num) => {
     if (num === 0) {
@@ -270,6 +262,14 @@ function GreenBagCounter({
     }
   };
 
+  // 그린백 개수 늘리기
+  const handlePlusClick = (e) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+    plusBagNumChange(size, sizeNum);
+  };
   const plusBagNumChange = (size, num) => {
     if (availableNum === 0) {
       return;
@@ -313,7 +313,7 @@ const PickUpOptions = ({
   setDisabled,
   setIsClicked,
 }) => {
-  // const [clothesNum, setClothesNum] = useState(0);
+  // 옷 정리 개수 설정
   const handleRangeChange = (e) => {
     let value = Math.floor(e.target.value);
     if (value < 0) {
@@ -325,23 +325,10 @@ const PickUpOptions = ({
     }
   };
 
-  // const [greenBagNum, setGreenBagNum] = useState({
-  //   small: 0,
-  //   medium: 0,
-  //   large: 0,
-  // });
-
   const { small, medium, large } = greenBagNum;
+
+  // 신청 가능 그린백 개수 설정
   const [availableNum, setAvailableNum] = useState(3);
-
-  // const [howto, setHowto] = useState("");
-  const handleHowtoClick = (value) => {
-    setHowto(value);
-    setTimeout(() => {
-      setIsClicked("where");
-    }, 500);
-  };
-
   const handleDisableClick = () => {
     setDisabled(!disabled);
     if (!disabled) {
@@ -349,6 +336,14 @@ const PickUpOptions = ({
     } else {
       setAvailableNum(3);
     }
+  };
+
+  // 정리방법 설정
+  const handleHowtoClick = (value) => {
+    setHowto(value);
+    setTimeout(() => {
+      setIsClicked("where");
+    }, 500);
   };
 
   return (

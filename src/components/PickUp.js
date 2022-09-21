@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -34,18 +34,15 @@ const CloseBtnWrapper = styled.div`
   .close-btn {
     margin: 8px 8px 0 0;
   }
-  /* background-color: aliceblue; */
 `;
 
 const CenterContents = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
-  /* background-color: lightblue; */
   .right-contents {
     margin-bottom: 20px;
     color: ${({ theme }) => theme.colors.white};
-    /* background-color: antiquewhite; */
     .firstP {
       font-family: "Noto Sans KR";
       font-weight: 700;
@@ -101,7 +98,6 @@ const SaveResult = styled.div`
 
 const ProfileImg = styled.div`
   position: relative;
-  /* background-color: aliceblue; */
   margin-right: 30px;
   width: 120px;
   height: 120px;
@@ -152,7 +148,6 @@ const BoxTitle = styled.span`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* cursor: pointer; */
   &.isLogin {
     cursor: pointer;
   }
@@ -199,12 +194,15 @@ const SubmitBtn = styled.div`
 `;
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
+const number = 7;
+const tomorrow = new Date(Date.now() + 3600 * 1000 * 24);
 
 const PickUp = () => {
+  // 회원정보
   const { data } = useSelector((state) => state.user);
+  // 로그인 여부
   const [isLogin, setIsLogin] = useState(false);
-  // const name = data.name;
-  const number = 7;
+  // 픽업 옵션 선택
   const [isClicked, setIsClicked] = useState("");
 
   // 픽업 방법 데이터
@@ -215,8 +213,8 @@ const PickUp = () => {
     large: 0,
   });
   const { small, medium, large } = greenBagNum;
-  const [howto, setHowto] = useState("");
 
+  // 선택한 그린백 표시
   const showGreenBagSize = () => {
     let sizeArr = [];
     for (let size in greenBagNum) {
@@ -230,12 +228,8 @@ const PickUp = () => {
       .replaceAll("medium", "M")
       .replaceAll("large", "L")
       .replaceAll(",", "+");
-
     return ` | 그린백 ${resultSize} : `;
   };
-
-  showGreenBagSize();
-
   const showGreenBagNum = () => {
     let greenBags = [small, medium, large];
     let resultArr = greenBags.filter((bag) => bag !== 0);
@@ -247,7 +241,8 @@ const PickUp = () => {
     return `${resultToString}개`;
   };
 
-  showGreenBagNum();
+  // 정리 방법 설정
+  const [howto, setHowto] = useState("");
   const showHowto = () => {
     if (howto === "01") {
       return " | 포인트";
@@ -259,6 +254,17 @@ const PickUp = () => {
       return;
     }
   };
+
+  // 그린백 선택 여부
+  const [disabled, setDisabled] = useState(false);
+  const greenBagYN = () => {
+    if (disabled) {
+      return "N";
+    } else {
+      return "Y";
+    }
+  };
+
   const [randomData, setRandomData] = useState(
     Math.floor(Math.random() * 1000)
   );
@@ -268,12 +274,14 @@ const PickUp = () => {
     setRandomData(Math.floor(Math.random() * 1000));
   };
 
+  // 픽업 장소 데이터
   const [fullAdd, setFullAdd] = useState("");
 
-  const tomorrow = new Date(Date.now() + 3600 * 1000 * 24);
+  // 픽업 시간 데이터
   const [pickupDate, setPickupDate] = useState(tomorrow);
   const [pickupTime, setPickupTime] = useState("");
 
+  // 픽업 시간 표시
   const showPickupTime = () => {
     if (pickupTime === "01") {
       return " | 06AM - 11AM";
@@ -288,17 +296,11 @@ const PickUp = () => {
     }
   };
 
-  const [disabled, setDisabled] = useState(false);
-
-  const greenBagYN = () => {
-    if (disabled) {
-      return "N";
-    } else {
-      return "Y";
-    }
-  };
-
+  // 엑세스 토큰
   const { accessToken } = useSelector((state) => state.token);
+
+  // 픽업 신청 기능
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleSubmitBtnClick = () => {
     let ynResult = greenBagYN();
@@ -322,6 +324,7 @@ const PickUp = () => {
     }, 1000);
   };
 
+  // 로그인 여부 체크
   useEffect(() => {
     if (data) {
       setIsLogin(true);
@@ -330,7 +333,7 @@ const PickUp = () => {
     }
   }, []);
 
-  const [isSubmit, setIsSubmit] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <TopWrapper key={randomData}>
@@ -394,12 +397,10 @@ const PickUp = () => {
               </p>
             </SaveResult>
           ) : (
-            // <Link to="/">
-            <button>
+            <button onClick={() => navigate(`/login`)}>
               <span>픽업과정 보러가기</span>
               <FontAwesomeIcon icon={faAngleRight} className="angle-right" />
             </button>
-            // </Link>
           )}
         </div>
       </CenterContents>

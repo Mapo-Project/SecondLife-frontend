@@ -3,7 +3,8 @@ import styled from "styled-components";
 import "../css/Post.css";
 const TopWrapper = styled.div``;
 
-const PickUpPost = ({ address, setAddress }) => {
+// 픽업장소 선택 - 다음 주소 검색 API
+const PickUpPost = ({ setAddress }) => {
   const handleComplete = (data) => {
     let fullAddress = data.address;
     let extraAddress = "";
@@ -17,7 +18,6 @@ const PickUpPost = ({ address, setAddress }) => {
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    console.log(fullAddress);
     setAddress(fullAddress);
   };
   return (

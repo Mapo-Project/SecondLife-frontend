@@ -188,6 +188,13 @@ const MypageCircle = styled.div`
   height: 36px;
   background-color: #00ff85;
   border-radius: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${({ theme }) => theme.english.subtitle2}
 `;
 
 const InputWrapper = styled.div`
@@ -211,7 +218,13 @@ const Navbar = () => {
   const handleSearchClick = (event) => {
     event.stopPropagation();
     setOnSearch(!onSearch);
+    setInputValue("");
   };
+
+  const { data } = useSelector((state) => state.user);
+
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <>
       <SideNavigation active={active} onToggle={onToggle} />
@@ -258,6 +271,10 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="검색어를 입력하세요."
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+              }}
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -292,10 +309,13 @@ const Navbar = () => {
               {/* <Link to="/"> */}
               <li className="mypage">
                 <MypageCircle
+                  // style={{ backgroundImage: `url(${data.profile_img})` }}
                   onClick={() => {
                     navigate("/mypage");
                   }}
-                />
+                >
+                  {data.name.substr(0, 1)}
+                </MypageCircle>
                 <h6>My page</h6>
               </li>
               {/* </Link> */}
