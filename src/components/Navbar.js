@@ -251,11 +251,11 @@ const Navbar = () => {
               alt="logo button"
             />
           </Link>
-          {login && (
+          {/* {login && (
             <Btn style={{ marginRight: 50 }}>
               <Link to="/logout">Log out</Link>
             </Btn>
-          )}
+          )} */}
           <ul className={onSearch && "search-disappear"}>
             <li>Woman</li>
             <li>Man</li>
