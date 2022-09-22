@@ -14,6 +14,7 @@ import Top from "./components/Top";
 import Tshirts from "./components/Tshirts";
 import Tops from "./components/Tops";
 import Detail from "./components/Detail";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   //로그인 체크
@@ -22,6 +23,7 @@ function App() {
     <>
       <GlobalStyle />
       <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/*" element={<Home />} />
