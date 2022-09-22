@@ -9,6 +9,12 @@ import SimpleLogin from "./auth/SimpleLogin";
 import { useSelector } from "react-redux";
 import SimpleSignUp from "./pages/SimpleSignUp";
 import MypageHome from "./components/MypageHome";
+import ProductCollection from "./pages/ProductCollection";
+import Top from "./components/Top";
+import Tshirts from "./components/Tshirts";
+import Tops from "./components/Tops";
+import Detail from "./components/Detail";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   //로그인 체크
@@ -17,9 +23,16 @@ function App() {
     <>
       <GlobalStyle />
       <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/*" element={<Home />} />
+          <Route path="/collection/*" element={<ProductCollection />} />
+          <Route path="/top" element={<Top />} />
+          <Route path="/tshirts" element={<Tshirts />} />
+          <Route path="/tops" element={<Tops />} />
+          <Route path="/detail" element={<Detail />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route
             path="/signup/*"
             element={login ? <Navigate replace to="/" /> : <SignUp />}
