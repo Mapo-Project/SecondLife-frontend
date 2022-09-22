@@ -12,42 +12,48 @@ const Section = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-top: 102px;
-  .content {
-    display: flex;
-    margin-bottom: 100px;
-    width: 100%;
-    overflow: scroll;
-    scroll-margin-bottom: 0;
-    white-space: nowrap;
-    .brand {
-      position: relative;
-      margin-right: 11px;
-      cursor: pointer;
-      .logo {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        background: rgba(0, 0, 0, 0.5);
-        cursor: pointer;
-      }
-    }
-    .brand:hover > .logo {
-      opacity: 1;
-    }
-
-    span {
-      ${({ theme }) => theme.english.subtitle2};
-      cursor: pointer;
-    }
-  }
-  .content::-webkit-scrollbar {
+`;
+const Content = styled.div`
+  margin-bottom: 100px;
+  display: flex;
+  overflow: scroll;
+  /* scroll-margin-bottom: 0; */
+  white-space: nowrap;
+  ::-webkit-scrollbar {
     display: none;
+  }
+`;
+
+const Wrapper = styled.div`
+  margin-right: 11px;
+
+  .brand:hover > .logo {
+    opacity: 1;
+  }
+`;
+const Brand = styled.div`
+  position: relative;
+  height: 452px;
+`;
+
+const Logo = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+`;
+const BrandName = styled.div`
+  margin-top: 8px;
+  span {
+    ${({ theme }) => theme.english.subtitle2};
+    cursor: pointer;
   }
 `;
 
@@ -62,21 +68,23 @@ const BrandSection = () => {
   return (
     <Section>
       <TitleInHome title={title} />
-      <div className="content" {...events} ref={containerRef}>
+      <Content {...events} ref={containerRef}>
         {brand.map((a, i) => {
           return (
-            <div className="item" key={i}>
-              <div className="brand">
-                <img src={brand[i].url} alt="" />
-                <div className="logo">
-                  <img src={brand[i].logo} alt="" />
-                </div>
-              </div>
-              <span>#{brand[i].name}</span>
-            </div>
+            <Wrapper key={i}>
+              <Brand className="brand">
+                <img src={a.url} alt="" />
+                <Logo className="logo">
+                  <img src={a.logo} alt="" />
+                </Logo>
+              </Brand>
+              <BrandName>
+                <span>#{a.name}</span>
+              </BrandName>
+            </Wrapper>
           );
         })}
-      </div>
+      </Content>
     </Section>
   );
 };
