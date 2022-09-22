@@ -34,7 +34,7 @@ const RightContents = styled.div``;
 const BigImg = styled.div`
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   width: 690px;
   height: 690px;
   transition: 0.4s ease-in-out;

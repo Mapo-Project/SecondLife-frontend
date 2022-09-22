@@ -82,6 +82,7 @@ const FollowingList = () => {
   const { events } = useDraggable(containerRef);
 
   const [followingList, setFollowingList] = useState([]);
+  const [isNotZero, setIsNotZero] = useState(true);
   const [username, setUsername] = useState("");
 
   let title = `${username}님이 팔로우한 셀러`;
@@ -112,6 +113,9 @@ const FollowingList = () => {
     const data1 = await getUserFollowingList(accessToken);
     // const data2 = await selectUserProfile(accessToken);
     setFollowingList(data1);
+    if (data1.length === 0) {
+      setIsNotZero(false);
+    }
     // setUsername(data2.json.data.name);
     setUsername(data.name);
   };
@@ -123,7 +127,7 @@ const FollowingList = () => {
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {followingList ? (
+      {isNotZero ? (
         <TopWrapper>
           <TitleInHome title={title} />
           <ItemsWrapper className="items" {...events} ref={containerRef}>
