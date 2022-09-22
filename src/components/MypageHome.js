@@ -315,7 +315,7 @@ const MypageHome = () => {
               {/* <span>다섯글자님님</span> */}
               <span>@JJiasClosett</span>
               <p>
-                <img src={`${imgUrl}levelGreen.png`} alt="level" />
+                <img src={`${imgUrl}levelGreen2.png`} alt="G" />
                 <span>Lv. Green</span>
               </p>
               <p>
