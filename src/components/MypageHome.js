@@ -299,7 +299,7 @@ const MypageHome = () => {
   return (
     <>
       {/* {isLogin ? console.log("로그인O") : console.log("로그인X")} */}
-      {/* <Navbar /> */}
+      <Navbar />
       <Check />
       <Container>
         <LeftSection>
@@ -436,7 +436,7 @@ const MypageHome = () => {
           {SideMenuContent[sideMenuChange.activeSideMenu]}
         </RightSection>
       </Container>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };
