@@ -4,37 +4,56 @@ import { useState } from "react";
 import styled from "styled-components";
 import { BrandSectionData } from "../utils/BrandSectiondata";
 import TitleInHome from "./TitleInHome";
-
-const imgUrl = `${process.env.PUBLIC_URL}/assets/images/BottomBanners/`;
+import { useRef } from "react";
+import { useDraggable } from "react-use-draggable-scroll";
 
 const Section = styled.div`
   max-width: 1410px;
   margin-left: auto;
   margin-right: auto;
-  .content {
-    height: 508px;
-    display: flex;
-    margin-bottom: 100px;
-    .brand {
-      position: relative;
-      padding-right: 11px;
-      .logo{
-        position: absolute;
-        top: 38%; 
-        left:25%;
-        opacity : 0;
-      }
-    }
-    .brand:hover{
-      opacity: 0.5;
-    }
-    .brand:hover > .logo{
-        opacity: 1;
-      }
-    
-    a {
-      ${({ theme }) => theme.english.subtitle2};
-    }
+  margin-top: 102px;
+`;
+const Content = styled.div`
+  margin-bottom: 100px;
+  display: flex;
+  overflow: scroll;
+  /* scroll-margin-bottom: 0; */
+  white-space: nowrap;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const Wrapper = styled.div`
+  margin-right: 11px;
+
+  .brand:hover > .logo {
+    opacity: 1;
+  }
+`;
+const Brand = styled.div`
+  position: relative;
+  height: 452px;
+`;
+
+const Logo = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+`;
+const BrandName = styled.div`
+  margin-top: 8px;
+  span {
+    ${({ theme }) => theme.english.subtitle2};
+    cursor: pointer;
   }
 `;
 
@@ -42,24 +61,30 @@ const BrandSection = () => {
   let title = "#브랜드 제품 모아보기";
   let [brand] = useState(BrandSectionData);
 
+  //마우스 드래그 스크롤
+  const containerRef = useRef(null);
+  const { events } = useDraggable(containerRef);
+
   return (
     <Section>
       <TitleInHome title={title} />
-      <div className="content">
+      <Content {...events} ref={containerRef}>
         {brand.map((a, i) => {
           return (
-            <div className="item" key={i}>
-              <div className="brand">
-                <img src={brand[i].url} alt="" />
-                <div className="logo">
-                  <img src={brand[i].logo} alt="" />
-                </div>
-              </div>
-              <a href="#">#{brand[i].name}</a>
-            </div>
+            <Wrapper key={i}>
+              <Brand className="brand">
+                <img src={a.url} alt="" />
+                <Logo className="logo">
+                  <img src={a.logo} alt="" />
+                </Logo>
+              </Brand>
+              <BrandName>
+                <span>#{a.name}</span>
+              </BrandName>
+            </Wrapper>
           );
         })}
-      </div>
+      </Content>
     </Section>
   );
 };

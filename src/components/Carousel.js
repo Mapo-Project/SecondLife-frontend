@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/carouselImg/`;
 
+const Slide = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+
 const carouselData = [
   {
     id: 1,
-    imgUrl: `${imgUrl}topbanner1.png`,
+    imgUrl: `${imgUrl}topbanner01.png`,
     title: `THE MONSTER \r\n IN OUR CLOSET`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -18,7 +27,7 @@ const carouselData = [
   },
   {
     id: 2,
-    imgUrl: `${imgUrl}topbanner2.jpg`,
+    imgUrl: `${imgUrl}topbanner02.gif`,
     title: `THE MONSTER \r\n IN OUR CLOSET2`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -27,7 +36,7 @@ const carouselData = [
   },
   {
     id: 3,
-    imgUrl: `${imgUrl}topbanner3.jpg`,
+    imgUrl: `${imgUrl}topbanner03.png`,
     title: `THE MONSTER \r\n IN OUR CLOSET3`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -36,7 +45,7 @@ const carouselData = [
   },
   {
     id: 4,
-    imgUrl: `${imgUrl}topbanner4.jpg`,
+    imgUrl: `${imgUrl}topbanner04.png`,
     title: `THE MONSTER \r\n IN OUR CLOSET4`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -45,7 +54,7 @@ const carouselData = [
   },
   {
     id: 5,
-    imgUrl: `${imgUrl}topbanner5.jpg`,
+    imgUrl: `${imgUrl}topbanner05.png`,
     title: `THE MONSTER \r\n IN OUR CLOSET5`,
     content: `무심코 입고 버리는 옷들의 탄생과정부터 폐기되기 까지의
     숨겨진 과정들을 모두 알고 있나요?
@@ -64,13 +73,14 @@ const SlideWrapper = styled.div`
     height: 100%;
     position: absolute;
     display: none;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     z-index: 10;
     cursor: pointer;
     top: 0;
     left: 0;
+    animation: ${Slide} 1s linear;
   }
   .slide-contents {
     position: absolute;
@@ -88,12 +98,10 @@ const SlideWrapper = styled.div`
     color: ${({ theme }) => theme.colors.green300};
     line-height: 70px;
     text-shadow: -4px 0 #000, 0 4px #000, 4px 0 #000, 0 -4px #000;
-    /* background-color: aliceblue; */
   }
   .slide-content {
     margin-bottom: 86px;
     ${({ theme }) => theme.korean.caption};
-    /* background-color: aqua; */
   }
   .slide-link {
     padding: 7px 16px 7px 20px;
@@ -158,7 +166,7 @@ const Carousel = () => {
 
   return (
     <div className="carousel">
-      {carouselData.map((datum, index) => (
+      {/* {carouselData.map((datum, index) => (
         <Link to="/" key={datum.id}>
           <SlideWrapper>
             <div
@@ -183,7 +191,48 @@ const Carousel = () => {
             </div>
           </SlideWrapper>
         </Link>
-      ))}
+      ))} */}
+      <Link to="/">
+        <SlideWrapper>
+          <div
+            style={{ backgroundImage: `url(${imgUrl}topbanner01.png)` }}
+            className={slideIndex === 0 ? "slide-img active" : "slide-img"}
+          />
+        </SlideWrapper>
+      </Link>
+      <Link to="/">
+        <SlideWrapper>
+          <div className={slideIndex === 1 ? "slide-img active" : "slide-img"}>
+            <video autoPlay muted loop>
+              <source src={`${imgUrl}topbanner2.mp4`} type="video/mp4" />
+            </video>
+          </div>
+        </SlideWrapper>
+      </Link>
+      <Link to="/">
+        <SlideWrapper>
+          <div
+            style={{ backgroundImage: `url(${imgUrl}topbanner03.png)` }}
+            className={slideIndex === 2 ? "slide-img active" : "slide-img"}
+          />
+        </SlideWrapper>
+      </Link>
+      <Link to="/">
+        <SlideWrapper>
+          <div
+            style={{ backgroundImage: `url(${imgUrl}topbanner04.png)` }}
+            className={slideIndex === 3 ? "slide-img active" : "slide-img"}
+          />
+        </SlideWrapper>
+      </Link>
+      <Link to="/">
+        <SlideWrapper>
+          <div
+            style={{ backgroundImage: `url(${imgUrl}topbanner05.png)` }}
+            className={slideIndex === 4 ? "slide-img active" : "slide-img"}
+          />
+        </SlideWrapper>
+      </Link>
       <BtnWrapper>
         {carouselData.map((datum, index) => {
           return (

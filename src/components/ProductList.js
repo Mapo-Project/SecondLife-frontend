@@ -1,0 +1,321 @@
+import styled, { keyframes } from "styled-components";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+const Appear = keyframes`
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+`;
+
+const Disappear = keyframes`
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+`;
+
+const ProductImgWrapper = styled.div`
+  width: 210px;
+  height: 210px;
+  position: relative;
+`;
+
+const BigHeart = styled.div`
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  display: none;
+  opacity: 0;
+  &.start {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: ${Appear} 0.5s linear;
+  }
+  &.end {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: ${Disappear} 1s linear;
+  }
+`;
+
+const ProductImg = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  .like {
+    margin-top: 5px;
+    margin-left: 13px;
+    img {
+      margin-right: 5px;
+    }
+  }
+  .bottom-contents {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    img {
+      cursor: pointer;
+      width: 29.15px;
+      height: 29.15px;
+      margin-right: 8.4px;
+      margin-bottom: 8.3px;
+    }
+  }
+  .like {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 24px;
+    color: #fff;
+  }
+  .size {
+    min-width: 28px;
+    height: 28px;
+    padding-left: 4px;
+    padding-right: 4px;
+    background-color: ${({ theme }) => theme.colors.gray900};
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+  }
+`;
+
+const TopWrapper = styled.div`
+  display: grid;
+  width: 100%;
+  background-color: #fff;
+  column-gap: 30px;
+  row-gap: 52px;
+  margin-top: 28px;
+`;
+
+const ProductInform = styled.div`
+  width: 210px;
+  background-color: #fff;
+  h6 {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 350;
+    font-size: 12px;
+    letter-spacing: 0.1px;
+    color: ${({ theme }) => theme.colors.gray700};
+  }
+`;
+
+const AboutPrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+  h5 {
+    ${({ theme }) => theme.english.caption};
+  }
+  button {
+    width: 51px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid ${({ theme }) => theme.colors.gray900};
+    cursor: pointer;
+    span {
+      ${({ theme }) => theme.korean.caption};
+    }
+  }
+  .inCart {
+    background-color: ${({ theme }) => theme.colors.gray900};
+    color: #fff;
+  }
+  .notInCart {
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.gray900};
+  }
+`;
+
+const imgUrl = `${process.env.PUBLIC_URL}/assets/images/`;
+
+const brandNameStyle = { margin: `5px 0` };
+
+const ProductImage = ({ elm, products, setProducts }) => {
+  const [appearance, setAppearance] = useState(false);
+  let navigate = useNavigate();
+  // 회원정보
+  const { data } = useSelector((state) => state.user);
+
+  const handleBlankClick = (e, id) => {
+    e.stopPropagation();
+    if (data) {
+      let result = products.map((product) =>
+        product.id === id
+          ? {
+              ...product,
+              like_num: product.like_num + 1,
+              isLike: !product.isLike,
+            }
+          : product
+      );
+      setProducts(result);
+      setAppearance(true);
+      setTimeout(() => {
+        setAppearance(false);
+      }, 1000);
+    } else {
+      navigate(`/login`);
+    }
+  };
+
+  const handleFilledClick = (e, id) => {
+    e.stopPropagation();
+    if (data) {
+      let result = products.map((product) =>
+        product.id === id
+          ? {
+              ...product,
+              like_num: product.like_num - 1,
+              isLike: !product.isLike,
+            }
+          : product
+      );
+      setProducts(result);
+    } else {
+      navigate(`/login`);
+    }
+  };
+
+  return (
+    <ProductImgWrapper>
+      <ProductImg
+        style={{ backgroundImage: `url(${elm.product_img_url})` }}
+        onClick={() => {
+          let idArr = [100, 101, 102, 103];
+          idArr.forEach((id) => {
+            if (elm.id === id) {
+              navigate(`/detail/${elm.id}`);
+            }
+          });
+        }}
+      >
+        <div className="like">
+          <img src={`${imgUrl}icons/like.svg`} alt="" />
+          {elm.like_num}
+        </div>
+        <div className="bottom-contents">
+          <div className="size">{elm.size}</div>
+          {elm.isLike ? (
+            <img
+              src={`${imgUrl}icons/filled_heart.svg`}
+              alt=""
+              onClick={(e) => handleFilledClick(e, elm.id)}
+            />
+          ) : (
+            <img
+              src={`${imgUrl}icons/blank_heart.svg`}
+              alt=""
+              onClick={(e) => handleBlankClick(e, elm.id)}
+            />
+          )}
+        </div>
+      </ProductImg>
+      <BigHeart className={appearance && "start"}>
+        <img src={`${imgUrl}icons/big_blank.svg`} alt="" />
+      </BigHeart>
+      <BigHeart className={appearance && "end"}>
+        <img src={`${imgUrl}icons/big_filled.svg`} alt="" />
+      </BigHeart>
+    </ProductImgWrapper>
+  );
+};
+
+const ProductList = ({ products, setProducts, grid }) => {
+  let navigate = useNavigate();
+  const handleCartClick = (id) => {
+    if (data) {
+      let result = products.map((product) =>
+        product.id === id
+          ? {
+              ...product,
+              inCart: !product.inCart,
+            }
+          : product
+      );
+      setProducts(result);
+    } else {
+      navigate(`/login`);
+    }
+  };
+
+  const gridStyle = { gridTemplateColumns: `${grid}` };
+
+  const { data } = useSelector((state) => state.user);
+
+  return (
+    <TopWrapper style={gridStyle}>
+      {products.map((elm) => {
+        let price = 0;
+        if (elm.price) {
+          price = elm.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        return (
+          <ProductInform key={elm.id}>
+            <ProductImage
+              elm={elm}
+              setProducts={setProducts}
+              products={products}
+            />
+            <h6 style={brandNameStyle}>{elm.brand}</h6>
+            <h6>{elm.name}</h6>
+            <AboutPrice>
+              <h5>{price}원</h5>
+              {elm.inCart ? (
+                <button
+                  className="notInCart"
+                  onClick={() => handleCartClick(elm.id)}
+                >
+                  <span>빼기</span>
+                  <FontAwesomeIcon icon={faCartShopping} />
+                </button>
+              ) : (
+                <button
+                  className="inCart"
+                  onClick={() => handleCartClick(elm.id)}
+                >
+                  <span>담기</span>
+                  <FontAwesomeIcon icon={faCartShopping} />
+                </button>
+              )}
+            </AboutPrice>
+          </ProductInform>
+        );
+      })}
+    </TopWrapper>
+  );
+};
+
+export default ProductList;

@@ -6,6 +6,8 @@ import { useCallback } from "react";
 import axios from "axios";
 import DaumPost from "./Daumpost";
 import CryptoJS from "crypto-js";
+import Swal from "sweetalert2";
+import "../css/SweetAlert.css";
 
 const TopWrapper = styled.div`
   width: 509px;
@@ -69,7 +71,6 @@ const InputWrapper = styled.div`
     font-size: 12px;
     line-height: 24px;
     letter-spacing: 0.1px;
-    /* color: ${({ theme }) => theme.colors.gray700}; */
     img {
       margin-right: 6px;
     }
@@ -80,10 +81,12 @@ const InputWrapper = styled.div`
   .visible {
     position: absolute;
     right: 0px;
+    cursor: pointer;
   }
   .unvisible {
     position: absolute;
     right: 0px;
+    cursor: pointer;
   }
   position: relative;
   margin-bottom: 30px;
@@ -123,6 +126,8 @@ const Button = styled.input`
   ${({ theme }) => theme.korean.caption};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.gray700};
+  background-color: ${(props) => (props.check ? "#BEBEBE" : "#FFFFFF")};
+
   width: 93px;
   border: 1px solid ${({ theme }) => theme.colors.black};
   border-radius: 20px;
@@ -132,7 +137,7 @@ const Button = styled.input`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background-color: ${({ theme }) => theme.colors.green300};
+    background-color: ${(props) => (props.check ? "" : "#00FF85")};
   }
 `;
 const Submit = styled.sub;
@@ -148,7 +153,6 @@ const BottomSection = styled.div`
 `;
 
 const SignUpBtn = styled.input`
-  /* position: sticky; */
   bottom: 0px;
   margin-top: 66px;
   margin-bottom: 38px;
@@ -202,7 +206,6 @@ const UserInformation = () => {
           `https://hee-backend.shop:7179/user/general/duplicate/id/${user_id}`
         );
         if (response.status === 200) {
-          // console.log(response.data);
           if (response.data.duplicate === "unDuplicate") {
             setCheckIdRes(true);
           } else {
@@ -221,9 +224,6 @@ const UserInformation = () => {
   const handleEyeClick = () => {
     setShowPW(!showPW);
   };
-
-  // 비밀번호 변수
-  // const [password, setPassword] = useState("");
   // 비밀번호 확인 변수
   const [pwChecked, setPwChecked] = useState("");
   // 비밀번호 확인 함수
@@ -233,7 +233,6 @@ const UserInformation = () => {
 
   // 생년월일 자동 하이픈(-) 추가
   const birthRef = useRef();
-  // const [birthNum, setBirthNum] = useState("");
   const changeBirth = (e) => {
     const value = birthRef.current.value.replace(/\D+/g, "");
     const numberLength = 8;
@@ -265,7 +264,6 @@ const UserInformation = () => {
   let navigate = useNavigate();
   // 폼 전송시 실행되는 함수
   const onSubmit = async () => {
-    console.log("onsubmit할때", user);
     // try {
     //비밀번호를 SHA256으로 해싱한다.
     const hash = CryptoJS.SHA256(user.password);
@@ -274,18 +272,20 @@ const UserInformation = () => {
     //패스워드로 다시 반환한다
 
     let newInform = { ...user, password: hashPassword };
-    console.log(newInform);
 
     try {
       const response = await axios.post(
         `https://hee-backend.shop:7179/user/general/signup`,
         newInform
       );
-      console.log(response);
       navigate("/signup/finishSignUp");
     } catch (error) {
-      console.log("encryptPW error:", error);
-      alert("회원가입 실패");
+      if (error.response.status === 409) {
+        FailAlert("중복된 이메일입니다.");
+        return;
+      }
+      console.log("signup submit error:", error.response);
+      FailAlert("회원정보를 입력해 주세요.");
     }
   };
 
@@ -333,6 +333,33 @@ const UserInformation = () => {
     const { name, value } = e.target;
     setPhone({ ...phone, [name]: value });
   };
+
+  //ALERT 라이브러리 추가
+  const SuccessAlert = (props) => {
+    const text = props;
+    Swal.fire({
+      icon: "success",
+      text: text,
+      confirmButtonText: "닫기",
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: "alert-button",
+      },
+    });
+  };
+  const FailAlert = (props) => {
+    const text = props;
+    Swal.fire({
+      icon: "error",
+      html: text,
+      confirmButtonText: "닫기",
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: "alert-button",
+      },
+    });
+  };
+
   //우편번호 API
   const [popup, setPopup] = useState(false);
   const handleComplete = () => {
@@ -392,16 +419,18 @@ const UserInformation = () => {
         `https://hee-backend.shop:7179/user/general/signup/auth/phone/test/${phone.num}`
       )
       .then((result) => {
-        alert("인증번호가 전송되었습니다.");
+        SuccessAlert("입력한 휴대 전화로 인증 번호를 전송했습니다.");
         setPhone({ ...phone, code: result.data.code });
-        console.log(result.data);
+        console.log("인증번호 -> " + result.data.code);
         timerReset();
       })
       .catch((result) => {
         if (result.response.data.statusCode === 409) {
-          alert("이미 존재하는 번호입니다.");
+          FailAlert(
+            "이미 사용 중인 번호입니다.<br> 다른 휴대전화 번호를 입력해주세요."
+          );
         } else {
-          alert("전화번호를 다시 확인해주세요");
+          FailAlert("입력한 휴대전화 번호를 다시 확인해주세요.");
         }
       });
   };
@@ -499,9 +528,6 @@ const UserInformation = () => {
                   showPWError: () => {
                     setErrorActive({ ...errorActive, password: true });
                   },
-                  // getPassword: (v) => {
-                  //   setUser({ ...user, password: v });
-                  // },
                 },
                 minLength: 10,
               })}
@@ -661,6 +687,7 @@ const UserInformation = () => {
               disabled={check ? "disabled" : ""}
               onClick={getCertification}
               value="인증번호발급"
+              check={check}
             />
             {/* <span>인증번호발급</span>
             </Button> */}
@@ -684,19 +711,21 @@ const UserInformation = () => {
               disabled={check ? "disabled" : ""}
               className="eye unvisible"
               onClick={() => {
-                console.log(phone);
                 if ((code === "" && code === "") || num === "") {
-                  alert("휴대전화 인증이 필요합니다.");
+                  FailAlert("인증번호를 먼저 발급받으세요.");
                 } else if (code == code2) {
                   setPhone({ ...phone, check: true });
                   setUser({ ...user, phone_num: num, phone_verify: "Y" });
                   stop();
-                  alert("인증되었습니다");
+                  SuccessAlert("인증이 완료되었습니다.");
                 } else {
-                  alert("인증번호를 다시 확인해주세요.");
+                  FailAlert(
+                    "인증 번호를 다시 입력해주세요.<br> 3분이 지났을 경우 재발급을 받아주세요."
+                  );
                 }
               }}
               value={check ? "완료" : "확인"}
+              check={check}
             />
             <span className="timer">
               {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
@@ -740,7 +769,7 @@ const UserInformation = () => {
               onChange={onChangeInput}
             />
           </InputWrapper>
-          <SignUpBtn type="submit" value="동의하기" />
+          <SignUpBtn type="submit" value="가입하기" />
         </form>
       </BottomSection>
     </>

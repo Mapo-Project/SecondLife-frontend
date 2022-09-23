@@ -59,6 +59,7 @@ export const loginUser = async (credentials) => {
   }
 };
 
+// 백으로 로그아웃 요
 export const logoutUser = async (accessToken) => {
   const option = {
     method: "POST",
@@ -91,6 +92,7 @@ export const logoutUser = async (accessToken) => {
   }
 };
 
+// 백으로 토큰 다시 요청
 export const requestToken = async (refresh_Token) => {
   const option = {
     method: "POST",
@@ -102,6 +104,51 @@ export const requestToken = async (refresh_Token) => {
 
   const data = await getPromise(
     "https://hee-backend.shop:7179/auth/token/reissuance",
+    option
+  ).catch(() => {
+    return statusError;
+  });
+
+  if (parseInt(Number(data.status) / 100) === 2) {
+    const status = data.ok;
+    const code = data.status;
+    const text = await data.text();
+    const json = text.length ? JSON.parse(text) : "";
+
+    return {
+      status,
+      code,
+      json,
+    };
+  } else {
+    return statusError;
+  }
+};
+
+// 로컬 스토리지에 자동로그인 상태 가져오기
+export const getValueOnLocalStorage = (key) => {
+  let val = localStorage.getItem(key);
+  return JSON.parse(val);
+};
+
+// 로컬 스토리지에 자동로그인 상태 변경하기
+export const setValueOnLocalStorage = (key, value) => {
+  let val = JSON.stringify(value);
+  localStorage.setItem(key, val);
+};
+
+// 회원정보 조회
+export const selectUserProfile = async (accessToken) => {
+  const option = {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  };
+
+  const data = await getPromise(
+    "https://hee-backend.shop:7179/user/profile/select",
     option
   ).catch(() => {
     return statusError;

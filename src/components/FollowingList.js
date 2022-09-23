@@ -4,11 +4,15 @@ import styled from "styled-components";
 import { followingListData } from "../utils/followingListData";
 import TitleInHome from "./TitleInHome";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { selectUserProfile } from "../api/User";
 
 const TopWrapper = styled.div`
   width: 1410px;
   height: 246px;
-  margin: 0 auto 140px;
+  margin: 135px auto 0;
   /* background-color: aliceblue; */
   /* 스크롤바 설정*/
   .items::-webkit-scrollbar {
@@ -54,6 +58,15 @@ const ItemWrapper = styled.div`
   position: relative;
 `;
 
+const FollowingImg = styled.div`
+  width: 124px;
+  height: 124px;
+  margin-bottom: 10px;
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
 const Circle = styled.div`
   width: 15px;
   height: 15px;
@@ -64,28 +77,76 @@ const Circle = styled.div`
   right: 18px;
 `;
 
-let user = `김뫄뫄`;
-let title = `${user}님이 팔로우한 셀러`;
-
 const FollowingList = () => {
   const containerRef = useRef(null);
   const { events } = useDraggable(containerRef);
 
+  const [followingList, setFollowingList] = useState([]);
+  const [isNotZero, setIsNotZero] = useState(true);
+  const [username, setUsername] = useState("");
+
+  let title = `${username}님이 팔로우한 셀러`;
+
+  const { accessToken } = useSelector((state) => state.token);
+  const { data } = useSelector((state) => state.user);
+
+  const getUserFollowingList = async (accessToken) => {
+    try {
+      const option = {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+      const response = await axios.get(
+        `https://hee-backend.shop:7179/user/following/select`,
+        option
+      );
+      const data = response.data.data;
+      return data;
+    } catch (error) {
+      console.log("FollowingList Error", error);
+    }
+  };
+
+  const showUserFollowingList = async () => {
+    const data1 = await getUserFollowingList(accessToken);
+    // const data2 = await selectUserProfile(accessToken);
+    setFollowingList(data1);
+    if (data1.length === 0) {
+      setIsNotZero(false);
+    }
+    // setUsername(data2.json.data.name);
+    setUsername(data.name);
+  };
+
+  useEffect(() => {
+    showUserFollowingList();
+  }, [accessToken]);
+
   return (
-    <TopWrapper>
-      <TitleInHome title={title} />
-      <ItemsWrapper className="items" {...events} ref={containerRef}>
-        {followingListData.map((datum) => (
-          <ItemWrapper key={datum.id}>
-            {datum.active && <Circle />}
-            <Link to="/">
-              <img src={datum.imgUrl} alt={datum.following} />
-              <h5>{datum.following}</h5>
-            </Link>
-          </ItemWrapper>
-        ))}
-      </ItemsWrapper>
-    </TopWrapper>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {isNotZero ? (
+        <TopWrapper>
+          <TitleInHome title={title} />
+          <ItemsWrapper className="items" {...events} ref={containerRef}>
+            {followingList.map((datum) => (
+              <ItemWrapper key={datum.following_user_id}>
+                {parseInt(datum.product_count) > 0 && <Circle />}
+                <Link to="/">
+                  {/* <img src={datum.profile_img} alt={datum.name} /> */}
+                  <FollowingImg
+                    style={{ backgroundImage: `url(${datum.profile_img})` }}
+                  />
+                  <h5>{datum.name}</h5>
+                </Link>
+              </ItemWrapper>
+            ))}
+          </ItemsWrapper>
+        </TopWrapper>
+      ) : null}
+    </>
   );
 };
 export default FollowingList;

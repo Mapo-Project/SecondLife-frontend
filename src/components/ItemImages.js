@@ -72,27 +72,25 @@ const ItemImages = ({ items }) => {
           price = item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         return (
-          <Link to="/" key={item.id}>
-            <ItemWrapper className="item-wrapper">
-              <div className="hover-img">
-                <Texts>
-                  {item.size && <p>{item.size}</p>}
-                  {item.price && (
-                    <p>
-                      {price}
-                      <span>원</span>
-                    </p>
-                  )}
-                </Texts>
-              </div>
-              <div
-                className="item-img"
-                style={{
-                  backgroundImage: `url(${item.imgUrl})`,
-                }}
-              />
-            </ItemWrapper>
-          </Link>
+          <ItemWrapper className="item-wrapper" key={item.id}>
+            <div className="hover-img">
+              <Texts>
+                {item.size && <p>{item.size}</p>}
+                {item.price && (
+                  <p>
+                    {price}
+                    <span>원</span>
+                  </p>
+                )}
+              </Texts>
+            </div>
+            <div
+              className="item-img"
+              style={{
+                backgroundImage: `url(${item.product_img})`,
+              }}
+            />
+          </ItemWrapper>
         );
       })}
     </TopWrapper>

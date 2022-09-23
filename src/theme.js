@@ -17,7 +17,7 @@ const korean = {
   headline3: `
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 400;
-    font-size: 48px;
+    font-size: 48px; 
     line-height: 56px;
   `,
   headline4: `
@@ -40,16 +40,23 @@ const korean = {
     line-height: 32px;
     letter-spacing: 0.15px;
   `,
+  headline7: `
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 34px;
+    letter-spacing: 0.18px;
+  `,
   subtitle1: `
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.15px;
   `,
   subtitle2: `
     font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
     line-height: 24px;
     letter-spacing: 0.1px;
@@ -75,6 +82,13 @@ const korean = {
     line-height: 20px;
     letter-spacing: 0.25px;
   `,
+  button3: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.25px;
+`,
   caption: `
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 700;
@@ -88,6 +102,34 @@ const korean = {
     font-size: 12px;
     line-height: 20px;
     letter-spacing: 0.4px;
+  `,
+  overline2: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.4px;
+  `,
+  overline3: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 350;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  `,
+  overline4: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 350;
+  font-size: 11px;
+  line-height: 17px;
+  letter-spacing: 0.1px;
+  `,
+  xs: `
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 8px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
   `,
 };
 

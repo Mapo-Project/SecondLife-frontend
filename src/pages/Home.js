@@ -10,13 +10,17 @@ import RollingBanner, {
 } from "../components/RollingBanner";
 import TopSellerSection from "../components/TopSellerSection";
 import BottomBanners from "../components/BottomBanner";
-import Circle from "../components/Circle";
+import PickUpPopup from "../components/PickUpPopup";
 import BrandSection from "../components/BrandSection";
 import NewItemSection from "../components/NewItemSection";
 import Footer from "../components/Footer";
 import Check from "../auth/Check";
+import StepSection from "../components/StepSection";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const { data } = useSelector((state) => state.user);
+
   return (
     <>
       <Check />
@@ -24,19 +28,35 @@ const Home = () => {
       <RollingBanner type={BannerData[0]}>
         {textData[0]} <span>짃</span> !{textData[1]} <span>짃</span> !
       </RollingBanner>
-      <FollowingPDSection />
-      <PopularSection />
-      <HashtagSection />
-      <TodayPick />
-      <RollingBanner type={BannerData[1]}>{textData[2]}</RollingBanner>
-      <RollingBanner type={BannerData[2]}>{textData[3]}</RollingBanner>
-      <TopSellerSection />
-      <FollowingList />
-      <NewItemSection />
+      <StepSection />
+      {data ? (
+        <>
+          <FollowingPDSection />
+          <PopularSection />
+          <HashtagSection />
+          <TodayPick />
+          <RollingBanner type={BannerData[1]}>{textData[2]}</RollingBanner>
+          <RollingBanner type={BannerData[2]}>{textData[3]}</RollingBanner>
+          <TopSellerSection />
+          <FollowingList />
+          <NewItemSection />
+        </>
+      ) : (
+        <>
+          <NewItemSection />
+          <PopularSection />
+          <HashtagSection />
+          <TopSellerSection />
+          <TodayPick />
+          <RollingBanner type={BannerData[1]}>{textData[2]}</RollingBanner>
+          <RollingBanner type={BannerData[2]}>{textData[3]}</RollingBanner>
+        </>
+      )}
+
       <BrandSection />
       <BottomBanners />
       <Footer />
-      <Circle />
+      <PickUpPopup />
     </>
   );
 };

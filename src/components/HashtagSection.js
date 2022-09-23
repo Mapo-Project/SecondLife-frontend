@@ -2,20 +2,34 @@ import styled from "styled-components";
 import { itemsData3 } from "../utils/itemsData3";
 import ItemImages from "./ItemImages";
 import TitleInHome from "./TitleInHome";
-
-let user = "김뫄뫄";
-let hashtag = "네온";
-let title = `${user}님이 관심있는 #${hashtag} 상품 모아보기`;
+import { useSelector } from "react-redux";
 
 const TopWrapper = styled.div`
   width: 1410px;
-  margin: 0px auto 135px;
+  margin: 135px auto 0px;
 `;
 
+let hashtag = "네온";
+// 비로그인 섹션 제목
+let nonloginTitle = `22 S/S 트렌드 키워드! #${hashtag} 상품 모아보기`;
+
 const HashtagSection = () => {
+  // 회원정보
+  const { data } = useSelector((state) => state.user);
+  // 로그인 섹션 제목
+  let loginTitle = "";
+  if (data) {
+    let user = data.name;
+    loginTitle = `${user}님이 관심있는 #${hashtag} 상품 모아보기`;
+  }
+
   return (
     <TopWrapper>
-      <TitleInHome title={title} />
+      {data ? (
+        <TitleInHome title={loginTitle} />
+      ) : (
+        <TitleInHome title={nonloginTitle} />
+      )}
       <ItemImages items={itemsData3} />
     </TopWrapper>
   );

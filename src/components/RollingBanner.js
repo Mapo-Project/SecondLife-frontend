@@ -9,25 +9,26 @@ const Container = styled.div`
 
 const scrollAnim = keyframes`
 0%{
-    transform: translateX(1920px)
+    transform: translateX(-100%)
 }
 100%{
-    transform: translateX(-1920px)
+    transform: translateX(100%)
 }
 `;
 
 const re_scrollAnim = keyframes`
 0%{
-    transform: translateX(-1920px)
+    transform: translateX(100%)
 }
 100%{
-    transform: translateX(1920px)
+    transform: translateX(-100%)
 }
 `;
 
 const ScrollText = styled.span`
+  width: 100%;
   animation: ${(props) => (props.active === true ? scrollAnim : re_scrollAnim)}
-    50s linear infinite;
+    35s linear infinite;
   transition: 0.5s;
   white-space: nowrap;
   display: flex;
@@ -59,6 +60,13 @@ const ScrollText = styled.span`
     -webkit-text-stroke: 1px ${(prop) => prop.theme.colors.green300};
     color: ${(prop) => prop.theme.colors.white};
   }
+  .type_4 {
+    ${(prop) => prop.theme.english.headline3}
+    letter-spacing: 0.06em;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      1px 1px 0 #000;
+    color: ${(prop) => prop.theme.colors.bg};
+  }
   span {
     font-family: "YUniverse";
   }
@@ -69,18 +77,26 @@ export const BannerData = [
     textStyle: 0,
     size: 102,
     style: "2px solid black",
+    direction: false,
   },
   {
+    textStyle: 2,
     bg: "black",
     size: 46,
-    textStyle: 2,
+    style: "none",
+    direction: true,
+  },
+  {
+    textStyle: 1,
+    bg: "#00FF85",
+    direction: true,
+    size: 73,
     style: "none",
   },
   {
-    bg: "#00FF85",
-    textStyle: 1,
+    textStyle: 3,
     direction: true,
-    size: 73,
+    size: 96,
     style: "none",
   },
 ];
@@ -109,11 +125,11 @@ const RollingBanner = ({ type, children }) => {
               ? "type_1"
               : type.textStyle === 1
               ? "type_2"
-              : "type_3"
+              : type.textStyle === 2
+              ? "type_3"
+              : "type_4"
           }
         >
-          {children}
-          {children}
           {children}
           {children}
           {children}

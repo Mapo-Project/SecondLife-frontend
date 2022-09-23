@@ -1,0 +1,18 @@
+.alert-button {
+  width: 75px;
+  margin: 0.3125em;
+  padding: 0.625em 1.1em;
+  transition: box-shadow 0.1s;
+  box-shadow: 0 0 0 3px transparent;
+  color: black;
+  background-color: white;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1em;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: black;
+  cursor: pointer;
+}
+.alert-button:hover {
+  background-color: #00ff85;
+}

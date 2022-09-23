@@ -1,19 +1,58 @@
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../api/User";
+import { loginUser, setValueOnLocalStorage } from "../api/User";
 import { setRefreshToken } from "../storage/Cookie";
 import { SET_TOKEN } from "../store/Auth";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import CryptoJS from "crypto-js";
-// import pbkdf2 from "pbkdf2-sha256";
+import { Link } from "react-router-dom";
 
 const imgUrl = `${process.env.PUBLIC_URL}/assets/images/icons/`;
 const BACKEND = "https://hee-backend.shop:7179";
+
+const NavbarWrapper = styled.nav`
+  width: 100%;
+  height: 90px;
+  display: flex;
+  border: 3px solid ${({ theme }) => theme.colors.black};
+  z-index: 10;
+  ul {
+    background-color: ${({ theme }) => theme.colors.bg};
+    display: flex;
+    li {
+      cursor: pointer;
+    }
+  }
+  .navbar-section1 {
+    width: 254px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-right: 3px solid ${({ theme }) => theme.colors.black};
+    padding-right: 32px;
+  }
+  .navbar-section2 {
+    width: calc(100% - 512px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-right: 3px solid ${({ theme }) => theme.colors.black};
+    padding-left: 37px;
+    img {
+      margin-bottom: 5px;
+    }
+  }
+  .navbar-section3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 35px;
+  }
+`;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -24,6 +63,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   .error:focus {
     border-bottom: 2px solid red;
+  }
+  .normal:focus {
+    border-bottom: 2px solid black;
   }
   .true_type {
     background-color: ${({ theme }) => theme.colors.green300};
@@ -124,6 +166,7 @@ const LoginBtn = styled.button`
   font-weight: 700;
   border-radius: 100px;
   margin-top: 10px;
+  cursor: pointer;
 `;
 
 const SimpleLogin = styled.div`
@@ -164,6 +207,7 @@ const GoogleBtn = styled(SimpleBtn)`
   background: ${({ theme }) => theme.colors.white};
 `;
 
+//Login
 const Login = () => {
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState(false);
@@ -171,12 +215,19 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // 비밀번호 숨기기
   const onHidePassword = () => {
     setHidden(!hidden);
   };
 
+  // 로그인 유지 버튼
   const onKeepLogin = () => {
     setKeepLogin(!keepLogin);
+  };
+
+  //로고 클릭시 홈으로 돌아가기
+  const onGoHome = () => {
+    navigate("/");
   };
 
   // useForm 사용을 위한 선언
@@ -218,10 +269,12 @@ const Login = () => {
     }
   };
 
+  // 회원가입으로 이동
   const signUp = () => {
     navigate("/signup/agreement");
   };
 
+  // 로그인 폼 다 입력 되었는지 체크
   useEffect(() => {
     if (watch("user_id") !== "" && watch("password") !== "") {
       setActive(true);
@@ -230,15 +283,25 @@ const Login = () => {
     }
   }, [watch()]);
 
+  // 자동 로그인 유무 로컬스토리지에 저장
   useEffect(() => {
-    if (active) {
-      setKeepLogin(true);
-    }
-  }, [active]);
+    setValueOnLocalStorage("AutoLogin", keepLogin);
+    console.log("AutoLogin", keepLogin);
+  }, [keepLogin]);
 
   return (
     <>
-      <Navbar />
+      <NavbarWrapper>
+        <ul className="navbar-section1" />
+        <ul className="navbar-section2">
+          <li onClick={onGoHome}>
+            <Link to="/">
+              <img src={`${imgUrl}LOGO.png`} alt="logo button" />
+            </Link>
+          </li>
+        </ul>
+        <ul className="navbar-section3" />
+      </NavbarWrapper>
       <Wrapper>
         <Container>
           <h1>Login</h1>
@@ -247,27 +310,28 @@ const Login = () => {
             <label htmlFor="user_id">아이디</label>
             <Input
               {...register("user_id", {
-                required: "Please Enter Your ID",
-                maxLength: 10,
+                required: true,
+                minLength: 4,
+                maxLength: 15,
               })}
               type="text"
               placeholder="example123"
-              className={errors.user_id?.type === "required" && "error"}
+              className={errors.user_id?.type ? "error" : "normal"}
             />
             <ErrorMessage>
-              {errors.user_id?.type === "required" && "아이디를 입력해주세요."}
-              {errors.user_id?.type === "maxLength" &&
-                "올바르지 않은 아이디 입니다."}
+              {errors.user_id && "아이디를 다시 입력해주세요"}
             </ErrorMessage>
 
             <label htmlFor="password">비밀번호</label>
             <Input
               {...register("password", {
-                required: "Please Enter Your Password",
+                required: true,
+                minLength: 4,
+                maxLength: 20,
               })}
               type={!hidden ? "password" : "text"}
               placeholder="영어 대문자, 소문자, 숫자, 특수문자를 포함한 10자리 이상"
-              className={errors.password?.type === "required" && "error"}
+              className={errors.password?.type ? "error" : "normal"}
             />
             <FontAwesomeIcon
               className={!hidden ? "eye_default" : "eye_true"}
@@ -276,13 +340,12 @@ const Login = () => {
             />
 
             <ErrorMessage>
-              {errors.password && "패스워드를 입력해주세요."}
+              {errors.password && "비밀번호를 다시 입력해주세요!"}
             </ErrorMessage>
 
             <LoginBox>
-              <h5>
+              <h5 onClick={onKeepLogin}>
                 <img
-                  onClick={onKeepLogin}
                   src={
                     keepLogin
                       ? imgUrl + "check_true.png"
@@ -296,7 +359,13 @@ const Login = () => {
                 로그인
               </LoginBtn>
               <div>
-                <p>아이디/비밀번호 찾기</p>
+                <p
+                  onClick={() => {
+                    alert("준비중...");
+                  }}
+                >
+                  아이디/비밀번호 찾기
+                </p>
                 <p onClick={signUp}>회원가입</p>
               </div>
             </LoginBox>
@@ -308,7 +377,7 @@ const Login = () => {
               <SimpleBtn type="submit">
                 <img src={imgUrl + "Union.svg"} alt="카카오" />
                 카카오 계정으로 로그인
-                <span></span>
+                <span />
               </SimpleBtn>
             </form>
 
@@ -316,7 +385,7 @@ const Login = () => {
               <GoogleBtn type="submit">
                 <img src={imgUrl + "google_logo.svg"} alt="구글" />
                 Google 계정으로 로그인
-                <span></span>
+                <span />
               </GoogleBtn>
             </form>
           </SimpleLogin>
