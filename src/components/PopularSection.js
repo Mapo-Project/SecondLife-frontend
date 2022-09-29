@@ -21,6 +21,7 @@ const PopularSection = () => {
         `https://hee-backend.shop:7179/product/popularity/select`
       );
       setPopularItems(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
