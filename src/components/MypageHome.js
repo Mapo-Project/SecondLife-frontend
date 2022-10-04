@@ -299,7 +299,7 @@ const MypageHome = () => {
   return (
     <>
       {/* {isLogin ? console.log("로그인O") : console.log("로그인X")} */}
-      {/* <Navbar /> */}
+      <Navbar />
       <Check />
       <Container>
         <LeftSection>
@@ -315,11 +315,11 @@ const MypageHome = () => {
               {/* <span>다섯글자님님</span> */}
               <span>@JJiasClosett</span>
               <p>
-                <img src={`${imgUrl}levelgreen.png`} alt="level" />
+                <img src={`${imgUrl}levelGreen2.png`} alt="G" />
                 <span>Lv. Green</span>
               </p>
               <p>
-                <img src={`${imgUrl}alarm.png`} alt="level" />
+                <img src={`${imgUrl}alarm.png`} alt="alarm" />
                 <span>읽지 않은 알람</span>
                 <span>1개</span>
               </p>
@@ -436,7 +436,7 @@ const MypageHome = () => {
           {SideMenuContent[sideMenuChange.activeSideMenu]}
         </RightSection>
       </Container>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };
