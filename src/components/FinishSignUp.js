@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const TopWrapper = styled.div`
   width: 509px;
@@ -119,33 +120,36 @@ const FinishSignUp = () => {
   };
 
   return (
-    <TopWrapper>
-      <ProgressBarWrapper>
-        <ProgressBar />
-      </ProgressBarWrapper>
-      <Step>
-        <p>약관동의</p>
-        <p>회원정보</p>
-        <p>가입완료</p>
-      </Step>
-      <CenterWrapper>
-        <div>
-          <Logo>
-            <img src={`${imgURL}icons/LOGO.png`} alt="logo" />
-          </Logo>
-          <Greeting>환영합니다!</Greeting>
+    <>
+      <ScrollToTop />
+      <TopWrapper>
+        <ProgressBarWrapper>
+          <ProgressBar />
+        </ProgressBarWrapper>
+        <Step>
+          <p>약관동의</p>
+          <p>회원정보</p>
+          <p>가입완료</p>
+        </Step>
+        <CenterWrapper>
+          <div>
+            <Logo>
+              <img src={`${imgURL}icons/LOGO.png`} alt="logo" />
+            </Logo>
+            <Greeting>환영합니다!</Greeting>
 
-          <Description>
-            2ND라이프와 함께
-            <br /> 지속가능한 의류쇼핑
-            <br />
-            지금 바로 시작해볼까요?
-          </Description>
-        </div>
-        <ImageWrapper style={backImg} />
-      </CenterWrapper>
-      <AgreeBtnWrapper onClick={handleStartClick}>시작하기</AgreeBtnWrapper>
-    </TopWrapper>
+            <Description>
+              2ND라이프와 함께
+              <br /> 지속가능한 의류쇼핑
+              <br />
+              지금 바로 시작해볼까요?
+            </Description>
+          </div>
+          <ImageWrapper style={backImg} />
+        </CenterWrapper>
+        <AgreeBtnWrapper onClick={handleStartClick}>시작하기</AgreeBtnWrapper>
+      </TopWrapper>
+    </>
   );
 };
 
