@@ -50,7 +50,7 @@ const Texts = styled.div`
     line-height: 25px;
   }
   p:nth-child(2) {
-    font-family: "Noto Sans";
+    font-family: "Noto Sans KR";
     font-weight: 700;
     font-size: 20px;
     line-height: 20px;
