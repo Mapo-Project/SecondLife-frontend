@@ -23,7 +23,7 @@ function App() {
     <>
       <GlobalStyle />
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/*" element={<Home />} />

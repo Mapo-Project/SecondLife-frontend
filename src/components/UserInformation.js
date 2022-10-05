@@ -8,6 +8,7 @@ import DaumPost from "./Daumpost";
 import CryptoJS from "crypto-js";
 import Swal from "sweetalert2";
 import "../css/SweetAlert.css";
+import ScrollToTop from "./ScrollToTop";
 
 const TopWrapper = styled.div`
   width: 509px;
@@ -444,6 +445,7 @@ const UserInformation = () => {
           <img src={`${iconImgURL}x.png`} alt="close button" />
         </Link>
       </CloseBtnWrapper> */}
+      <ScrollToTop />
       <ProgressBarWrapper>
         <ProgressBar />
       </ProgressBarWrapper>
