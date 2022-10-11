@@ -5,6 +5,7 @@ import TitleInFilter from "./TitleInFilter";
 import ProductList from "./ProductList";
 import { newFilterData } from "../utils/newFilterData";
 import { useNavigate } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const LeftWrapper = styled.div`
   display: flex;
@@ -68,6 +69,7 @@ const NewCollection = () => {
 
   return (
     <>
+      <ScrollToTop />
       <LeftWrapper>
         <FilterMenu imgName={"new"} />
       </LeftWrapper>

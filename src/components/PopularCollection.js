@@ -5,6 +5,7 @@ import TitleInFilter from "./TitleInFilter";
 import ProductList from "./ProductList";
 import { useNavigate } from "react-router-dom";
 import { popularFilterData } from "../utils/popularFilterData";
+import ScrollToTop from "./ScrollToTop";
 
 const LeftWrapper = styled.div`
   display: flex;
@@ -66,6 +67,7 @@ const PopularCollection = () => {
 
   return (
     <>
+      <ScrollToTop />
       <LeftWrapper>
         <FilterMenu imgName={"popular"} />
       </LeftWrapper>
