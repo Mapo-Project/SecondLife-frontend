@@ -54,13 +54,13 @@
 ---
 
 ## 구현화면
-####홈
+#### 홈
 ![main](https://user-images.githubusercontent.com/60383706/195486492-a4c39c60-96df-41ad-ad8d-e06e0160db49.gif)   
-####상세페이지
+#### 상세페이지
 ![filter](https://user-images.githubusercontent.com/60383706/195486487-c41bbaf8-948a-46cb-a64a-ece37776839e.gif)   
-####마이페이지
+#### 마이페이지
 ![mypage](https://user-images.githubusercontent.com/60383706/195486495-0c8f7888-2831-4989-882c-881d110af07b.gif)   
-####픽업신청
+#### 픽업신청
 ![pickup](https://user-images.githubusercontent.com/60383706/195486496-a470eee2-4a24-4f3d-8e5d-453d27d71cbc.gif)
    
 
