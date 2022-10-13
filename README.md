@@ -1,4 +1,6 @@
-# Second Life Project
+<h1>
+<img src="https://user-images.githubusercontent.com/60383706/195504384-cf5bbc8e-f663-4470-a603-1d9ee15165ca.png" width="8%" height="8%" \> Second Life Project
+</h1>
 
 - 프로젝트 명: **Second Life**
 - 프로젝트 목표: 의류 재사용과 환경 보호를 위한 **중고의류 거래 쇼핑몰** 제작
