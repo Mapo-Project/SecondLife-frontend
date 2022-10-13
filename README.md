@@ -11,28 +11,21 @@
 
 ---
 
-<div display="flex">
-  <img src="https://user-images.githubusercontent.com/101153145/195472900-77284af3-cfdb-4683-9f26-933af986810e.png" width="15%"/>
-  <img src="https://user-images.githubusercontent.com/101153145/195474773-32a4e2c8-1dd8-42b9-afd6-67b42f4b8094.jpg" width="15%"/>
-  <img src="https://user-images.githubusercontent.com/101153145/195474963-8bc1f095-31b7-4755-8ea2-1930b307a7aa.png" width="15%"/>
-  <img src="https://user-images.githubusercontent.com/101153145/195473828-0a027ac7-82ce-4945-bd4d-041bd61da63f.png" width="15%"/>
-  <img src="https://user-images.githubusercontent.com/101153145/195474576-62dd9c2d-9abd-4b06-a820-dc59498503e3.png" width="15%"/>
-  <img src="https://user-images.githubusercontent.com/101153145/195476222-eebd3b32-c33c-463c-a9a5-4768a6ba2e51.png" width="15%"/>
-</div>
-
----
-
 ## 화면구성 및 기능구현
 
-- 홈
+- 홈   
+![main](https://user-images.githubusercontent.com/60383706/195486492-a4c39c60-96df-41ad-ad8d-e06e0160db49.gif)   
 - 로컬 로그인, 간편 로그인(구글, 카카오)
 - 로컬 회원가입
 - 간편 회원가입
-- 픽업신청
-- 마이페이지
+- 픽업신청   
+![pickup](https://user-images.githubusercontent.com/60383706/195486496-a470eee2-4a24-4f3d-8e5d-453d27d71cbc.gif)
+- 마이페이지   
+![mypage](https://user-images.githubusercontent.com/60383706/195486495-0c8f7888-2831-4989-882c-881d110af07b.gif)   
 - 상품 더보기
 - 카테고리별 상품 조회
-- 상품 상세
+- 상품 상세   
+![filter](https://user-images.githubusercontent.com/60383706/195486487-c41bbaf8-948a-46cb-a64a-ece37776839e.gif)   
 
 ---
 
@@ -52,16 +45,3 @@
 - Figma
 - Slack, Notion
 ---
-
-## 구현화면
-#### 홈
-![main](https://user-images.githubusercontent.com/60383706/195486492-a4c39c60-96df-41ad-ad8d-e06e0160db49.gif)   
-#### 상세페이지
-![filter](https://user-images.githubusercontent.com/60383706/195486487-c41bbaf8-948a-46cb-a64a-ece37776839e.gif)   
-#### 마이페이지
-![mypage](https://user-images.githubusercontent.com/60383706/195486495-0c8f7888-2831-4989-882c-881d110af07b.gif)   
-#### 픽업신청
-![pickup](https://user-images.githubusercontent.com/60383706/195486496-a470eee2-4a24-4f3d-8e5d-453d27d71cbc.gif)
-   
-
-
