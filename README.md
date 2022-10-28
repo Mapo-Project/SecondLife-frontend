@@ -5,6 +5,7 @@
 - 프로젝트 명: **Second Life**
 - 프로젝트 목표: 의류 재사용과 환경 보호를 위한 **중고의류 거래 쇼핑몰** 제작
 - [Live Demo](https://mapo-project.github.io/SecondLife-frontend/) 에서 서비스를 확인해 볼 수 있습니다.
+  <br/>( id: test | pw: mapo1234 )
 - 팀원 구성 및 이름
   - 기획 & 디자인 : 이진희, 최연정
   - 프론트 : **민지원([@Gwonie](https://github.com/Gwonie)), 이경은([@ke-leee](https://github.com/ke-leee)), 추홍규([@chuhongkyu](https://github.com/chuhongkyu))**
